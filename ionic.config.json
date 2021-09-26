@@ -1,5 +1,8 @@
 {
   "name": "tapsynewdashboard",
-  "integrations": {},
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
   "type": "angular"
 }

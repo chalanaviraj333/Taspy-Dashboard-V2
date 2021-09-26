@@ -1,57 +1,76 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
     <ion-title>ALL REMOTES</ion-title>
   </ion-toolbar>
+  <!-- doing nothing this serach bar -->
   <ion-toolbar color="primary">
-    <ion-searchbar #search debounce="500" (ionChange)="_ionChange($event)" placeholder="Enter Brand,Blade,Code or Box no" showCancelButton="never" animated></ion-searchbar>
+    <ion-searchbar
+      #search
+      debounce="500"
+      (ionChange)="_ionChange($event)"
+      placeholder="Enter Tapsy Code, Box No or Car Brand"
+      showCancelButton="never"
+      animated
+    ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScrollStart)="logScrollStart()">
-  <ion-grid>
-    <ion-row>
+<ion-content
+  [scrollEvents]="true"
+  (ionScrollStart)="logScrollStart()"
+>
 
-      <ion-col size-md="8" offset-md="2" size-lg="8" offset-lg="2">
-  <ion-card *ngFor="let remote of searchedItem" (click)="onClick(x = remote.tapsycode)"
-    class="ion-activatable ripple-parent">
-    <div class="fabbutton">
-      <ion-fab *ngIf="!remote.remoteinStock">
-        <ion-fab-button color="danger">
-          <ion-icon src="/assets/icon/lowinstock.svg"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-    </div>
-
+<ion-card *ngFor="let remote of allhttprequestservice.filteredRemotes" (click)="onClick(remote)"
+    class="ion-activatable ripple-parent ion-no-margin">
       <ion-card-content>
-        <ion-row class="ion-no-padding">
-          <ion-col size-xs="4" size-md="4" size-lg="4">
-            <ion-card-subtitle color="primary" id="boxNumber" class="primarytext"s>BOX: {{remote.boxnumber}}</ion-card-subtitle>
-            <ion-card-subtitle color="danger" class="primarytext">{{remote.frequency}}</ion-card-subtitle>
-            <ion-card-subtitle color="dark" class="primarytext">BLADE:{{remote.inbuildblade}}</ion-card-subtitle>
-            <ion-card-subtitle color="medium" class="primarytext">{{remote.inbuildchip}}</ion-card-subtitle>
-            <ion-card-subtitle color="dark" class="primarytext">BATTERY:{{remote.battery}}</ion-card-subtitle>
-            <ion-card-subtitle color="dark" class="primarytext">CODE:{{remote.tapsycode}}</ion-card-subtitle>
+        <ion-grid class="ion-no-padding">
+          <ion-row class="ion-no-padding">
+          <ion-col size="3" class="ion-no-margin">
+            <ion-label class="ion-text-nowrap">
+              <ion-label color="medium" class="saveTag">BOX </ion-label>
+              <ion-note id="boxnumberID"
+                color="danger"
+                class="ion-text-nowrap"
+                >{{remote.boxnumber}}</ion-note
+              >
+            </ion-label>
+
+            <ion-label class="ion-text-nowrap availableClass">
+              <ion-label color="medium" class="saveTag">QTY </ion-label>
+              <ion-note id="boxnumberID"
+                color="dark"
+                class="ion-text-nowrap"
+                >{{remote.qtyavailable}}</ion-note
+              >
+            </ion-label>
+
+            <ion-card-subtitle color="dark" class="primarytext">{{remote.frequency}}</ion-card-subtitle>
+            <ion-card-subtitle color="dark" class="primarytext">{{remote.inbuildblade}}</ion-card-subtitle>
+            <ion-card-subtitle color="dark" class="primarytext">{{remote.inbuildchip}}</ion-card-subtitle>
+
 
           </ion-col>
-          <ion-col class="imageColoum" size-xs="4" size-md="4" offset-md="1" size-lg="4" offset-lg="1">
-            <img src="{{remote.image}}" width="120" height="120" />
+          <ion-col size="8" class="ion-text-end ion-no-margin">
+            <img src="{{remote.image}}" width="80" height="80" />
+          </ion-col>
 
+          <ion-col size="1" class="ion-text-end">
+            <ion-button (click)="onClickEditRemote($event, remote)" fill="clear">
+              <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="onClickDelete($event, remote)" fill="clear">
+              <ion-icon slot="icon-only" color="danger" name="trash-outline"></ion-icon>
+            </ion-button>
           </ion-col>
         </ion-row>
+        </ion-grid>
       </ion-card-content>
     <ion-ripple-effect type="unbounded"></ion-ripple-effect>
   </ion-card>
-  </ion-col>
-  </ion-row>
-  </ion-grid>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="ScrollToTop()" *ngIf="hideButton">
       <ion-icon name="arrow-up-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
 </ion-content>

@@ -4,6 +4,10 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
 
   {
+    path: '',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+  },
+  {
     path: 'allcustomers',
     loadChildren: () => import('./customer/allcustomers/allcustomers.module').then( m => m.AllcustomersPageModule)
   },
@@ -30,10 +34,6 @@ const routes: Routes = [
   {
     path: 'addremote',
     loadChildren: () => import('./carremote/addremote/addremote.module').then( m => m.AddremotePageModule)
-  },
-  {
-    path: 'editremote',
-    loadChildren: () => import('./carremote/editremote/editremote.module').then( m => m.EditremotePageModule)
   },
   {
     path: 'deleteremote',
@@ -88,8 +88,32 @@ const routes: Routes = [
     loadChildren: () => import('./carmodel/deletecarmodel/deletecarmodel.module').then( m => m.DeletecarmodelPageModule)
   },
   {
-    path: 'carremote/remotedetailspage/:selectedRemote',
-    loadChildren: () => import('./carremote/remotedetailspage/remotedetailspage.module').then( m => m.RemotedetailspagePageModule)
+    path: 'notaddedkeyshells',
+    loadChildren: () => import('./shopify/notaddedkeyshells/notaddedkeyshells.module').then( m => m.NotaddedkeyshellsPageModule)
+  },
+  {
+    path: 'notaddedkeyremotes',
+    loadChildren: () => import('./shopify/notaddedkeyremotes/notaddedkeyremotes.module').then( m => m.NotaddedkeyremotesPageModule)
+  },
+  {
+    path: 'remoteshellfilterpage',
+    loadChildren: () => import('./allmodels/remoteshellfilterpage/remoteshellfilterpage.module').then( m => m.RemoteshellfilterpagePageModule)
+  },
+  {
+    path: 'send-receipt',
+    loadChildren: () => import('./send-receipt/send-receipt.module').then( m => m.SendReceiptPageModule)
+  },
+  {
+    path: 'remote-detail-modal-page',
+    loadChildren: () => import('./carremote/remote-detail-modal-page/remote-detail-modal-page.module').then( m => m.RemoteDetailModalPagePageModule)
+  },
+  {
+    path: 'edit-remote-detail-page/:tapsycode',
+    loadChildren: () => import('./carremote/edit-remote-detail-page/edit-remote-detail-page.module').then( m => m.EditRemoteDetailPagePageModule)
+  },
+  {
+    path: 'addnewcomponent',
+    loadChildren: () => import('./modalcontrollers/addnewcomponent/addnewcomponent.module').then( m => m.AddnewcomponentPageModule)
   },
   //   path: '',
   //   redirectTo: 'folder/Inbox',

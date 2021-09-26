@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="primarytext">KEY SHELLS NOT IN SHOPIFY</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="primary">
+    <ion-searchbar #search debounce="500" (ionChange)="_ionChange($event)" class="primarytext" placeholder="Enter Brand or Blade or Box no" showCancelButton="never"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="checkAddedButtonDiv">
+    <ion-button (click)="onClickAddedCheck()" class="primarytext checkButton">Check Added Items</ion-button>
+  </div>
+
+  <ion-card *ngFor="let remoteShell of filterRemoteShells"
+  class="ion-activatable ripple-parent ion-no-margin">
+    <ion-card-content>
+      <ion-grid class="ion-no-padding">
+        <ion-row class="ion-no-padding">
+        <ion-col size="3" class="ion-no-margin">
+          <ion-label class="ion-text-nowrap">
+            <ion-label color="medium" class="saveTag">BOX </ion-label>
+            <ion-note id="boxnumberID"
+              color="danger"
+              class="ion-text-nowrap"
+              >{{remoteShell.boxnumber}}</ion-note
+            >
+          </ion-label>
+
+
+          <ion-card-subtitle color="dark" class="primarytext">{{remoteShell.tapsycode}}</ion-card-subtitle>
+        </ion-col>
+        <ion-col size="3" class="ion-no-margin">
+          <ion-card-subtitle color="dark" class="primarytext">Buttons: {{remoteShell.buttons}}</ion-card-subtitle>
+          <ion-card-subtitle color="dark" class="primarytext">Blade: {{remoteShell.inbuildblade}}</ion-card-subtitle>
+          <ion-card-subtitle *ngIf="remoteShell.notes" color="danger" class="primarytext">Notes Available</ion-card-subtitle>
+        </ion-col>
+        <ion-col size="2" class="ion-text-center ion-no-margin imageBackgroundClass">
+          <img src="{{remoteShell.image}}" width="100" height="100" />
+        </ion-col>
+
+        <ion-col size="4" class="ion-align-self-center ion-text-center ion-no-margin">
+          <ion-button class="primarytext" (click)="onClickAddedToShopify(remoteShell.tapsycode)" [disabled]="remoteShell.addedtoShopify">Added to Shopify</ion-button>
+        </ion-col>
+      </ion-row>
+      </ion-grid>
+    </ion-card-content>
+</ion-card>
+
+</ion-content>

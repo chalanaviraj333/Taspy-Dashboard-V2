@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonSearchbar } from '@ionic/angular';
-import { NavparamService } from 'src/app/navparam.service';
+import { AlertController, IonContent, IonSearchbar } from '@ionic/angular';
 import { Remote } from 'src/app/remote';
+import { HttpRequestServiceService } from 'src/app/services/http-request-service.service';
+import { ModalServiceService } from 'src/app/services/modal-service.service';
 
 @Component({
   selector: 'app-allremotes',
@@ -15,92 +15,24 @@ export class AllremotesPage implements OnInit, OnDestroy {
   @ViewChild("search", { static: false }) search: IonSearchbar;
   @ViewChild(IonContent, { static: false }) content: IonContent;
 
-  private remotes: Array<Remote> = [];
   public searchedItem: Array<Remote> = [];
-
   public hideButton: boolean = false;
 
   constructor(
+    private modelService: ModalServiceService,
     private router: Router,
-    private http: HttpClient,
-    private navParamService: NavparamService
+    public alertController: AlertController,
+    public allhttprequestservice: HttpRequestServiceService
   ) {}
 
   ngOnInit() {
-    this.http
-      .get<{ [key: string]: Remote }>(
-        "https://tapsystock-a6450-default-rtdb.firebaseio.com/remotes.json"
-      )
-      .subscribe((resData) => {
-        for (const key in resData) {
-          if (resData.hasOwnProperty(key)) {
-            this.remotes.push({
-              key,
-              tapsycode: resData[key].tapsycode,
-              boxnumber: resData[key].boxnumber,
-              inbuildchip: resData[key].inbuildchip,
-              inbuildblade: resData[key].inbuildblade,
-              battery: resData[key].battery,
-              buttons: resData[key].buttons,
-              costperitem: resData[key].costperitem,
-              frequency: resData[key].frequency,
-              remotetype: resData[key].remotetype,
-              image: resData[key].image,
-              notes: resData[key].notes,
-              remoteinStock: resData[key].remoteinStock,
-              compitablecars: resData[key].compitablecars,
-              compitablebrands: resData[key].compitablebrands,
-            });
-            this.remotes.sort((a, b) => (a.boxnumber > b.boxnumber ? 1 : -1));
-          }
-        }
-      });
 
-    this.searchedItem = this.remotes;
-  }
-
-  ionViewWillEnter() {
-    let changedLowStockItem = this.navParamService.getRemoteKey();
-
-    if (changedLowStockItem !== undefined) {
-      const changingitem = this.remotes.find(
-        (i) => i.key === changedLowStockItem
-      );
-
-      changingitem.remoteinStock = false;
-      this.navParamService.setRemoteKey(undefined);
-    }
+    this.allhttprequestservice.getAllRemotes();
   }
 
   ngOnDestroy() {}
 
-  _ionChange(event) {
-    const val = event.target.value;
-
-    this.searchedItem = this.remotes;
-
-    if (val && val.trim() != "") {
-      this.searchedItem = this.searchedItem.filter((currentremote) => {
-        if (currentremote.compitablebrands !== undefined) {
-          let searchWord =
-            currentremote.tapsycode +
-            currentremote.inbuildblade +
-            currentremote.compitablebrands.toString();
-          return searchWord.toLowerCase().indexOf(val.toLowerCase()) > -1;
-        } else {
-          let searchWord = currentremote.tapsycode + currentremote.inbuildblade;
-          return searchWord.toLowerCase().indexOf(val.toLowerCase()) > -1;
-        }
-      });
-    }
-  }
-
-  onClick(x) {
-    const selectedremote = x;
-
-    this.router.navigateByUrl("carremote/remotedetailspage/" + selectedremote);
-  }
-
+  // quick go to top button on page
   logScrollStart() {
     setTimeout(() => {
       this.hideButton = true;
@@ -113,5 +45,62 @@ export class AllremotesPage implements OnInit, OnDestroy {
       this.hideButton = false;
     }, 4000);
   }
+
+
+  // perform search based on search bar enteded data
+  _ionChange(event) {
+    const entervalue = event.target.value;
+    this.allhttprequestservice.performSearch(entervalue);
+
+  }
+
+// perform view remote detail page loading
+  async onClick(selectedRemote: Remote) {
+    await this.modelService.onClickViewItem(selectedRemote);
+  }
+
+// perform edit remote funtion
+  onClickEditRemote(event, remote: Remote) {
+    this.router.navigateByUrl('edit-remote-detail-page/' + remote.tapsycode);
+
+    // this use to prevent loading remote detail view model when user click on edit or delete button inside card
+    event.stopPropagation();
+  }
+
+  // perform delete remote funtion
+  onClickDelete(event, remote: Remote) {
+    this.presentAlertConfirm(remote);
+
+    // this use to prevent loading remote detail view model when user click on edit or delete button inside card
+    event.stopPropagation();
+  }
+
+
+  // delete alert controller
+  async presentAlertConfirm(remote: Remote) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Delete!',
+      message: '<strong>Are you want to DELETE this remote?</strong>',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+
+          }
+        }, {
+          text: 'Yes',
+          handler: () => {
+            this.allhttprequestservice.deleteRemote(remote);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 
 }

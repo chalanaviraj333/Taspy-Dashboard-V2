@@ -1,0 +1,47 @@
+.inputClass {
+  border: solid 1px #3880ff;
+  border-radius: 8px;
+  padding-left: 10px;
+  font-family: poppins,sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.stackClass {
+  margin-bottom: 10px;
+  font-family: poppins,sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+ion-input {
+  --padding-start: 12px !important;
+}
+
+.receiptnoClass {
+  margin-right: 20px;
+  font-family: poppins,sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 20px;
+}
+
+ion-datetime {
+  font-family: poppins,sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.ion-button-class {
+  font-family: poppins,sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.button-row-class {
+  padding: 20px;
+}
+
+.saveandexitButton {
+  margin: 10px;
+}

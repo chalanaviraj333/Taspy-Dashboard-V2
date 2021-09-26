@@ -1,0 +1,39 @@
+.inputClass {
+  border: solid 1px #3880ff;
+  border-radius: 8px;
+  padding-left: 10px;
+  font-family: poppins,sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.stackClass {
+  margin-bottom: 10px;
+  font-family: poppins,sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.uploadimageClass {
+  height: 180px;
+  width: 180px;
+  border: solid 1px #3880ff;
+  margin: 10px;
+}
+
+.saveandexitButton {
+  margin: 10px;
+}
+
+.automaticinputClass {
+  border: solid 1px #eb445a;
+  border-radius: 8px;
+  padding-left: 10px;
+  font-family: poppins,sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+ion-input {
+  --padding-start: 12px !important;
+}

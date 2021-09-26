@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Labels } from './labels';
 
 
 @Component({
@@ -19,28 +20,13 @@ export class AppComponent implements OnInit {
         {
           title: 'All Customers',
           url: '/allcustomers',
-          icon: 'assets/icon/all.svg'
+          icon: 'layers-outline'
         },
         {
           title: 'Add Customer',
           url: '/addcustomers',
-          icon: 'assets/icon/add.svg'
+          icon: 'add-circle-outline'
         },
-        {
-          title: 'Edit Customer',
-          url: '/editcustomer',
-          icon: 'assets/icon/edit.svg'
-        },
-        {
-          title: 'Delete Customer',
-          url: '/deletecustomer',
-          icon: 'assets/icon/delete.svg'
-        },
-        {
-          title: 'Export Customers',
-          url: '/exportcustomers',
-          icon: 'assets/icon/export.svg'
-        }
       ]
     },
     { title: 'Car Remotes',
@@ -49,22 +35,12 @@ export class AppComponent implements OnInit {
         {
           title: 'All Remotes',
           url: '/allremotes',
-          icon: 'assets/icon/all.svg'
+          icon: 'layers-outline'
         },
         {
           title: 'Add Remote',
           url: '/addremote',
-          icon: 'assets/icon/add.svg'
-        },
-        {
-          title: 'Edit Remote',
-          url: '/editremote',
-          icon: 'assets/icon/edit.svg'
-        },
-        {
-          title: 'Delete Remote',
-          url: '/deleteremote',
-          icon: 'assets/icon/delete.svg'
+          icon: 'add-circle-outline'
         },
       ]
     },
@@ -74,79 +50,73 @@ export class AppComponent implements OnInit {
         {
           title: 'All Remote-Shells',
           url: '/allremoteshells',
-          icon: 'assets/icon/all.svg'
+          icon: 'layers-outline'
         },
         {
           title: 'Add Remote-Shell',
           url: '/addremoteshell',
-          icon: 'assets/icon/add.svg'
-        },
-        {
-          title: 'Edit Remote-Shell',
-          url: '/editremoteshell',
-          icon: 'assets/icon/edit.svg'
-        },
-        {
-          title: 'Delete Remote-Shell',
-          url: '/deleteremoteshell',
-          icon: 'assets/icon/delete.svg'
-        },
+          icon: 'add-circle-outline'
+        }
       ]
     },
-    { title: 'Car Brands',
-    numberofitems: 0,
+    { title: 'Cars',
+      numberofitems: 0,
       children: [
         {
           title: 'All Car Brands',
-          url: '/allcarbrands',
-          icon: 'assets/icon/all.svg'
+          url: '/allcarmodels',
+          icon: 'layers-outline'
+        },
+        {
+          title: 'All Car Models',
+          url: '/allcarmodels',
+          icon: 'layers-outline'
         },
         {
           title: 'Add Car Brand',
           url: '/addcarbrand',
-          icon: 'assets/icon/add.svg'
-        },
-        {
-          title: 'Edit Car Brand',
-          url: '/editcarbrand',
-          icon: 'assets/icon/edit.svg'
-        },
-        {
-          title: 'Delete Car Brand',
-          url: '/deletecarbrand',
-          icon: 'assets/icon/delete.svg'
-        },
-      ]
-    },
-    { title: 'Car Models',
-      numberofitems: 0,
-      children: [
-        {
-          title: 'All Car Models',
-          url: '/allcarmodels',
-          icon: 'assets/icon/all.svg'
+          icon: 'add-circle-outline'
         },
         {
           title: 'Add Car Model',
           url: '/addcarmodel',
-          icon: 'assets/icon/add.svg'
-        },
-        {
-          title: 'Edit Car Model',
-          url: '/editcarmodel',
-          icon: 'assets/icon/edit.svg'
-        },
-        {
-          title: 'Delete Car Model',
-          url: '/deletecarmodel',
-          icon: 'assets/icon/delete.svg'
+          icon: 'add-circle-outline'
         },
       ]
     },
-
+    { title: 'Garage Remotes',
+    numberofitems: 0,
+    children: [
+      {
+        title: 'All Garage Remotes',
+        url: '/allcarmodels',
+        icon: 'layers-outline'
+      },
+      {
+        title: 'Add Garage Remote',
+        url: '/addcarbrand',
+        icon: 'add-circle-outline'
+      },
+    ]
+  },
+  { title: 'Restricted Keys',
+    numberofitems: 0,
+    children: [
+      {
+        title: 'All Restricted Keys',
+        url: '/allcarmodels',
+        icon: 'layers-outline'
+      },
+      {
+        title: 'Add New Restricted Key',
+        url: '/addcarbrand',
+        icon: 'add-circle-outline'
+      },
+    ]
+  },
   ];
 
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  public labels: Array<Labels> = [{title: 'Key Shells not in Shopify', url: '/notaddedkeyshells'},{title: 'Remote Keys not in Shopify', url: '/notaddedkeyremotes'}];
   constructor(private http: HttpClient ) {
 
   }
@@ -161,24 +131,24 @@ export class AppComponent implements OnInit {
    .subscribe((resData) => {
      for (const key in resData) {
        if (resData.hasOwnProperty(key)) {
-         this.appPages[1].numberofitems = this.appPages[1].numberofitems + 1;
+         this.appPages[1].numberofitems++;
        }
      }
 
    });
 
-   await this.http
-   .get<{ [key: string]: string }>(
-     "https://tapsystock-a6450-default-rtdb.firebaseio.com/car-brand.json"
-   )
-   .subscribe((resData) => {
-     for (const key in resData) {
-       if (resData.hasOwnProperty(key)) {
-         this.appPages[3].numberofitems = this.appPages[3].numberofitems + 1;
-       }
-     }
+  //  await this.http
+  //  .get<{ [key: string]: string }>(
+  //    "https://tapsystock-a6450-default-rtdb.firebaseio.com/car-brand.json"
+  //  )
+  //  .subscribe((resData) => {
+  //    for (const key in resData) {
+  //      if (resData.hasOwnProperty(key)) {
+  //        this.appPages[3].numberofitems = this.appPages[3].numberofitems + 1;
+  //      }
+  //    }
 
-   });
+  //  });
 
    await this.http
    .get<{ [key: string]: string }>(
@@ -187,7 +157,7 @@ export class AppComponent implements OnInit {
    .subscribe((resData) => {
      for (const key in resData) {
        if (resData.hasOwnProperty(key)) {
-         this.appPages[4].numberofitems = this.appPages[4].numberofitems + 1;
+         this.appPages[3].numberofitems++;
        }
      }
 
@@ -200,7 +170,7 @@ export class AppComponent implements OnInit {
    .subscribe((resData) => {
      for (const key in resData) {
        if (resData.hasOwnProperty(key)) {
-         this.appPages[2].numberofitems = this.appPages[2].numberofitems + 1;
+         this.appPages[2].numberofitems++;
        }
      }
 

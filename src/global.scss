@@ -24,3 +24,28 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+ion-title {
+  font-family: poppins,sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+ion-button {
+    font-family: poppins,sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.view-Remote-Details-class .modal-wrapper{
+  --border-radius: 10px;
+}
+
+.uploadingproduct-css-class {
+  font-family: poppins,sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  border-radius: 30px;
+}
+

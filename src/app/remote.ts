@@ -1,4 +1,5 @@
 import { Car } from './car';
+import { RemoteNote } from './remote-note';
 
 export interface Remote {
   key: string;
@@ -11,9 +12,10 @@ export interface Remote {
   frequency?: string;
   costperitem?: number;
   remotetype?: string;
+  productType: string;
   image?: string;
-  notes?: string;
-  remoteinStock: boolean;
+  notes: Array<RemoteNote>;
+  qtyavailable: number;
   compitablecars?: Array<Car>;
   compitablebrands: Array<string>;
 }

@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -7,6 +7,204 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
+  <form #f="ngForm" (ngSubmit)="onSubmitNext(f)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Box No</ion-label>
+            <ion-input class="automaticinputClass" name="boxnumber" [ngModel]="allhttprequestservice.availableRemoteBoxNumber + 1" required></ion-input>
+          </ion-item>
+        </ion-col>
+
+          <ion-col size="4">
+            <ion-item lines="none">
+              <ion-label position="stacked" class="stackClass">Remote Type</ion-label>
+              <ion-select class="inputClass" ngModel="BLADED" name="remotetype">
+                <ion-select-option value="BLADED">Bladed</ion-select-option>
+                <ion-select-option value="PROX">Prox</ion-select-option>
+                <ion-select-option value="SLOT">Slot</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Chip</ion-label>
+            <ion-select class="inputClass" ngModel="NO CHIP" name="remotechip">
+              <ion-select-option *ngFor="let chip of allhttprequestservice.allRemoteChips" [value]="chip">{{chip}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="1" class="ion-align-self-end ion-text-start">
+          <ion-button fill="clear" (click)="onClickAddNew('New Chip')">Add <br> new
+            <ion-icon slot="start" name="add-circle"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Blade</ion-label>
+            <ion-select class="inputClass" ngModel="NO BLADE" name="remoteblade">
+              <ion-select-option *ngFor="let blade of allhttprequestservice.allRemoteBlades" [value]="blade">{{blade}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="1" class="ion-align-self-end">
+          <ion-button fill="clear" (click)="onClickAddNew('New Blade')">Add <br> new
+            <ion-icon slot="start" name="add-circle"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Frequency</ion-label>
+            <ion-select class="inputClass" ngModel="NO BOARD" name="remotefrequency">
+              <ion-select-option *ngFor="let frequncy of allhttprequestservice.allRemoteFrequency" [value]="frequncy">{{frequncy}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="1" class="ion-align-self-end">
+          <ion-button fill="clear" (click)="onClickAddNew('New Frequency')">Add <br> new
+            <ion-icon slot="start" name="add-circle"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Battery</ion-label>
+            <ion-select class="inputClass" ngModel="CR2032" name="remotebattery">
+              <ion-select-option *ngFor="let battery of allhttprequestservice.allRemoteBattery" [value]="battery">{{battery}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="1" class="ion-align-self-end">
+          <ion-button fill="clear" (click)="onClickAddNew('New Battery')">Add <br> new
+            <ion-icon slot="start" name="add-circle"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Notes</ion-label>
+            <ion-textarea rows="5" type="text" cols="20" class="inputClass" ngModel name="remotenotes"></ion-textarea>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Quantity</ion-label>
+            <ion-input class="automaticinputClass" ngModel name="qtyavailable" type="number" required></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="1" class="ion-align-self-center ion-text-end">
+          <ion-button (click)="remotePhotoService.addNewToGallery()" [disabled]="remotePhotoService.uploadphotobutton">
+            <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="4" *ngFor="let photo of remotePhotoService.photos; index as position">
+          <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)" class="uploadimageClass"></ion-img>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Tapsy Code</ion-label>
+            <ion-input class="automaticinputClass ion-text-uppercase" name="tapsycode" [ngModel]="allhttprequestservice.genRemoteTapsyCode" minlength="8"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+    <form #form="ngForm" (ngSubmit)="onSubmitCar(form)">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="3">
+            <ion-item lines="none">
+              <ion-label position="stacked" class="stackClass">Brand</ion-label>
+              <ion-select class="inputClass" ngModel name="brand" (ionChange)="onChangeBrand($event)" required>
+                <ion-select-option *ngFor="let carbrand of allhttprequestservice.carBrands" [value]="carbrand">{{carbrand}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="3">
+            <ion-item lines="none">
+              <ion-label position="stacked" class="stackClass">Model</ion-label>
+              <ion-select class="inputClass" ngModel name="model" (ionChange)="onChangeModel($event)">
+                <ion-select-option *ngFor="let carmodel of allhttprequestservice.selectedCarBrandModels" [value]="carmodel">{{carmodel.model}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="2">
+            <ion-item lines="none">
+              <ion-label position="stacked" class="stackClass">Start Year</ion-label>
+              <ion-select class="inputClass" ngModel name="startyear">
+                <ion-select-option *ngFor="let year of selectedcarmodelyears" [value]="year">{{year}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="2">
+            <ion-item lines="none">
+              <ion-label position="stacked" class="stackClass">End Year</ion-label>
+              <ion-select class="inputClass" ngModel name="endyear">
+                <ion-select-option *ngFor="let year of selectedcarmodelyears" [value]="year">{{year}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="2" class="ion-align-self-end">
+            <ion-button type="submit" [disabled]="!form.valid">
+              <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="onClickRemoveCars()">
+              <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      </form>
+
+        <ion-card *ngFor="let addedcar of addedCars">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="3">
+                <ion-label class="textClass">{{addedcar.brand}}</ion-label>
+              </ion-col>
+
+              <ion-col size="3">
+                <ion-label class="textClass">{{addedcar.model}}</ion-label>
+              </ion-col>
+
+              <ion-col size="2">
+                <ion-label class="textClass">{{addedcar.startyear}}</ion-label>
+              </ion-col>
+
+              <ion-col size="2">
+                <ion-label class="textClass">{{addedcar.endyear}}</ion-label>
+              </ion-col>
+
+            </ion-row>
+          </ion-grid>
+        </ion-card>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button slot="end" color="success" class="ion-button-class saveandexitButton" [disabled]="!f.valid" (click)="f.ngSubmit.emit()">
+      <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+      SAVE AND UPLOAD
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
