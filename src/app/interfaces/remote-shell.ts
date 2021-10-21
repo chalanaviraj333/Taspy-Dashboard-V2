@@ -5,13 +5,14 @@ export interface RemoteShell {
   key: string;
   tapsycode: string;
   boxnumber: number;
+  shell: string;
   remotetype?: string;
   qtyavailable: number;
   productType: string;
   compitablebrands?: Array<string>;
   image: string;
   inbuildblade: string;
-  buttons: string
+  buttons: number;
   notes: Array<RemoteNote>;
   compitablecars?: Array<Car>;
 }

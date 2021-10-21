@@ -72,6 +72,7 @@ export class EditRemoteDetailPagePage implements OnInit {
       key: this.allhttprequestservice.editRemote.key,
       tapsycode: enteredtapsycode,
       boxnumber: form.value.boxnumber,
+      shell: form.value.shell.toUpperCase(),
       inbuildchip: form.value.remotechip,
       inbuildblade: form.value.remoteblade,
       battery: form.value.remotebattery,
@@ -109,11 +110,20 @@ export class EditRemoteDetailPagePage implements OnInit {
       startyear: carform.value.startyear,
       endyear: carform.value.endyear,
     };
-    this.allhttprequestservice.editRemote.compitablecars.push(selectedCar);
+    if (this.allhttprequestservice.editRemote.compitablecars == undefined){
+      this.allhttprequestservice.editRemote.compitablecars = [];
+      this.allhttprequestservice.editRemote.compitablecars.push(selectedCar);
+    }
+    else {
+      this.allhttprequestservice.editRemote.compitablecars.push(selectedCar);
+    }
 
-    let unsortedcompatiblebrands: Array<string> =
+    let unsortedcompatiblebrands: Array<string> = [];
+    if (this.allhttprequestservice.editRemote.compitablebrands !== undefined) {
+      unsortedcompatiblebrands =
       this.allhttprequestservice.editRemote.compitablebrands;
 
+    }
     unsortedcompatiblebrands.push(carform.value.brand);
 
     this.allhttprequestservice.editRemote.compitablebrands = unsortedcompatiblebrands.filter(

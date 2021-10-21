@@ -17,10 +17,12 @@ export class HttpRequestServiceService {
   public filteredRemotes: Array<Remote> = [];
   public genRemoteTapsyCode: string = '';
 
+
   public editRemote: Remote = {
     key: '',
     tapsycode: '',
     boxnumber: 0,
+    shell: 'A',
     inbuildchip: '',
     inbuildblade: '',
     battery: '',
@@ -35,7 +37,24 @@ export class HttpRequestServiceService {
     compitablecars: [],
     compitablebrands: [],
   }
+
+  public editRemoteShell : RemoteShell = {
+    key: '',
+    tapsycode: '',
+    boxnumber: 0,
+    shell: '',
+    remotetype: '',
+    qtyavailable: 0,
+    productType: '',
+    compitablebrands: [],
+    image: '',
+    inbuildblade: '',
+    buttons: 0,
+    notes: [],
+    compitablecars: []
+  }
   public availableRemoteBoxNumber: number = 0;
+  public availableRemoteShellBoxNumber: number = 0;
 
   // remote shells
   public allRemoteShells: Array<RemoteShell> = [];
@@ -62,6 +81,9 @@ export class HttpRequestServiceService {
       .get<{ [key: string]: Remote }>(
         'https://tapsystock-a6450-default-rtdb.firebaseio.com/remotes.json'
       )
+      // .get<{ [key: string]: Remote }>(
+      //   'https://tapsy-stock-backup-default-rtdb.firebaseio.com/all-remotes.json'
+      // )
       .subscribe((resData) => {
         for (const key in resData) {
           if (resData.hasOwnProperty(key)) {
@@ -69,6 +91,7 @@ export class HttpRequestServiceService {
               key,
               tapsycode: resData[key].tapsycode,
               boxnumber: Number(resData[key].boxnumber),
+              shell: resData[key].shell,
               inbuildchip: resData[key].inbuildchip,
               inbuildblade: resData[key].inbuildblade,
               battery: resData[key].battery,
@@ -86,7 +109,21 @@ export class HttpRequestServiceService {
           }
         }
         // sorting all remotes by box number
+        // this.allRemotes.sort((a, b) => (a.boxnumber > b.boxnumber ? 1 : -1));
+
+        // sorting all remotes by box number and shell
         this.allRemotes.sort((a, b) => (a.boxnumber > b.boxnumber ? 1 : -1));
+
+        // this.allRemotes.sort(function(a, b) {
+        //     let boxnumberA = a.boxnumber;
+        //     let boxnumberB = b.boxnumber;
+        //     let shellA = a.shell;
+        //     let shellB = b.shell;
+
+        //     if (shellA < shellB) return -1;
+        //     if (boxnumberA < boxnumberB) return -1;
+        //     return 0;
+        //   });
 
         // get available remote box number and tapsy code
         this.availableRemoteBoxNumber = this.allRemotes[this.allRemotes.length -1].boxnumber;
@@ -98,6 +135,7 @@ export class HttpRequestServiceService {
 
     this.filteredRemotes = this.allRemotes;
   }
+
 
   // get all remote chips form the database
   getAllRemoteChips() {
@@ -236,15 +274,23 @@ export class HttpRequestServiceService {
     });
     await loading.present();
 
+    this.filteredRemotes.find((i) => i.tapsycode == enteredRemoteDetails.tapsycode).shell = enteredRemoteDetails.shell;
+    this.filteredRemotes.find((i) => i.tapsycode == enteredRemoteDetails.tapsycode).boxnumber = enteredRemoteDetails.boxnumber;
+
+
     this.http
         .put(
           `https://tapsystock-a6450-default-rtdb.firebaseio.com/remotes/${enteredRemoteDetails.key}.json`,
           { ...enteredRemoteDetails, key: null }
         )
+        // .put(
+        //   `https://tapsy-stock-backup-default-rtdb.firebaseio.com/all-remotes/${enteredRemoteDetails.key}.json`,
+        //   { ...enteredRemoteDetails, key: null }
+        // )
         .subscribe((resData) => {
           setInterval(() => {
             loading.dismiss();
-          }, 2000);
+          }, 1000);
 
           loading.message = 'Successfully Uploaded';
           loading.spinner = null;
@@ -320,6 +366,32 @@ export class HttpRequestServiceService {
     }
   }
 
+  async onCLickRemoteBackup() {
+
+    const loading = await this.loadingController.create({
+      cssClass: 'uploadingproduct-css-class',
+      message: 'Uploading Box No',
+      backdropDismiss: false,
+    });
+    await loading.present();
+
+    this.allRemotes.forEach(remote => {
+      this.http
+      // .put(
+      //   `https://tapsy-stock-backup-default-rtdb.firebaseio.com/all-remotes/${remote.key}.json`,
+      //   { ...remote, key: null, shell: 'C' }
+      // )
+      .put(
+        `https://tapsystock-a6450-default-rtdb.firebaseio.com/remotes/${remote.key}.json`,
+        { ...remote, key: null, shell: 'C' }
+      )
+      .subscribe((resData) => {
+        loading.message = 'Uploading Box No ' + remote.boxnumber;
+        console.log(resData);
+      });
+    });
+  }
+
   // http request about all remote shells
   // .....................................
 
@@ -338,29 +410,65 @@ export class HttpRequestServiceService {
               key,
               tapsycode: resData[key].tapsycode,
               boxnumber: resData[key].boxnumber,
+              shell: resData[key].shell,
               remotetype: resData[key].remotetype,
               productType: resData[key].productType,
               compitablebrands: resData[key].compitablebrands,
               image: resData[key].image,
               qtyavailable: resData[key].qtyavailable,
               inbuildblade: resData[key].inbuildblade,
-              buttons: resData[key].buttons,
+              buttons: Number(resData[key].buttons),
               notes: resData[key].notes
             });
           }
         }
         // sorting all remotes by box number
         this.allRemoteShells.sort((a, b) => (a.boxnumber > b.boxnumber ? 1 : -1));
-
-        // get available remote box number and tapsy code
-        // this.availableRemoteBoxNumber = this.allRemotes[this.allRemotes.length -1].boxnumber;
-        // this.genRemoteTapsyCode = 'TAP' + [this.availableRemoteBoxNumber + 1] + '-';
+        this.availableRemoteShellBoxNumber = this.allRemoteShells[this.allRemoteShells.length -1].boxnumber + 1;
       });
 
 
     }
 
     this.filteredRemoteShells = this.allRemoteShells;
+  }
+
+  // find edit remoteshell from all the remoteshells
+  findEditRemoteShell(selectedtapsycode: string) {
+
+    this.allRemoteShells.forEach(remoteshell => {
+      if (remoteshell.tapsycode == selectedtapsycode) {
+        this.editRemoteShell = remoteshell;
+      }
+    });
+    // return editRemote;
+  }
+
+  async uploadChangesRemoteShell(updateRemoteShell: RemoteShell) {
+    const loading = await this.loadingController.create({
+      cssClass: 'uploadingproduct-css-class',
+      message: 'Uploading Changes',
+      backdropDismiss: false,
+    });
+    await loading.present();
+
+    this.filteredRemoteShells.find((i) => i.tapsycode == updateRemoteShell.tapsycode).shell = updateRemoteShell.shell;
+    this.filteredRemoteShells.find((i) => i.tapsycode == updateRemoteShell.tapsycode).boxnumber = updateRemoteShell.boxnumber;
+    this.filteredRemoteShells.find((i) => i.tapsycode == updateRemoteShell.tapsycode).qtyavailable = updateRemoteShell.qtyavailable;
+
+    this.http
+        .put(
+          `https://tapsystock-a6450-default-rtdb.firebaseio.com/remote-shells/${updateRemoteShell.key}.json`,
+          { ...updateRemoteShell, key: null }
+        )
+        .subscribe((resData) => {
+          setInterval(() => {
+            loading.dismiss();
+          }, 1000);
+
+          loading.message = 'Successfully Uploaded';
+          loading.spinner = null;
+        });
   }
 
 }

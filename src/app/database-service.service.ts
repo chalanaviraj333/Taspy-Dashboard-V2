@@ -43,6 +43,7 @@ export class DatabaseServiceService {
                 key,
                 tapsycode: resData[key].tapsycode,
                 boxnumber: Number(resData[key].boxnumber),
+                shell: resData[key].shell,
                 inbuildchip: resData[key].inbuildchip,
                 inbuildblade: resData[key].inbuildblade,
                 battery: resData[key].battery,

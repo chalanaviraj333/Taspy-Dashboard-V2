@@ -20,7 +20,7 @@
   (ionScrollStart)="logScrollStart()"
 >
 
-<ion-card *ngFor="let remote of allhttprequestservice.filteredRemoteShells" (click)="onClick(remote)"
+<ion-card *ngFor="let remoteshell of allhttprequestservice.filteredRemoteShells" (click)="onClick(remoteshell)"
     class="ion-activatable ripple-parent ion-no-margin">
       <ion-card-content>
         <ion-grid class="ion-no-padding">
@@ -28,10 +28,11 @@
           <ion-col size="3" class="ion-no-margin">
             <ion-label class="ion-text-nowrap">
               <ion-label color="medium" class="saveTag">BOX </ion-label>
+              <ion-label color="danger" class="shellClass">{{remoteshell.shell}}</ion-label>
               <ion-note id="boxnumberID"
                 color="danger"
                 class="ion-text-nowrap"
-                >{{remote.boxnumber}}</ion-note
+                >{{remoteshell.boxnumber}}</ion-note
               >
             </ion-label>
 
@@ -40,24 +41,24 @@
               <ion-note id="boxnumberID"
                 color="dark"
                 class="ion-text-nowrap"
-                >{{remote.qtyavailable}}</ion-note
+                >{{remoteshell.qtyavailable}}</ion-note
               >
             </ion-label>
 
-            <ion-card-subtitle color="dark" class="primarytext">{{remote.inbuildblade}}</ion-card-subtitle>
-            <ion-card-subtitle color="dark" class="primarytext">{{remote.buttons}} BUTTONS</ion-card-subtitle>
+            <ion-card-subtitle color="dark" class="primarytext">{{remoteshell.inbuildblade}}</ion-card-subtitle>
+            <ion-card-subtitle color="dark" class="primarytext">{{remoteshell.buttons}} BUTTONS</ion-card-subtitle>
 
 
           </ion-col>
           <ion-col size="8" class="ion-text-end ion-no-margin">
-            <img src="{{remote.image}}" width="80" height="80" />
+            <img src="{{remoteshell.image}}" width="80" height="80" />
           </ion-col>
 
           <ion-col size="1" class="ion-text-end">
-            <ion-button (click)="onClickEditRemote($event, remote)" fill="clear">
+            <ion-button (click)="onClickEditRemoteShell($event, remoteshell)" fill="clear">
               <ion-icon slot="icon-only" name="create-outline"></ion-icon>
             </ion-button>
-            <ion-button (click)="onClickDelete($event, remote)" fill="clear">
+            <ion-button (click)="onClickDelete($event, remoteshell)" fill="clear">
               <ion-icon slot="icon-only" color="danger" name="trash-outline"></ion-icon>
             </ion-button>
           </ion-col>

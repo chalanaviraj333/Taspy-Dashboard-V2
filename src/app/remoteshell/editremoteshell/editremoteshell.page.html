@@ -1,12 +1,116 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>EDIT REMOTE SHELL</ion-title>
+    <ion-title color="primary">EDIT REMOTE SHELL</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
+  <form #f="ngForm" (ngSubmit)="onSubmitNext(f)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Box No</ion-label>
+            <ion-input class="automaticinputClass" type="number" name="boxnumber" [ngModel]="allhttprequestservice.editRemoteShell.boxnumber" required></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="2">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Shell</ion-label>
+            <ion-input class="automaticinputClass ion-text-uppercase" type="text" name="shell" [ngModel]="allhttprequestservice.editRemoteShell.shell" required></ion-input>
+          </ion-item>
+        </ion-col>
+
+          <ion-col size="3">
+            <ion-item lines="none">
+              <ion-label position="stacked" class="stackClass">Buttons</ion-label>
+              <ion-input class="inputClass" type="number" name="buttons" [ngModel]="allhttprequestservice.editRemoteShell.buttons"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="3">
+            <ion-item lines="none">
+              <ion-label position="stacked" class="stackClass">Blade</ion-label>
+              <ion-select class="inputClass" type="text" name="remoteblade" [ngModel]="allhttprequestservice.editRemoteShell.inbuildblade">
+                <ion-select-option *ngFor="let blade of allhttprequestservice.allRemoteBlades" [value]="blade">{{blade}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+        </ion-col>
+        <ion-col size="1" class="ion-align-self-end">
+          <ion-button fill="clear" (click)="onClickAddNew('New Blade')">Add <br> new
+            <ion-icon slot="start" name="add-circle"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+
+        <ion-col size="4">
+          <ion-item>
+            <ion-label position="stacked" class="stackClass">Current Notes</ion-label>
+            <ion-text class="currentnoteFont" *ngFor="let note of allhttprequestservice.editRemoteShell.notes">{{note.notebodyText}}</ion-text>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Quantity</ion-label>
+            <ion-input class="automaticinputClass" name="qtyavailable" type="number" [ngModel]="allhttprequestservice.editRemoteShell.qtyavailable" required></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="1" class="ion-align-self-center ion-text-end">
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-img [src]="allhttprequestservice.editRemoteShell.image" class="uploadimageClass"></ion-img>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Tapsy Code</ion-label>
+            <ion-input class="automaticinputClass ion-text-uppercase" name="tapsycode" minlength="8" [ngModel]="allhttprequestservice.editRemoteShell.tapsycode"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="5">
+            <ion-label position="stacked" class="stackClass">Compatible Car Brands</ion-label>
+            <br>
+              <ion-chip *ngFor="let carbrand of this.allhttprequestservice.editRemoteShell.compitablebrands" (click)="_removeSelectBrand(carbrand)" color="dark">
+                <ion-label class="textClass" color="danger">{{carbrand}}</ion-label>
+                <ion-icon name="close-outline"></ion-icon>
+              </ion-chip>
+
+        </ion-col>
+
+        <ion-col size="7">
+            <ion-label position="stacked" class="stackClass">Select</ion-label>
+            <br>
+            <div class="carSelectedYears" *ngFor="let carbrandname of this.allhttprequestservice.carBrands">
+              <ion-chip (click)="_selectBrand(carbrandname)" color="dark">
+                <ion-label class="textClass" color="primary">{{carbrandname}}</ion-label>
+              </ion-chip>
+            </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button slot="end" color="success" class="ion-button-class saveandexitButton" [disabled]="!f.valid" (click)="f.ngSubmit.emit()">
+      <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+      SAVE AND UPLOAD
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

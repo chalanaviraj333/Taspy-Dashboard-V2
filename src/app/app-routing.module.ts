@@ -48,7 +48,7 @@ const routes: Routes = [
     loadChildren: () => import('./remoteshell/addremoteshell/addremoteshell.module').then( m => m.AddremoteshellPageModule)
   },
   {
-    path: 'editremoteshell',
+    path: 'editremoteshell/:tapsycode',
     loadChildren: () => import('./remoteshell/editremoteshell/editremoteshell.module').then( m => m.EditremoteshellPageModule)
   },
   {

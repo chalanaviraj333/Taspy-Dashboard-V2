@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, IonContent, IonSearchbar } from '@ionic/angular';
+import { RemoteShell } from 'src/app/interfaces/remote-shell';
 import { Remote } from 'src/app/remote';
 import { HttpRequestServiceService } from 'src/app/services/http-request-service.service';
 import { ModalServiceService } from 'src/app/services/modal-service.service';
@@ -60,16 +61,16 @@ export class AllremoteshellsPage implements OnInit, OnDestroy {
   }
 
 // perform edit remote funtion
-  onClickEditRemote(event, remote: Remote) {
-    this.router.navigateByUrl('edit-remote-detail-page/' + remote.tapsycode);
+  onClickEditRemoteShell(event, remoteshell: RemoteShell) {
+    this.router.navigateByUrl('editremoteshell/' + remoteshell.tapsycode);
 
     // this use to prevent loading remote detail view model when user click on edit or delete button inside card
     event.stopPropagation();
   }
 
   // perform delete remote funtion
-  onClickDelete(event, remote: Remote) {
-    this.presentAlertConfirm(remote);
+  onClickDelete(event, remoteshell: Remote) {
+    this.presentAlertConfirm(remoteshell);
 
     // this use to prevent loading remote detail view model when user click on edit or delete button inside card
     event.stopPropagation();

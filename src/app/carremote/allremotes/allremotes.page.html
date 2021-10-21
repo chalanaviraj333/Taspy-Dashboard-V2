@@ -1,6 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
     <ion-title>ALL REMOTES</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="danger" fill="solid" (click)="allhttprequestservice.onCLickRemoteBackup()">BACKUP REMOTES
+        <ion-icon slot="end" name="cloud-upload-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
   <!-- doing nothing this serach bar -->
   <ion-toolbar color="primary">
@@ -28,6 +33,7 @@
           <ion-col size="3" class="ion-no-margin">
             <ion-label class="ion-text-nowrap">
               <ion-label color="medium" class="saveTag">BOX </ion-label>
+              <ion-label color="danger" class="shellClass">{{remote.shell}}</ion-label>
               <ion-note id="boxnumberID"
                 color="danger"
                 class="ion-text-nowrap"
