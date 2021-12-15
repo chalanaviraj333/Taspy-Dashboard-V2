@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { CarBrand } from '../car-brand';
 import { CarModel } from '../car-model';
+import { AvailableRemoteBox } from '../interfaces/available-remote-box';
 import { RemoteShell } from '../interfaces/remote-shell';
+import { StockAdd } from '../interfaces/stock-add';
 import { Remote } from '../remote';
 import { AllStorageService } from './all-storage.service';
 
@@ -16,6 +18,12 @@ export class HttpRequestServiceService {
   public allRemotes: Array<Remote> = [];
   public filteredRemotes: Array<Remote> = [];
   public genRemoteTapsyCode: string = '';
+  public allRemoteTapsyCodes: Array<string> = [];
+  public allRemoteShellTapsyCodes: Array<string> = [];
+  public filteredtapsycode: Array<string> = [];
+  public filteredremoteshelltapsycodes: Array<string> = [];
+  public addedStockItems: Array<StockAdd> = [];
+  public addedStockItemsRemoteShell: Array<StockAdd> = [];
 
 
   public editRemote: Remote = {
@@ -53,7 +61,7 @@ export class HttpRequestServiceService {
     notes: [],
     compitablecars: []
   }
-  public availableRemoteBoxNumber: number = 0;
+  public availableRemoteBoxNumber: AvailableRemoteBox = {key: '', availableRemoteBox: 63};
   public availableRemoteShellBoxNumber: number = 0;
 
   // remote shells
@@ -81,9 +89,6 @@ export class HttpRequestServiceService {
       .get<{ [key: string]: Remote }>(
         'https://tapsystock-a6450-default-rtdb.firebaseio.com/remotes.json'
       )
-      // .get<{ [key: string]: Remote }>(
-      //   'https://tapsy-stock-backup-default-rtdb.firebaseio.com/all-remotes.json'
-      // )
       .subscribe((resData) => {
         for (const key in resData) {
           if (resData.hasOwnProperty(key)) {
@@ -126,14 +131,47 @@ export class HttpRequestServiceService {
         //   });
 
         // get available remote box number and tapsy code
-        this.availableRemoteBoxNumber = this.allRemotes[this.allRemotes.length -1].boxnumber;
-        this.genRemoteTapsyCode = 'TAP' + [this.availableRemoteBoxNumber + 1] + '-';
+        // this.availableRemoteBoxNumber = this.allRemotes[this.allRemotes.length -1].boxnumber;
+        // this.genRemoteTapsyCode = 'TAP' + [this.availableRemoteBoxNumber + 1] + '-';
       });
 
 
     }
 
     this.filteredRemotes = this.allRemotes;
+  }
+
+  getAllRemoteTapsycodes() {
+    if (this.allRemoteTapsyCodes.length == 0) {
+      this.http
+      .get<{ [key: string]: Remote }>(
+        'https://tapsystock-a6450-default-rtdb.firebaseio.com/remotes.json'
+      )
+      .subscribe((resData) => {
+        for (const key in resData) {
+          if (resData.hasOwnProperty(key)) {
+            this.allRemoteTapsyCodes.push(resData[key].tapsycode);
+          }
+        }
+      });
+    }
+  }
+
+  // get all remoteshell tapsy codes
+  getAllRemoteShellsTapsycodes() {
+    if (this.allRemoteShellTapsyCodes.length == 0) {
+      this.http
+      .get<{ [key: string]: Remote }>(
+        'https://tapsystock-a6450-default-rtdb.firebaseio.com/remote-shells.json'
+      )
+      .subscribe((resData) => {
+        for (const key in resData) {
+          if (resData.hasOwnProperty(key)) {
+            this.allRemoteShellTapsyCodes.push(resData[key].tapsycode);
+          }
+        }
+      });
+    }
   }
 
 
@@ -230,6 +268,25 @@ export class HttpRequestServiceService {
           return searchWord.toLowerCase().indexOf(entervalue.toLowerCase()) > -1;
         } else {
           let searchWord = currentremote.tapsycode + currentremote.boxnumber;
+          return searchWord.toLowerCase().indexOf(entervalue.toLowerCase()) > -1;
+        }
+      });
+    }
+  }
+
+  // perform searchbar funtion
+  performSearchRemoteShell(entervalue: string) {
+    this.filteredRemoteShells = this.allRemoteShells;
+
+    if (entervalue && entervalue.trim() != "") {
+      this.filteredRemoteShells = this.filteredRemoteShells.filter((currentremote) => {
+        if (currentremote.compitablebrands !== undefined) {
+          let searchWord =
+            currentremote.boxnumber + currentremote.inbuildblade +
+            currentremote.compitablebrands.toString();
+          return searchWord.toLowerCase().indexOf(entervalue.toLowerCase()) > -1;
+        } else {
+          let searchWord = currentremote.boxnumber + currentremote.inbuildblade;
           return searchWord.toLowerCase().indexOf(entervalue.toLowerCase()) > -1;
         }
       });
@@ -470,5 +527,145 @@ export class HttpRequestServiceService {
           loading.spinner = null;
         });
   }
+
+  performcurrenctPairSearch(entervalue: string) {
+    this.filteredtapsycode = this.allRemoteTapsyCodes;
+
+    if (entervalue && entervalue.trim() != "")
+    {
+      this.filteredtapsycode = this.filteredtapsycode.filter((currentcurrencypair) => {
+        let searchWord = currentcurrencypair;
+        return searchWord.toLowerCase().indexOf(entervalue.toLowerCase()) > -1;
+      });
+    }
+  }
+
+  performremoteshellTapsycodeSearch(entervalue: number) {
+    this.filteredRemoteShells = this.allRemoteShells;
+
+    if (entervalue)
+    {
+      this.filteredRemoteShells = this.filteredRemoteShells.filter((currentremoteShell) => {
+        let searchWord = currentremoteShell;
+        return searchWord.boxnumber == entervalue;
+      });
+    }
+
+    // this.filteredremoteshelltapsycodes = this.allRemoteShellTapsyCodes;
+
+    // if (entervalue && entervalue.trim() != "")
+    // {
+    //   this.filteredremoteshelltapsycodes = this.filteredremoteshelltapsycodes.filter((currentcurrencypair) => {
+    //     let searchWord = currentcurrencypair;
+    //     return searchWord.toLowerCase().indexOf(entervalue.toLowerCase()) > -1;
+    //   });
+    // }
+  }
+
+  async addNewRemoteStock() {
+
+    const loading = await this.loadingController.create({
+      cssClass: 'uploadingproduct-css-class',
+      message: 'Uploading New Stock',
+      backdropDismiss: false,
+    });
+    await loading.present();
+    this.addedStockItems.forEach(item => {
+        const currentRemote: Remote = this.allRemotes.find((i) => i.tapsycode == item.tapsycode);
+        const newStock = currentRemote.qtyavailable + item.addedquantity;
+
+        this.http
+        .put(
+          `https://tapsystock-a6450-default-rtdb.firebaseio.com/remotes/${currentRemote.key}.json`,
+          { ...currentRemote, qtyavailable: newStock, key: null }
+        )
+        .subscribe((resData) => {
+          const index = this.addedStockItems.indexOf(item, 0);
+          if (index > -1) {
+            this.addedStockItems.splice(index, 1);
+          }
+        });
+
+    });
+    setInterval(() => {
+      loading.dismiss();
+    }, 1000);
+
+    loading.message = 'Successfully Uploaded';
+    loading.spinner = null;
+  }
+
+  async addNewRemoteShellStock() {
+    const loading = await this.loadingController.create({
+      cssClass: 'uploadingproduct-css-class',
+      message: 'Uploading New Stock',
+      backdropDismiss: false,
+    });
+    await loading.present();
+    this.addedStockItemsRemoteShell.forEach(item => {
+        const currentRemoteShell: RemoteShell = this.allRemoteShells.find((i) => i.tapsycode == item.tapsycode);
+        const newStock = item.addedquantity;
+
+        this.http
+        .put(
+          `https://tapsystock-a6450-default-rtdb.firebaseio.com/remote-shells/${currentRemoteShell.key}.json`,
+          { ...currentRemoteShell, qtyavailable: newStock, key: null }
+        )
+        .subscribe((resData) => {
+          const index = this.addedStockItemsRemoteShell.indexOf(item, 0);
+          if (index > -1) {
+            this.addedStockItemsRemoteShell.splice(index, 1);
+          }
+        });
+
+    });
+    setInterval(() => {
+      loading.dismiss();
+    }, 1000);
+
+    loading.message = 'Successfully Uploaded';
+    loading.spinner = null;
+
+  }
+
+  // get available remote box from database
+  getAvailableRemoteBox() {
+    const remoteBoxarray: Array<AvailableRemoteBox> = [];
+    this.http
+      .get<{ [key: string]: AvailableRemoteBox }>(
+        'https://tapsystock-a6450-default-rtdb.firebaseio.com/available-remote-box.json'
+      )
+      .subscribe((resData) => {
+        for (const key in resData) {
+          if (resData.hasOwnProperty(key)) {
+            remoteBoxarray.push({
+              key,
+              availableRemoteBox: resData[key].availableRemoteBox
+            });
+
+            this.availableRemoteBoxNumber = {key: remoteBoxarray[0].key, availableRemoteBox: remoteBoxarray[0].availableRemoteBox};
+            this.genRemoteTapsyCode = 'TAP' + [this.availableRemoteBoxNumber.availableRemoteBox] + '-';
+            console.log(this.availableRemoteBoxNumber);
+        }
+      }
+      // this.availableRemoteBoxNumber = remoteBoxarray[0];
+      // this.genRemoteTapsyCode = 'TAP' + [this.availableRemoteBoxNumber.availableRemoteBox] + '-';
+      console.log(this.availableRemoteBoxNumber);
+    });
+  }
+
+  // update available remote box
+  uploadAvailableRemoteBox() {
+    this.http
+        .put(
+          `https://tapsystock-a6450-default-rtdb.firebaseio.com/available-remote-box/${this.availableRemoteBoxNumber.key}.json`,
+          { ...this.availableRemoteBoxNumber, key: null }
+        )
+        .subscribe((resData) => {
+          this.genRemoteTapsyCode = 'TAP' + [this.availableRemoteBoxNumber.availableRemoteBox] + '-';
+        });
+
+  }
+
 
 }

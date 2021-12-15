@@ -1,0 +1,124 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>ADD GARAGE REMOTE</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #f="ngForm" (ngSubmit)="onSubmitNext(f)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Box No</ion-label>
+            <ion-input type="number" class="automaticinputClass" name="boxnumber" ngModel required></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="2">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Shell</ion-label>
+            <ion-input class="automaticinputClass ion-text-uppercase" ngModel name="shell" required></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Frequency</ion-label>
+            <ion-select class="inputClass" ngModel="NO BOARD" name="frequency">
+              <ion-select-option *ngFor="let frequncy of allhttprequestservice.allFrequncies" [value]="frequncy">{{frequncy}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="1" class="ion-align-self-end">
+          <ion-button fill="clear" (click)="onClickAddNew('New Frequency')">Add <br> new
+            <ion-icon slot="start" name="add-circle"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Notes</ion-label>
+            <ion-textarea rows="5" type="text" cols="20" class="inputClass" ngModel name="productNotes"></ion-textarea>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Quantity</ion-label>
+            <ion-input class="automaticinputClass" ngModel name="qtyavailable" type="number" required></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="1" class="ion-align-self-center ion-text-end">
+          <ion-button (click)="commonProductUploadService.addNewToGallery()" [disabled]="commonProductUploadService.uploadphotobutton">
+            <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="4" *ngFor="let photo of commonProductUploadService.photos; index as position">
+          <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)" class="uploadimageClass"></ion-img>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="5">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Compatible Brand</ion-label>
+            <ion-input class="automaticinputClass ion-text-uppercase" ngModel name="compatibleBrand" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Tapsy Code</ion-label>
+            <ion-input class="automaticinputClass ion-text-uppercase" name="tapsycode" ngModel minlength="8"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="5">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Compatible Model</ion-label>
+            <ion-input class="automaticinputClass ion-text-uppercase" (keyup.enter)="onClickAddNewModel()" [(ngModel)]="enteredModel"></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="2" class="ion-align-self-end">
+          <ion-button (click)="onClickAddNewModel()">Add Model</ion-button>
+        </ion-col>
+        <ion-col size="2" class="ion-align-self-end">
+          <ion-button color="danger" (click)="onClickClearAll()">Clear All</ion-button>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-list *ngFor="let compatibleModel of compatibleModels">
+          <ion-item>
+            <ion-label class="textClass">{{compatibleModel}}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button slot="end" color="success" class="ion-button-class saveandexitButton" [disabled]="!f.valid" (click)="f.ngSubmit.emit()">
+      <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+      SAVE AND UPLOAD
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

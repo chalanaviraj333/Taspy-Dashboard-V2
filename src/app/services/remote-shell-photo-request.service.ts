@@ -7,7 +7,7 @@ import {
   Photo,
 } from '@capacitor/camera';
 import { Storage } from '@capacitor/storage';
-import { Directory, Filesystem } from '@capacitor/filesystem';
+import { Directory, Filesystem, FilesystemDirectory } from '@capacitor/filesystem';
 import { LoadingController, Platform } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
 import { RemoteShell } from '../interfaces/remote-shell';
@@ -16,7 +16,7 @@ import { base64StringToBlob } from 'blob-util';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { finalize } from 'rxjs/operators';
 import firebase from 'firebase/app';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { HttpRequestServiceService } from './http-request-service.service';
 
 @Injectable({
@@ -29,6 +29,8 @@ export class RemoteShellPhotoRequestService {
   public validentry: boolean = true;
   private PHOTO_STORAGE: string = 'photos';
   private photoID: string = '';
+
+  private downloadProgress = 0;
 
   constructor(private platform: Platform, public loadingController: LoadingController,
     private storage: AngularFireStorage, private http: HttpClient,
@@ -181,6 +183,34 @@ export class RemoteShellPhotoRequestService {
     this.photos = [];
     this.uploadphotobutton = false;
     this.validentry = true;
+  }
+
+  downloadPhoto(remoteshell: RemoteShell) {
+    const downloadURL = remoteshell.image;
+
+    this.http.get(downloadURL, {
+      responseType: 'blob',
+      reportProgress: true,
+      observe: 'events'
+    }).subscribe(async event => {
+      if (event.type === HttpEventType.DownloadProgress) {
+        this.downloadProgress = Math.round((100 * event.loaded) / event.total);
+      }
+      else if (event.type === HttpEventType.Response) {
+        this.downloadProgress = 0;
+
+        const name = remoteshell.tapsycode;
+        const base64 = await this.convertBlobToBase64(event.body) as string;
+
+        const savedFile = await Filesystem.writeFile({
+          path: name,
+          data: base64,
+          directory: FilesystemDirectory.Documents
+        });
+        console.log('Downloaed');
+      }
+    });
+
   }
 
 }

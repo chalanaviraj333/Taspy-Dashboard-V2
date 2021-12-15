@@ -1,0 +1,114 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>ADD REMOTESHELL STOCK</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #f="ngForm" (ngSubmit)="onSubmitNext(f)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="7">
+         <ion-item>
+           <ion-label position="stacked" class="textClass">Search Remoteshell</ion-label>
+           <ion-input class="textClass" type="text" (ionChange)="_remotesearchOnType($event)" [ngModel]="selectedTapsyCode" name="enteredTapsycode" required></ion-input>
+         </ion-item>
+        </ion-col>
+        <ion-col size="3">
+         <ion-item>
+           <ion-label position="stacked" class="textClass">Add Quantity</ion-label>
+           <ion-input class="textClass" type="number" ngModel name="enteredQuantity" required></ion-input>
+         </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button type="submit">Add Stock</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+       <ion-col size="7">
+         <ion-list *ngFor="let remoteshell of allhttprequestservice.filteredRemoteShells.slice(0, 2)" (click)="onClickSelectCode(remoteshell.tapsycode)">
+           <ion-item>
+             <ion-label class="textClass">{{remoteshell.boxnumber}}</ion-label>
+           </ion-item>
+         </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12" *ngIf="this.selectedRemoteshell.image!==''">
+          <ion-card>
+            <ion-card-header color="primary" class="textClass">
+              Selected Product
+            </ion-card-header>
+            <ion-card-content>
+              <ion-card-content>
+                <ion-grid class="ion-no-padding">
+                  <ion-row class="ion-no-padding">
+                  <ion-col size="3" class="ion-no-margin">
+                    <ion-label class="ion-text-nowrap">
+                      <ion-label color="medium" class="saveTag">BOX </ion-label>
+                      <ion-label color="danger" class="shellClass">{{this.selectedRemoteshell.shell}}</ion-label>
+                      <ion-note id="boxnumberID"
+                        color="danger"
+                        class="ion-text-nowrap"
+                        >{{this.selectedRemoteshell.boxnumber}}</ion-note
+                      >
+                    </ion-label>
+
+                    <ion-label class="ion-text-nowrap availableClass">
+                      <ion-label color="medium" class="saveTag">QTY </ion-label>
+                      <ion-note id="boxnumberID"
+                        color="dark"
+                        class="ion-text-nowrap"
+                        >{{this.selectedRemoteshell.qtyavailable}}</ion-note
+                      >
+                    </ion-label>
+
+                  </ion-col>
+                  <ion-col size="2" class="ion-text-end ion-no-margin">
+                    <img src="{{this.selectedRemoteshell.image}}" width="80" height="80" />
+                  </ion-col>
+                </ion-row>
+                </ion-grid>
+              </ion-card-content>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-card>
+            <ion-card-header color="primary" class="textClass">
+              Added Stock
+            </ion-card-header>
+            <ion-card-content>
+              <ion-list *ngFor="let item of allhttprequestservice.addedStockItemsRemoteShell">
+                <ion-item>
+                    <ion-label class="textClass">{{item.tapsycode}}</ion-label>
+                    <ion-badge slot="end">{{item.addedquantity}}</ion-badge>
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button slot="end" color="success" class="ion-button-class saveandexitButton" (click)="onClickUpload()">
+      <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+      SAVE AND UPLOAD
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

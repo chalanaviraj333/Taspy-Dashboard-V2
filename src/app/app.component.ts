@@ -42,6 +42,12 @@ export class AppComponent implements OnInit {
           url: '/addremote',
           icon: 'add-circle-outline'
         },
+        {
+          title: 'Add Stock',
+          url: '/add-remote-stock',
+          icon: 'add-circle-outline'
+        },
+
       ]
     },
     { title: 'Remote Shells',
@@ -55,6 +61,26 @@ export class AppComponent implements OnInit {
         {
           title: 'Add Remote-Shell',
           url: '/addremoteshell',
+          icon: 'add-circle-outline'
+        },
+        {
+          title: 'Add Stock',
+          url: '/addremoteshellstock',
+          icon: 'add-circle-outline'
+        }
+      ]
+    },
+    { title: 'KD/ X Horse',
+    numberofitems: 0,
+      children: [
+        {
+          title: 'All KD-Xhorse Remotes',
+          url: '/allremoteshells',
+          icon: 'layers-outline'
+        },
+        {
+          title: 'Add KD-Xhorse Remote',
+          url: '/add-xhrose-kd-remote',
           icon: 'add-circle-outline'
         }
       ]
@@ -94,7 +120,7 @@ export class AppComponent implements OnInit {
       },
       {
         title: 'Add Garage Remote',
-        url: '/addcarbrand',
+        url: '/add-new-garage-remote',
         icon: 'add-circle-outline'
       },
     ]
@@ -157,7 +183,7 @@ export class AppComponent implements OnInit {
    .subscribe((resData) => {
      for (const key in resData) {
        if (resData.hasOwnProperty(key)) {
-         this.appPages[3].numberofitems++;
+         this.appPages[4].numberofitems++;
        }
      }
 

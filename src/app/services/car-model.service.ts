@@ -12,6 +12,7 @@ import { finalize } from 'rxjs/operators';
 import firebase from 'firebase/app';
 import { HttpClient } from '@angular/common/http';
 import { CarModel } from '../car-model';
+import { CarBrand } from '../car-brand';
 
 @Injectable({
   providedIn: 'root'
@@ -129,6 +130,52 @@ export class CarModelService {
       path: filename,
       directory: Directory.Data,
     });
+  }
+
+  async uploadCarBrand(enteredCarBrandDetails: CarBrand) {
+    let downloadURL: Observable<string>;
+
+    const loading = await this.loadingController.create({
+      cssClass: 'uploadingproduct-css-class',
+      message: 'Uploading ' + enteredCarBrandDetails.name,
+      backdropDismiss: false,
+    });
+    await loading.present();
+
+    const contenttype = 'image/png';
+    const b64Data = this.photoID.split(',').pop();
+    const blob = base64StringToBlob(b64Data, contenttype);
+    const filename = enteredCarBrandDetails.name +'.png';
+    const uploadTask = this.storage.upload('images/carbrands/' + filename, blob);
+    const fileRef = this.storage.ref('images/carbrands/' + filename);
+
+    uploadTask
+      .snapshotChanges()
+      .pipe(finalize(() => (downloadURL = fileRef.getDownloadURL())))
+      .subscribe((response) => {
+        if (response.state == 'success') {
+          firebase
+            .storage()
+            .ref()
+            .child('images/carbrands/' + filename)
+            .getDownloadURL()
+            .then((imageURL) => {
+
+              this.http.post('https://tapsystock-a6450-default-rtdb.firebaseio.com/car-brand.json', {...enteredCarBrandDetails, icon: imageURL}).subscribe(
+              resData => {
+                setInterval(() => {
+                  loading.dismiss();
+                }, 2000);
+
+                  loading.message = 'Successfully Uploaded';
+                  loading.spinner = null;
+                  this.clearallphotos();
+
+              }
+              );
+            });
+        }
+      });
   }
 
   async uploadCarModel(enteredCarModelDetails: CarModel) {

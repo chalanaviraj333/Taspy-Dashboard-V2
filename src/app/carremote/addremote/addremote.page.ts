@@ -19,6 +19,7 @@ export class AddremotePage implements OnInit {
   private compitableBrandsunsorted: Array<string> = [];
   private compitableBrands: Array<string> = [];
   public selectedcarmodelyears: Array<number>;
+  public availableShell: string = "W";
 
   constructor(
      public actionSheetController: ActionSheetController,
@@ -40,6 +41,7 @@ export class AddremotePage implements OnInit {
     this.allhttprequestservice.getAllRemoteChips();
     this.allhttprequestservice.getAllRemoteFrequency();
     this.allhttprequestservice.getAllRemoteBatteries();
+    this.allhttprequestservice.getAvailableRemoteBox();
 
     // get all car brands from database
     this.allhttprequestservice.getcarbrands();
@@ -107,7 +109,7 @@ export class AddremotePage implements OnInit {
         key: null,
         tapsycode: enteredtapsycode,
         boxnumber: form.value.boxnumber,
-        shell: form.value.shell.toUpperCase(),
+        shell: form.value.remoteshell,
         inbuildchip: form.value.remotechip,
         inbuildblade: form.value.remoteblade,
         battery: form.value.remotebattery,
@@ -125,13 +127,15 @@ export class AddremotePage implements OnInit {
 
       // this.photoService.uploadRemote(enteredRemoteDetails);
       await this.remotePhotoService.uploadPhotoandItem(enteredRemoteDetails);
+      this.allhttprequestservice.availableRemoteBoxNumber.availableRemoteBox++
+      this.allhttprequestservice.uploadAvailableRemoteBox();
 
     } else {
       const enteredRemoteDetails: Remote = {
         key: null,
         tapsycode: enteredtapsycode,
         boxnumber: form.value.boxnumber,
-        shell: form.value.shell,
+        shell: form.value.remoteshell,
         inbuildchip: form.value.remotechip,
         inbuildblade: form.value.remoteblade,
         battery: form.value.remotebattery,
@@ -149,6 +153,8 @@ export class AddremotePage implements OnInit {
 
       // this.photoService.uploadRemote(enteredRemoteDetails);
       await this.remotePhotoService.uploadPhotoandItem(enteredRemoteDetails);
+      this.allhttprequestservice.availableRemoteBoxNumber.availableRemoteBox++
+      this.allhttprequestservice.uploadAvailableRemoteBox();
     }
 
   }
@@ -198,5 +204,6 @@ export class AddremotePage implements OnInit {
   onClickAddNew(newitemCategory: string) {
     this.modelController.onClickAddNewRemoteComponent(newitemCategory);
   }
+
 
 }

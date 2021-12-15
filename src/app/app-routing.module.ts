@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
 
@@ -115,14 +116,30 @@ const routes: Routes = [
     path: 'addnewcomponent',
     loadChildren: () => import('./modalcontrollers/addnewcomponent/addnewcomponent.module').then( m => m.AddnewcomponentPageModule)
   },
-  //   path: '',
-  //   redirectTo: 'folder/Inbox',
-  //   pathMatch: 'full'
-  // },
-  // {
-  //   path: 'folder/:id',
-  //   loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  // }
+  {
+    path: 'add-xhrose-kd-remote',
+    loadChildren: () => import('./kd-xhorse/add-xhrose-kd-remote/add-xhrose-kd-remote.module').then( m => m.AddXhroseKdRemotePageModule)
+  },
+  {
+    path: 'add-new-garage-remote',
+    loadChildren: () => import('./garage-remote/add-new-garage-remote/add-new-garage-remote.module').then( m => m.AddNewGarageRemotePageModule)
+  },
+  {
+    path: 'add-new-garage-remote-component',
+    loadChildren: () => import('./all-modals/add-new-garage-remote-component/add-new-garage-remote-component.module').then( m => m.AddNewGarageRemoteComponentPageModule)
+  },
+  {
+    path: 'add-remote-stock',
+    loadChildren: () => import('./add-stock/add-remote-stock/add-remote-stock.module').then( m => m.AddRemoteStockPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./all-modals/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'addremoteshellstock',
+    loadChildren: () => import('./addremoteshellstock/addremoteshellstock.module').then( m => m.AddremoteshellstockPageModule)
+  },
 ];
 
 @NgModule({

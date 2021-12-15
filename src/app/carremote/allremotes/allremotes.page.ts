@@ -10,7 +10,7 @@ import { ModalServiceService } from 'src/app/services/modal-service.service';
   templateUrl: './allremotes.page.html',
   styleUrls: ['./allremotes.page.scss'],
 })
-export class AllremotesPage implements OnInit, OnDestroy {
+export class AllremotesPage implements OnInit {
 
   @ViewChild("search", { static: false }) search: IonSearchbar;
   @ViewChild(IonContent, { static: false }) content: IonContent;
@@ -29,8 +29,6 @@ export class AllremotesPage implements OnInit, OnDestroy {
 
     this.allhttprequestservice.getAllRemotes();
   }
-
-  ngOnDestroy() {}
 
   // quick go to top button on page
   logScrollStart() {

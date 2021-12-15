@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Log In</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onClickModalDismiss()" >
+        <ion-icon class="header-icons" slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form #f="ngForm" (ngSubmit)="onSubmitLogin(f)">
+
+    <ion-list class="formlistClass">
+      <ion-item>
+        <ion-input type="email" ngModel name="emailAddress" placeholder="Email Address" required #emailAdressCtrl="ngModel"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!emailAdressCtrl.valid && emailAdressCtrl.touched" lines="none">
+        <ion-label class="invalidmessage" color="danger">Email address is required</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="password" ngModel name="password" placeholder="Password" required #passwordCtrl="ngModel" minlength="6"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!passwordCtrl.valid && passwordCtrl.touched" lines="none">
+        <ion-label class="invalidmessage" color="danger">Password is required</ion-label>
+      </ion-item>
+
+    </ion-list>
+
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="f.ngSubmit.emit()" color="primary" expand="block" [disabled]="!f.valid">Log In</ion-button>
+  </ion-toolbar>
+</ion-footer>

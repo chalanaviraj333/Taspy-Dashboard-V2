@@ -175,11 +175,11 @@ export class RemotePhotoRequestService {
                     loadingScreen.dismiss();
                   }, 2000);
 
-                  this.allhttprequestservice.availableRemoteBoxNumber++;
-                  this.allhttprequestservice.genRemoteTapsyCode =
-                    'TAP' +
-                    [this.allhttprequestservice.availableRemoteBoxNumber + 1] +
-                    '-';
+                  // this.allhttprequestservice.availableRemoteBoxNumber.availableRemoteBox++;
+                  // this.allhttprequestservice.genRemoteTapsyCode =
+                  //   'TAP' +
+                  //   [this.allhttprequestservice.availableRemoteBoxNumber.availableRemoteBox + 1] +
+                  //   '-';
                   loadingScreen.message = 'Successfully Uploaded';
                   loadingScreen.spinner = null;
                   this.clearallphotos();

@@ -1,0 +1,107 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>ADD KD/X HORSE REMOTE</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #f="ngForm" (ngSubmit)="onSubmitNext(f)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Box No</ion-label>
+            <ion-input class="automaticinputClass" type="number" ngModel name="boxnumber" required></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="2">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Shell</ion-label>
+            <ion-input class="automaticinputClass ion-text-uppercase" type="text" ngModel name="shell" required></ion-input>
+          </ion-item>
+        </ion-col>
+
+          <ion-col size="4">
+            <ion-item lines="none">
+              <ion-label position="stacked" class="stackClass">Product Category</ion-label>
+              <ion-select class="inputClass" ngModel="KD" name="productcategory">
+                <ion-select-option value="KD">KD</ion-select-option>
+                <ion-select-option value="XHORSE">XHorse</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="4">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Series</ion-label>
+            <ion-input class="inputClass ion-text-uppercase" type="text" ngModel name="series"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Buttons</ion-label>
+            <ion-input class="inputClass" type="number" ngModel name="buttons"></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="9">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Product Name</ion-label>
+            <ion-input class="inputClass" type="text" ngModel name="productname"></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Notes</ion-label>
+            <ion-textarea rows="5" type="text" cols="20" class="inputClass" ngModel name="productnotes"></ion-textarea>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Quantity</ion-label>
+            <ion-input class="automaticinputClass" ngModel name="qtyavailable" type="number" required></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="1" class="ion-align-self-center ion-text-end">
+          <ion-button (click)="commonProductUploadService.addNewToGallery()" [disabled]="commonProductUploadService.uploadphotobutton">
+            <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="4" *ngFor="let photo of commonProductUploadService.photos; index as position">
+          <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)" class="uploadimageClass"></ion-img>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Tapsy Code</ion-label>
+            <ion-input class="automaticinputClass ion-text-uppercase" type="text" ngModel name="tapsycode" minlength="8" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button slot="end" color="success" class="ion-button-class saveandexitButton" [disabled]="!f.valid" (click)="f.ngSubmit.emit()">
+      <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+      SAVE AND UPLOAD
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
