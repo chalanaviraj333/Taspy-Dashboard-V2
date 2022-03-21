@@ -53,6 +53,10 @@ export class AddremoteshellPage implements OnInit {
         image: form.value.tapsycode,
         inbuildblade: form.value.remoteblade,
         buttons: form.value.buttons,
+        recentAddedQuantity: undefined,
+        recentmoreStockAddDate: undefined,
+        totalSale: 0,
+        moreStock: false,
         notes: [{username: 'Chalana', notebodyText: form.value.remotenotes}],
         compitablecars: []
       }
@@ -71,6 +75,10 @@ export class AddremoteshellPage implements OnInit {
         image: form.value.tapsycode,
         inbuildblade: form.value.remoteblade,
         buttons: form.value.buttons,
+        recentAddedQuantity: undefined,
+        recentmoreStockAddDate: undefined,
+        totalSale: 0,
+        moreStock: false,
         notes: [],
         compitablecars: []
       }

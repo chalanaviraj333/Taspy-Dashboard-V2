@@ -14,5 +14,9 @@ export interface KeyShells {
   buttons: string
   notes: Array<RemoteNote>;
   addedtoShopify: boolean;
+  recentAddedQuantity: number;
+  recentmoreStockAddDate: Date;
+  totalSale: number;
+  moreStock: boolean;
   compitablecars?: Array<Car>;
 }

@@ -7,6 +7,7 @@ import { ModelControllerServiceService } from 'src/app/services/model-controller
 import { HttpRequestServiceService } from 'src/app/services/http-request-service.service';
 import { PhotoDetails } from 'src/app/interfaces/photo-details';
 import { RemotePhotoRequestService } from 'src/app/services/remote-photo-request.service';
+import { GetAvailableBoxNumberService } from 'src/app/services/get-available-box-number.service';
 
 @Component({
   selector: 'app-addremote',
@@ -26,7 +27,8 @@ export class AddremotePage implements OnInit {
       private toastController: ToastController,
       private modelController: ModelControllerServiceService,
       public allhttprequestservice: HttpRequestServiceService,
-      public remotePhotoService: RemotePhotoRequestService) {
+      public remotePhotoService: RemotePhotoRequestService,
+      public getAvailableBoxNumberService: GetAvailableBoxNumberService) {
 
   }
 
@@ -42,6 +44,7 @@ export class AddremotePage implements OnInit {
     this.allhttprequestservice.getAllRemoteFrequency();
     this.allhttprequestservice.getAllRemoteBatteries();
     this.allhttprequestservice.getAvailableRemoteBox();
+    this.getAvailableBoxNumberService.getAvailableBoxNumbers();
 
     // get all car brands from database
     this.allhttprequestservice.getcarbrands();
@@ -121,11 +124,15 @@ export class AddremotePage implements OnInit {
         image: enteredtapsycode,
         notes: [{username: 'Chalana', notebodyText: form.value.remotenotes}],
         qtyavailable: form.value.qtyavailable,
+        recentAddedQuantity: undefined,
+        recentmoreStockAddDate: undefined,
+        totalSale: 0,
+        moreStock: false,
         compitablecars: this.addedCars,
         compitablebrands: this.compitableBrands
       }
 
-      // this.photoService.uploadRemote(enteredRemoteDetails);
+
       await this.remotePhotoService.uploadPhotoandItem(enteredRemoteDetails);
       this.allhttprequestservice.availableRemoteBoxNumber.availableRemoteBox++
       this.allhttprequestservice.uploadAvailableRemoteBox();
@@ -147,11 +154,14 @@ export class AddremotePage implements OnInit {
         image: enteredtapsycode,
         notes: [],
         qtyavailable: form.value.qtyavailable,
+        recentAddedQuantity: undefined,
+        recentmoreStockAddDate: undefined,
+        totalSale: 0,
+        moreStock: false,
         compitablecars: this.addedCars,
         compitablebrands: this.compitableBrands
       }
 
-      // this.photoService.uploadRemote(enteredRemoteDetails);
       await this.remotePhotoService.uploadPhotoandItem(enteredRemoteDetails);
       this.allhttprequestservice.availableRemoteBoxNumber.availableRemoteBox++
       this.allhttprequestservice.uploadAvailableRemoteBox();

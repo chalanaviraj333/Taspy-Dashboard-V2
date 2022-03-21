@@ -23,6 +23,10 @@ export class AddremoteshellstockPage implements OnInit {
     image: '',
     inbuildblade: '',
     buttons: 0,
+    recentAddedQuantity: 0,
+    recentmoreStockAddDate: new Date(),
+    totalSale: 0,
+    moreStock: false,
     notes: [],
     compitablecars: []
   }
@@ -53,10 +57,18 @@ export class AddremoteshellstockPage implements OnInit {
   }
 
   onSubmitNext(form: NgForm) {
-    this.allhttprequestservice.addedStockItemsRemoteShell.push({tapsycode: this.selectedTapsyCode, addedquantity: form.value.enteredQuantity});
+    this.allhttprequestservice.addedStockItemsRemoteShell.push({tapsycode: this.selectedTapsyCode, addedquantity: form.value.enteredQuantity, downstairsStock: form.value.downstairsStcokValue});
+  }
+
+  onSubmitMoreStockDownstairs(form: NgForm) {
+    this.allhttprequestservice.addedMoreStockTodownstairsShells.push(this.selectedTapsyCode);
   }
 
   onClickUpload() {
     this.allhttprequestservice.addNewRemoteShellStock();
+  }
+
+  onClickUploadMoreStock() {
+    this.allhttprequestservice.addMoreStockTODownstairsRemoteShell();
   }
 }

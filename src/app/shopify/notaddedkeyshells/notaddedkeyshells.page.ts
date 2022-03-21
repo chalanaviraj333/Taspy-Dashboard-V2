@@ -38,6 +38,10 @@ export class NotaddedkeyshellsPage implements OnInit {
               inbuildblade: resData[key].inbuildblade,
               buttons: resData[key].buttons,
               notes: resData[key].notes,
+              recentAddedQuantity: resData[key].recentAddedQuantity,
+              recentmoreStockAddDate: resData[key].recentmoreStockAddDate,
+              totalSale: resData[key].totalSale,
+              moreStock: resData[key].moreStock,
               addedtoShopify: false,
             });
 

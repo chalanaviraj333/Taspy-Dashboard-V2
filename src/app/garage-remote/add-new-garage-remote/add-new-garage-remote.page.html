@@ -11,19 +11,67 @@
   <form #f="ngForm" (ngSubmit)="onSubmitNext(f)">
     <ion-grid>
       <ion-row>
-        <ion-col size="2">
+        <ion-col size="6">
+          <ion-list>
+            <ion-label position="stacked" class="stackClass specialStackClass">Box No</ion-label>
+            <ion-radio-group ngModel name="shellandBoxNo" required>
+              <ion-row>
+                <ion-col>
+                     <ion-item lines="none" [disabled]="this.getAvailableBoxNumberService.availableANumber == 270">
+                        <ion-label>{{(this.getAvailableBoxNumberService.availableANumber + 1) + 'A'}}</ion-label>
+                        <ion-radio mode="md" item-left value="A{{(this.getAvailableBoxNumberService.availableANumber + 1)}}"></ion-radio>
+                   </ion-item>
+                 </ion-col>
+
+                <ion-col>
+                    <ion-item lines="none" [disabled]="this.getAvailableBoxNumberService.availableBNumber == 270">
+                        <ion-label>{{(this.getAvailableBoxNumberService.availableBNumber + 1) + 'B'}}</ion-label>
+                        <ion-radio mode="md" item-left value="B{{(this.getAvailableBoxNumberService.availableBNumber + 1)}}"></ion-radio>
+                   </ion-item>
+                </ion-col>
+
+                <ion-col>
+                    <ion-item lines="none" [disabled]="this.getAvailableBoxNumberService.availableCNumber == 270">
+                        <ion-label>{{(this.getAvailableBoxNumberService.availableCNumber + 1) + 'C'}}</ion-label>
+                        <ion-radio mode="md" item-left value="C{{(this.getAvailableBoxNumberService.availableCNumber + 1)}}"></ion-radio>
+                   </ion-item>
+                </ion-col>
+
+                <ion-col>
+                  <ion-item lines="none">
+                      <ion-label>{{(this.getAvailableBoxNumberService.availableWNumber + 1) + 'W'}}</ion-label>
+                      <ion-radio mode="md" item-left value="W{{(this.getAvailableBoxNumberService.availableWNumber + 1)}}"></ion-radio>
+                 </ion-item>
+              </ion-col>
+
+            </ion-row>
+            </ion-radio-group>
+          </ion-list>
+        </ion-col>
+        <!-- <ion-col size="4">
           <ion-item lines="none">
             <ion-label position="stacked" class="stackClass">Box No</ion-label>
-            <ion-input type="number" class="automaticinputClass" name="boxnumber" ngModel required></ion-input>
+            <div class="ion-text-warp">
+              <ion-button class="active" [disabled]='getAvailableBoxNumberService.availableANumber == 270'>{{(getAvailableBoxNumberService.availableANumber + 1) + 'A'}}</ion-button>
+              <ion-button [disabled]='getAvailableBoxNumberService.availableBNumber == 270'>{{(getAvailableBoxNumberService.availableBNumber + 1) + 'B'}}</ion-button>
+              <ion-button [disabled]='getAvailableBoxNumberService.availableCNumber == 270'>{{(getAvailableBoxNumberService.availableCNumber + 1) + 'C'}}</ion-button>
+              <ion-button [disabled]='getAvailableBoxNumberService.availableWNumber == 270'>{{(getAvailableBoxNumberService.availableWNumber + 1) + 'W'}}</ion-button>
+            </div>
           </ion-item>
-        </ion-col>
+        </ion-col> -->
+        <!-- <ion-col size="2">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Box No</ion-label>
+            <ion-input type="number" class="automaticinputClass" name="boxnumber" [ngModel]="this.getAvailableBoxNumberService.availableWNumber + 1" required></ion-input>
+          </ion-item>
+        </ion-col> -->
 
-        <ion-col size="2">
+        <!-- <ion-col size="2">
           <ion-item lines="none">
             <ion-label position="stacked" class="stackClass">Shell</ion-label>
             <ion-input class="automaticinputClass ion-text-uppercase" ngModel name="shell" required></ion-input>
           </ion-item>
-        </ion-col>
+        </ion-col> -->
 
         <ion-col size="3">
           <ion-item lines="none">
@@ -33,10 +81,17 @@
             </ion-select>
           </ion-item>
         </ion-col>
-        <ion-col size="1" class="ion-align-self-end">
+        <ion-col size="1" class="ion-align-self-center">
           <ion-button fill="clear" (click)="onClickAddNew('New Frequency')">Add <br> new
             <ion-icon slot="start" name="add-circle"></ion-icon>
           </ion-button>
+        </ion-col>
+
+        <ion-col size="2">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Price</ion-label>
+            <ion-input class="automaticinputClass" ngModel name="sellingPrice" required></ion-input>
+          </ion-item>
         </ion-col>
       </ion-row>
 
@@ -53,15 +108,12 @@
             <ion-label position="stacked" class="stackClass">Quantity</ion-label>
             <ion-input class="automaticinputClass" ngModel name="qtyavailable" type="number" required></ion-input>
           </ion-item>
-        </ion-col>
-
-        <ion-col size="1" class="ion-align-self-center ion-text-end">
-          <ion-button (click)="commonProductUploadService.addNewToGallery()" [disabled]="commonProductUploadService.uploadphotobutton">
-            <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+          <ion-button style="margin-top: 12px; margin-left: 20px;" (click)="commonProductUploadService.addNewToGallery()" [disabled]="commonProductUploadService.uploadphotobutton">
+            <ion-icon slot="icon-only" name="camera-outline"></ion-icon> Upload Photo
           </ion-button>
         </ion-col>
 
-        <ion-col size="4" *ngFor="let photo of commonProductUploadService.photos; index as position">
+        <ion-col size="5" *ngFor="let photo of commonProductUploadService.photos; index as position">
           <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)" class="uploadimageClass"></ion-img>
         </ion-col>
       </ion-row>
@@ -73,12 +125,18 @@
             <ion-input class="automaticinputClass ion-text-uppercase" ngModel name="compatibleBrand" required></ion-input>
           </ion-item>
         </ion-col>
+        <ion-col size="6">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Tapsy Code</ion-label>
+            <ion-input class="automaticinputClass ion-text-uppercase" name="tapsycode" [ngModel]='"TAPGDR-" + f.value.shellandBoxNo' minlength="8" readonly></ion-input>
+          </ion-item>
+        </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="12">
           <ion-item lines="none">
-            <ion-label position="stacked" class="stackClass">Tapsy Code</ion-label>
-            <ion-input class="automaticinputClass ion-text-uppercase" name="tapsycode" ngModel minlength="8"></ion-input>
+            <ion-label position="stacked" class="stackClass">Instruction Image URL</ion-label>
+            <ion-input class="automaticinputClass" name="instructionsImage" ngModel minlength="8" required></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>

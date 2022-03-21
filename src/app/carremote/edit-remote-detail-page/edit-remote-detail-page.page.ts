@@ -84,6 +84,10 @@ export class EditRemoteDetailPagePage implements OnInit {
       image: this.allhttprequestservice.editRemote.image,
       notes: this.allhttprequestservice.editRemote.notes,
       qtyavailable: form.value.qtyavailable,
+      recentAddedQuantity: this.allhttprequestservice.editRemote.recentAddedQuantity,
+      recentmoreStockAddDate: this.allhttprequestservice.editRemote.recentmoreStockAddDate,
+      totalSale: this.allhttprequestservice.editRemote.totalSale,
+      moreStock:  this.allhttprequestservice.editRemote.moreStock,
       compitablecars: this.allhttprequestservice.editRemote.compitablecars,
       compitablebrands: compitableBrandssorted,
     };

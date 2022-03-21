@@ -51,6 +51,10 @@ export class EditremoteshellPage implements OnInit {
       image: this.allhttprequestservice.editRemoteShell.image,
       inbuildblade: form.value.remoteblade,
       buttons: form.value.buttons,
+      recentAddedQuantity: this.allhttprequestservice.editRemoteShell.recentAddedQuantity,
+      recentmoreStockAddDate: this.allhttprequestservice.editRemoteShell.recentmoreStockAddDate,
+      totalSale: this.allhttprequestservice.editRemoteShell.totalSale,
+      moreStock: this.allhttprequestservice.editRemoteShell.moreStock,
       notes: this.allhttprequestservice.editRemoteShell.notes,
       compitablecars: []
     }

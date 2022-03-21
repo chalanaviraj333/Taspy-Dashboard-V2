@@ -13,6 +13,10 @@ export interface RemoteShell {
   image: string;
   inbuildblade: string;
   buttons: number;
+  recentAddedQuantity: number;
+  recentmoreStockAddDate: Date;
+  totalSale: number;
+  moreStock: boolean;
   notes: Array<RemoteNote>;
   compitablecars?: Array<Car>;
 }

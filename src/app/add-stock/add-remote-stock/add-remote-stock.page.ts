@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { StockAdd } from 'src/app/interfaces/stock-add';
 import { HttpRequestServiceService } from 'src/app/services/http-request-service.service';
 
 @Component({
@@ -34,7 +33,7 @@ export class AddRemoteStockPage implements OnInit {
   }
 
   onSubmitNext(form: NgForm) {
-    this.allhttprequestservice.addedStockItems.push({tapsycode: this.selectedTapsyCode, addedquantity: form.value.enteredQuantity});
+    this.allhttprequestservice.addedStockItems.push({tapsycode: this.selectedTapsyCode, addedquantity: form.value.enteredQuantity, downstairsStock: form.value.downstairsStcokValue});
   }
 
   onClickUpload() {

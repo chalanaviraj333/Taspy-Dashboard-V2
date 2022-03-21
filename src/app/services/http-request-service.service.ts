@@ -24,6 +24,7 @@ export class HttpRequestServiceService {
   public filteredremoteshelltapsycodes: Array<string> = [];
   public addedStockItems: Array<StockAdd> = [];
   public addedStockItemsRemoteShell: Array<StockAdd> = [];
+  public addedMoreStockTodownstairsShells: Array<string> = [];
 
 
   public editRemote: Remote = {
@@ -42,6 +43,10 @@ export class HttpRequestServiceService {
     image: '',
     notes: [],
     qtyavailable: 0,
+    recentAddedQuantity: 0,
+    recentmoreStockAddDate: new Date(),
+    totalSale: 0,
+    moreStock: false,
     compitablecars: [],
     compitablebrands: [],
   }
@@ -58,6 +63,10 @@ export class HttpRequestServiceService {
     image: '',
     inbuildblade: '',
     buttons: 0,
+    recentAddedQuantity: 0,
+    recentmoreStockAddDate: new Date(),
+    totalSale: 0,
+    moreStock: false,
     notes: [],
     compitablecars: []
   }
@@ -78,6 +87,12 @@ export class HttpRequestServiceService {
   public allRemoteBlades: Array<string> = [];
   public allRemoteFrequency: Array<string> = [];
   public allRemoteBattery: Array<string> = [];
+
+  // get available box number
+  public a_Box_Available: string = '';
+  public b_Box_Available: string = '';
+  public c_Box_Available: string = '';
+  public w_Box_available: string = '';
 
   constructor(private http: HttpClient, private commonStorageService: AllStorageService, public loadingController: LoadingController) {}
 
@@ -108,31 +123,18 @@ export class HttpRequestServiceService {
               productType: resData[key].productType,
               image: resData[key].image,
               notes: resData[key].notes,
+              recentAddedQuantity: resData[key].recentAddedQuantity,
+              recentmoreStockAddDate: resData[key].recentmoreStockAddDate,
+              totalSale: resData[key].totalSale,
+              moreStock: resData[key].moreStock,
               compitablecars: resData[key].compitablecars,
               compitablebrands: resData[key].compitablebrands,
             });
           }
         }
-        // sorting all remotes by box number
-        // this.allRemotes.sort((a, b) => (a.boxnumber > b.boxnumber ? 1 : -1));
 
         // sorting all remotes by box number and shell
         this.allRemotes.sort((a, b) => (a.boxnumber > b.boxnumber ? 1 : -1));
-
-        // this.allRemotes.sort(function(a, b) {
-        //     let boxnumberA = a.boxnumber;
-        //     let boxnumberB = b.boxnumber;
-        //     let shellA = a.shell;
-        //     let shellB = b.shell;
-
-        //     if (shellA < shellB) return -1;
-        //     if (boxnumberA < boxnumberB) return -1;
-        //     return 0;
-        //   });
-
-        // get available remote box number and tapsy code
-        // this.availableRemoteBoxNumber = this.allRemotes[this.allRemotes.length -1].boxnumber;
-        // this.genRemoteTapsyCode = 'TAP' + [this.availableRemoteBoxNumber + 1] + '-';
       });
 
 
@@ -475,6 +477,10 @@ export class HttpRequestServiceService {
               qtyavailable: resData[key].qtyavailable,
               inbuildblade: resData[key].inbuildblade,
               buttons: Number(resData[key].buttons),
+              recentAddedQuantity: resData[key].recentAddedQuantity,
+              recentmoreStockAddDate: resData[key].recentmoreStockAddDate,
+              totalSale: resData[key].totalSale,
+              moreStock: resData[key].moreStock,
               notes: resData[key].notes
             });
           }
@@ -551,15 +557,6 @@ export class HttpRequestServiceService {
       });
     }
 
-    // this.filteredremoteshelltapsycodes = this.allRemoteShellTapsyCodes;
-
-    // if (entervalue && entervalue.trim() != "")
-    // {
-    //   this.filteredremoteshelltapsycodes = this.filteredremoteshelltapsycodes.filter((currentcurrencypair) => {
-    //     let searchWord = currentcurrencypair;
-    //     return searchWord.toLowerCase().indexOf(entervalue.toLowerCase()) > -1;
-    //   });
-    // }
   }
 
   async addNewRemoteStock() {
@@ -573,11 +570,15 @@ export class HttpRequestServiceService {
     this.addedStockItems.forEach(item => {
         const currentRemote: Remote = this.allRemotes.find((i) => i.tapsycode == item.tapsycode);
         const newStock = currentRemote.qtyavailable + item.addedquantity;
+        const downStairsStock: boolean = item.downstairsStock;
+
+        currentRemote.recentAddedQuantity = item.addedquantity;
+        currentRemote.recentmoreStockAddDate = new Date();
 
         this.http
         .put(
           `https://tapsystock-a6450-default-rtdb.firebaseio.com/remotes/${currentRemote.key}.json`,
-          { ...currentRemote, qtyavailable: newStock, key: null }
+          { ...currentRemote, qtyavailable: newStock, moreStock: downStairsStock, key: null }
         )
         .subscribe((resData) => {
           const index = this.addedStockItems.indexOf(item, 0);
@@ -604,12 +605,12 @@ export class HttpRequestServiceService {
     await loading.present();
     this.addedStockItemsRemoteShell.forEach(item => {
         const currentRemoteShell: RemoteShell = this.allRemoteShells.find((i) => i.tapsycode == item.tapsycode);
-        const newStock = item.addedquantity;
+        const downStairsStock: boolean = true;
 
         this.http
         .put(
           `https://tapsystock-a6450-default-rtdb.firebaseio.com/remote-shells/${currentRemoteShell.key}.json`,
-          { ...currentRemoteShell, qtyavailable: newStock, key: null }
+          { ...currentRemoteShell, moreStock: downStairsStock, key: null }
         )
         .subscribe((resData) => {
           const index = this.addedStockItemsRemoteShell.indexOf(item, 0);
@@ -626,6 +627,75 @@ export class HttpRequestServiceService {
     loading.message = 'Successfully Uploaded';
     loading.spinner = null;
 
+  }
+
+  // async addNewRemoteShellStock() {
+  //   const loading = await this.loadingController.create({
+  //     cssClass: 'uploadingproduct-css-class',
+  //     message: 'Uploading New Stock',
+  //     backdropDismiss: false,
+  //   });
+  //   await loading.present();
+  //   this.addedStockItemsRemoteShell.forEach(item => {
+  //       const currentRemoteShell: RemoteShell = this.allRemoteShells.find((i) => i.tapsycode == item.tapsycode);
+  //       const newStock = item.addedquantity + currentRemoteShell.qtyavailable;
+  //       const downStairsStock: boolean = item.downstairsStock;
+
+  //       currentRemoteShell.recentAddedQuantity = item.addedquantity;
+  //       currentRemoteShell.recentmoreStockAddDate = new Date();
+
+  //       this.http
+  //       .put(
+  //         `https://tapsystock-a6450-default-rtdb.firebaseio.com/remote-shells/${currentRemoteShell.key}.json`,
+  //         { ...currentRemoteShell, qtyavailable: newStock, moreStock: downStairsStock, key: null }
+  //       )
+  //       .subscribe((resData) => {
+  //         const index = this.addedStockItemsRemoteShell.indexOf(item, 0);
+  //         if (index > -1) {
+  //           this.addedStockItemsRemoteShell.splice(index, 1);
+  //         }
+  //       });
+
+  //   });
+  //   setInterval(() => {
+  //     loading.dismiss();
+  //   }, 1000);
+
+  //   loading.message = 'Successfully Uploaded';
+  //   loading.spinner = null;
+
+  // }
+
+  // add more stock to downstairs key shells
+  async addMoreStockTODownstairsRemoteShell() {
+    const loading = await this.loadingController.create({
+      cssClass: 'uploadingproduct-css-class',
+      message: 'Moving More Stock to Downstairs',
+      backdropDismiss: false,
+    });
+    await loading.present();
+    this.addedMoreStockTodownstairsShells.forEach(item => {
+        const currentRemoteShell: RemoteShell = this.allRemoteShells.find((i) => i.tapsycode == item);
+
+        this.http
+        .put(
+          `https://tapsystock-a6450-default-rtdb.firebaseio.com/remote-shells/${currentRemoteShell.key}.json`,
+          { ...currentRemoteShell, moreStock: true, key: null }
+        )
+        .subscribe((resData) => {
+          const index = this.addedMoreStockTodownstairsShells.indexOf(item, 0);
+          if (index > -1) {
+            this.addedMoreStockTodownstairsShells.splice(index, 1);
+          }
+        });
+
+    });
+    setInterval(() => {
+      loading.dismiss();
+    }, 1000);
+
+    loading.message = 'Successfully Uploaded';
+    loading.spinner = null;
   }
 
   // get available remote box from database
@@ -645,12 +715,9 @@ export class HttpRequestServiceService {
 
             this.availableRemoteBoxNumber = {key: remoteBoxarray[0].key, availableRemoteBox: remoteBoxarray[0].availableRemoteBox};
             this.genRemoteTapsyCode = 'TAP' + [this.availableRemoteBoxNumber.availableRemoteBox] + '-';
-            console.log(this.availableRemoteBoxNumber);
         }
       }
-      // this.availableRemoteBoxNumber = remoteBoxarray[0];
-      // this.genRemoteTapsyCode = 'TAP' + [this.availableRemoteBoxNumber.availableRemoteBox] + '-';
-      console.log(this.availableRemoteBoxNumber);
+
     });
   }
 

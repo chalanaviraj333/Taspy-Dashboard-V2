@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Labels } from './labels';
+import { HttpRequestServiceService } from './services/http-request-service.service';
 
 
 @Component({
@@ -143,7 +144,7 @@ export class AppComponent implements OnInit {
   ];
 
   public labels: Array<Labels> = [{title: 'Key Shells not in Shopify', url: '/notaddedkeyshells'},{title: 'Remote Keys not in Shopify', url: '/notaddedkeyremotes'}];
-  constructor(private http: HttpClient ) {
+  constructor(private http: HttpClient, public allhttprequestservice: HttpRequestServiceService) {
 
   }
 
@@ -162,19 +163,6 @@ export class AppComponent implements OnInit {
      }
 
    });
-
-  //  await this.http
-  //  .get<{ [key: string]: string }>(
-  //    "https://tapsystock-a6450-default-rtdb.firebaseio.com/car-brand.json"
-  //  )
-  //  .subscribe((resData) => {
-  //    for (const key in resData) {
-  //      if (resData.hasOwnProperty(key)) {
-  //        this.appPages[3].numberofitems = this.appPages[3].numberofitems + 1;
-  //      }
-  //    }
-
-  //  });
 
    await this.http
    .get<{ [key: string]: string }>(
@@ -201,6 +189,8 @@ export class AppComponent implements OnInit {
      }
 
    });
+
+   this.allhttprequestservice.getAllRemotes();
   }
 
 }

@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { DatabaseServiceService } from 'src/app/database-service.service';
 import { Remote } from 'src/app/remote';
 
 @Component({
@@ -12,7 +11,7 @@ export class RemoteDetailModalPagePage implements OnInit {
 
   @Input() selectedRemote : Remote;
 
-  constructor(private modalController: ModalController, private databaseService: DatabaseServiceService) { }
+  constructor(private modalController: ModalController) { }
 
   ngOnInit() {
   }

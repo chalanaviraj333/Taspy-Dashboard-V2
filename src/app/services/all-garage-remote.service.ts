@@ -33,7 +33,9 @@ export class AllGarageRemoteService {
               compatibleBrand: resData[key].compatibleBrand,
               productType: resData[key].productType,
               qtyavailable: resData[key].qtyavailable,
+              sellingPrice: resData[key].sellingPrice,
               image: resData[key].image,
+              instructionsImage: resData[key].instructionsImage,
               notes: resData[key].notes,
               compatibleModels: resData[key].compatibleModels
             });
@@ -52,6 +54,7 @@ export class AllGarageRemoteService {
 
         // sorting all garage remotes by box number and shell
         this.allGarageRemotes.sort((a, b) => (a.boxnumber > b.boxnumber ? 1 : -1));
+
       });
     }
   }

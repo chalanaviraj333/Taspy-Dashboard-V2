@@ -17,7 +17,7 @@ import { finalize } from 'rxjs/operators';
 import firebase from 'firebase/app';
 import { Remote } from '../remote';
 import { HttpClient } from '@angular/common/http';
-import { HttpRequestServiceService } from './http-request-service.service';
+import { GetAvailableBoxNumberService } from './get-available-box-number.service';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,8 @@ export class CommonProductUploadService {
     private platform: Platform,
     private storage: AngularFireStorage,
     public loadingController: LoadingController,
-    private http: HttpClient
+    private http: HttpClient,
+    private getAvailableBoxBumberService: GetAvailableBoxNumberService
   ) {}
 
   // Delete picture when user in add item
@@ -187,6 +188,18 @@ export class CommonProductUploadService {
                   setInterval(() => {
                     loadingScreen.dismiss();
                   }, 2000);
+                  if (enteredProductDetails.shell == 'A') {
+                    this.getAvailableBoxBumberService.availableANumber++;
+                  }
+                  else if (enteredProductDetails.shell == 'B') {
+                    this.getAvailableBoxBumberService.availableBNumber++;
+                  }
+                  else if (enteredProductDetails.shell == 'C') {
+                    this.getAvailableBoxBumberService.availableCNumber++;
+                  }
+                  else if (enteredProductDetails.shell == 'W') {
+                    this.getAvailableBoxBumberService.availableWNumber++;
+                  }
                   loadingScreen.message = 'Successfully Uploaded';
                   loadingScreen.spinner = null;
                   this.clearallphotos();

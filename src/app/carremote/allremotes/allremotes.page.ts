@@ -27,7 +27,7 @@ export class AllremotesPage implements OnInit {
 
   ngOnInit() {
 
-    this.allhttprequestservice.getAllRemotes();
+    // this.allhttprequestservice.getAllRemotes();
   }
 
   // quick go to top button on page
