@@ -265,11 +265,11 @@ export class HttpRequestServiceService {
       this.filteredRemotes = this.filteredRemotes.filter((currentremote) => {
         if (currentremote.compitablebrands !== undefined) {
           let searchWord =
-            currentremote.tapsycode + currentremote.boxnumber +
+            currentremote.tapsycode + (currentremote.shell + currentremote.boxnumber)
             currentremote.compitablebrands.toString();
           return searchWord.toLowerCase().indexOf(entervalue.toLowerCase()) > -1;
         } else {
-          let searchWord = currentremote.tapsycode + currentremote.boxnumber;
+          let searchWord = currentremote.tapsycode + (currentremote.shell + currentremote.boxnumber);
           return searchWord.toLowerCase().indexOf(entervalue.toLowerCase()) > -1;
         }
       });

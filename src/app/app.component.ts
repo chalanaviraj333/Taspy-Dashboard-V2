@@ -11,7 +11,7 @@ import { HttpRequestServiceService } from './services/http-request-service.servi
 })
 export class AppComponent implements OnInit {
 
-  public numberOfCarRemote: number;
+  // public numberOfCarRemote: number;
 
 
   public appPages = [
@@ -71,21 +71,6 @@ export class AppComponent implements OnInit {
         }
       ]
     },
-    { title: 'KD/ X Horse',
-    numberofitems: 0,
-      children: [
-        {
-          title: 'All KD-Xhorse Remotes',
-          url: '/allremoteshells',
-          icon: 'layers-outline'
-        },
-        {
-          title: 'Add KD-Xhorse Remote',
-          url: '/add-xhrose-kd-remote',
-          icon: 'add-circle-outline'
-        }
-      ]
-    },
     { title: 'Cars',
       numberofitems: 0,
       children: [
@@ -109,6 +94,11 @@ export class AppComponent implements OnInit {
           url: '/addcarmodel',
           icon: 'add-circle-outline'
         },
+        {
+          title: 'Add Car Sub Model',
+          url: '/add-car-sub-model',
+          icon: 'add-circle-outline'
+        },
       ]
     },
     { title: 'Garage Remotes',
@@ -116,7 +106,7 @@ export class AppComponent implements OnInit {
     children: [
       {
         title: 'All Garage Remotes',
-        url: '/allcarmodels',
+        url: '/all-garage-remotes',
         icon: 'layers-outline'
       },
       {
@@ -135,8 +125,13 @@ export class AppComponent implements OnInit {
         icon: 'layers-outline'
       },
       {
+        title: 'Generate New System',
+        url: '/generate-new-system',
+        icon: 'add-circle-outline'
+      },
+      {
         title: 'Add New Restricted Key',
-        url: '/addcarbrand',
+        url: '/new-restricted-system',
         icon: 'add-circle-outline'
       },
     ]
@@ -171,7 +166,7 @@ export class AppComponent implements OnInit {
    .subscribe((resData) => {
      for (const key in resData) {
        if (resData.hasOwnProperty(key)) {
-         this.appPages[4].numberofitems++;
+         this.appPages[3].numberofitems++;
        }
      }
 
@@ -190,7 +185,20 @@ export class AppComponent implements OnInit {
 
    });
 
-   this.allhttprequestservice.getAllRemotes();
+   await this.http
+   .get<{ [key: string]: string }>(
+     "https://tapsystock-a6450-default-rtdb.firebaseio.com/garage-remotes.json"
+   )
+   .subscribe((resData) => {
+     for (const key in resData) {
+       if (resData.hasOwnProperty(key)) {
+         this.appPages[4].numberofitems++;
+       }
+     }
+
+   });
+
+  //  this.allhttprequestservice.getAllRemotes();
   }
 
 }

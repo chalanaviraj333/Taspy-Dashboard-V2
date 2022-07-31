@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, IonContent, IonSearchbar } from '@ionic/angular';
 import { Remote } from 'src/app/remote';
@@ -27,7 +27,7 @@ export class AllremotesPage implements OnInit {
 
   ngOnInit() {
 
-    // this.allhttprequestservice.getAllRemotes();
+    this.allhttprequestservice.getAllRemotes();
   }
 
   // quick go to top button on page
@@ -99,6 +99,5 @@ export class AllremotesPage implements OnInit {
 
     await alert.present();
   }
-
 
 }

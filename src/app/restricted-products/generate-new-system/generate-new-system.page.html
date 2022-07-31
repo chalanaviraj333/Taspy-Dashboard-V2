@@ -1,0 +1,283 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Generate New System</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <form #form="ngForm" (ngSubmit)="onSubmitMasterForm(form)">
+    <ion-row *ngIf="masterkey.length == 0">
+      <ion-label class="rowheader">Enter Master Key</ion-label>
+    </ion-row>
+    <ion-row *ngIf="masterkey.length == 0">
+      <ion-col size="2">
+        <ion-item lines="none">
+          <ion-label position="stacked">Chamber 1</ion-label>
+          <ion-input  type="number" name="masterChamber1" ngModel required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item lines="none">
+          <ion-label position="stacked">Chamber 2</ion-label>
+          <ion-input  type="number" name="masterChamber2" ngModel required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item lines="none">
+          <ion-label position="stacked">Chamber 3</ion-label>
+          <ion-input  type="number" name="masterChamber3" ngModel required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item lines="none">
+          <ion-label position="stacked">Chamber 4</ion-label>
+          <ion-input  type="number" name="masterChamber4" ngModel required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item lines="none">
+          <ion-label position="stacked">Chamber 5</ion-label>
+          <ion-input  type="number" name="masterChamber5" ngModel required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item lines="none">
+          <ion-label position="stacked">Chamber 6</ion-label>
+          <ion-input  type="number" name="masterChamber6" ngModel required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="masterkey.length == 0">
+      <ion-col size="3" offset="9">
+        <ion-button color="success" type="submit">Get Available Pins</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+    <!-- <ion-row>
+      <ion-label class="rowheader">Enter Units Amount</ion-label>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">
+        <ion-item lines="none">
+          <ion-label position="stacked">Units Amount</ion-label>
+          <ion-input  type="number" name="unitsAmount" [(ngModel)]="unitsAmount" required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3">
+        <ion-button color="success" (click)="onSubmitUnitAmount()">Generate Unit Keys</ion-button>
+      </ion-col>
+    </ion-row> -->
+
+  <ion-row>
+    <form #f="ngForm" (ngSubmit)="onSubmitUnitForm(f)">
+      <ion-row>
+        <ion-label class="rowheader">Enter Each Unit Key</ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-col size="2">
+          <ion-item lines="none">
+            <ion-label position="stacked">Chamber 1</ion-label>
+            <ion-input  type="number" name="unitChamber1" ngModel required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item lines="none">
+            <ion-label position="stacked">Chamber 2</ion-label>
+            <ion-input  type="number" name="unitChamber2" ngModel required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item lines="none">
+            <ion-label position="stacked">Chamber 3</ion-label>
+            <ion-input  type="number" name="unitChamber3" ngModel required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item lines="none">
+            <ion-label position="stacked">Chamber 4</ion-label>
+            <ion-input  type="number" name="unitChamber4" ngModel required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item lines="none">
+            <ion-label position="stacked">Chamber 5</ion-label>
+            <ion-input  type="number" name="unitChamber5" ngModel required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item lines="none">
+            <ion-label position="stacked">Chamber 6</ion-label>
+            <ion-input  type="number" name="unitChamber6" ngModel required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="3" offset="9">
+          <ion-button color="success" type="submit">Add Unit Keys</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-card *ngIf="this.masterkey.length !== 0">
+          <ion-card-header>Master</ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="2">
+                  <ion-label>Pin 1</ion-label>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-label>Pin 2</ion-label>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-label>Pin 3</ion-label>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-label>Pin 4</ion-label>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-label>Pin 5</ion-label>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-label>Pin 6</ion-label>
+                </ion-col>
+              </ion-row>
+              <!-- numbers -->
+              <ion-row>
+                <ion-col size="2">
+                  <ion-item>
+                    <ion-label>{{masterkey[0].depth}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-item>
+                    <ion-label>{{masterkey[1].depth}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-item>
+                    <ion-label>{{masterkey[2].depth}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-item>
+                    <ion-label>{{masterkey[3].depth}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-item>
+                    <ion-label>{{masterkey[4].depth}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-item>
+                    <ion-label>{{masterkey[5].depth}}</ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-list *ngFor="let unitkey of this.unitKeys">
+          <ion-card>
+            <ion-card-header>Unit {{unitkey.unitNumber}}</ion-card-header>
+            <ion-card-content>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="2">
+                    {{unitkey.positonNDepth[0].depth}}
+                  </ion-col>
+                  <ion-col size="2">
+                    {{unitkey.positonNDepth[1].depth}}
+                  </ion-col>
+                  <ion-col size="2">
+                    {{unitkey.positonNDepth[2].depth}}
+                  </ion-col>
+                  <ion-col size="2">
+                    {{unitkey.positonNDepth[3].depth}}
+                  </ion-col>
+                  <ion-col size="2">
+                    {{unitkey.positonNDepth[4].depth}}
+                  </ion-col>
+                  <ion-col size="2">
+                    {{unitkey.positonNDepth[5].depth}}
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-card *ngIf="this.availableChamberPins.length !== 0">
+          <ion-card-header>Available Pin(s)</ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="2">
+                  <ion-label>Pin 1</ion-label>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-label>Pin 2</ion-label>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-label>Pin 3</ion-label>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-label>Pin 4</ion-label>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-label>Pin 5</ion-label>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-label>Pin 6</ion-label>
+                </ion-col>
+              </ion-row>
+              <!-- numbers -->
+              <ion-row>
+                <ion-col size="2">
+                  <ion-item *ngFor="let pin of availableChamberPins[0].available">
+                    <ion-label>{{pin}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-item *ngFor="let pin of availableChamberPins[1].available">
+                    <ion-label>{{pin}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-item *ngFor="let pin of availableChamberPins[2].available">
+                    <ion-label>{{pin}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-item *ngFor="let pin of availableChamberPins[3].available">
+                    <ion-label>{{pin}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-item *ngFor="let pin of availableChamberPins[4].available">
+                    <ion-label>{{pin}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-item *ngFor="let pin of availableChamberPins[5].available">
+                    <ion-label>{{pin}}</ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

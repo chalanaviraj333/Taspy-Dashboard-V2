@@ -139,7 +139,23 @@ const routes: Routes = [
   {
     path: 'addremoteshellstock',
     loadChildren: () => import('./addremoteshellstock/addremoteshellstock.module').then( m => m.AddremoteshellstockPageModule)
+  },  {
+    path: 'all-garage-remotes',
+    loadChildren: () => import('./garage-remote/all-garage-remotes/all-garage-remotes.module').then( m => m.AllGarageRemotesPageModule)
   },
+  {
+    path: 'new-restricted-system',
+    loadChildren: () => import('./restricted-products/new-restricted-system/new-restricted-system.module').then( m => m.NewRestrictedSystemPageModule)
+  },
+  {
+    path: 'generate-new-system',
+    loadChildren: () => import('./restricted-products/generate-new-system/generate-new-system.module').then( m => m.GenerateNewSystemPageModule)
+  },
+  {
+    path: 'add-car-sub-model',
+    loadChildren: () => import('./carsubmodel/add-car-sub-model/add-car-sub-model/add-car-sub-model.module').then( m => m.AddCarSubModelPageModule)
+  },
+
 ];
 
 @NgModule({

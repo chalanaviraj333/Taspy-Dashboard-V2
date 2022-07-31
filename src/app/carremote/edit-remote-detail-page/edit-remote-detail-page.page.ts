@@ -95,7 +95,7 @@ export class EditRemoteDetailPagePage implements OnInit {
     this.allhttprequestservice.uploadEditRemote(enteredRemoteDetails);
   }
 
-  onClickRemoveComCar(compatibleCar: CarModel) {
+  onClickRemoveComCar(compatibleCar: any) {
 
     // remove car brand from compatible car brand list
     const indexBrand = this.allhttprequestservice.editRemote.compitablebrands.indexOf(compatibleCar.brand, 0);

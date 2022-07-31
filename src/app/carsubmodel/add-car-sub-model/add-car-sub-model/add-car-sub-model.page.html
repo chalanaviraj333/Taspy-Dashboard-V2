@@ -1,0 +1,104 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>ADD CAR SUB MODEL</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+   <form #f="ngForm" (ngSubmit)="onSubmitNext(f)">
+  <ion-grid>
+    <ion-row>
+        <ion-col size="3">
+        <ion-item lines="none">
+          <ion-label position="stacked" class="stackClass">Select Brand</ion-label>
+          <ion-select class="automaticinputClass" (ionChange)="_ionChange($event)" ngModel name="selectedCarBrand" required>
+            <ion-select-option *ngFor="let carBrand of allcarbrands" [value]="carBrand">{{carBrand}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3">
+        <ion-item lines="none">
+          <ion-label position="stacked" class="stackClass">Select Model</ion-label>
+          <ion-select class="automaticinputClass" ngModel name="selectedCarModel" required>
+            <ion-select-option *ngFor="let carModel of selectedcarmodels" [value]="carModel">{{carModel.model}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3">
+        <ion-item lines="none">
+          <ion-label position="stacked" class="stackClass">Car Sub Model</ion-label>
+          <ion-input class="automaticinputClass" ngModel name="enteredCarSubModel" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3">
+        <ion-item lines="none">
+          <ion-label position="stacked" class="stackClass">Ignition Type</ion-label>
+          <ion-select class="inputClass" type="text" ngModel="Bladed" name="typeofignition">
+            <ion-select-option value="Bladed">Bladed</ion-select-option>
+            <ion-select-option value="Prox">Prox</ion-select-option>
+            <ion-select-option value="Slot">Slot</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3">
+        <ion-item lines="none">
+          <ion-label position="stacked" class="stackClass">Start Year</ion-label>
+          <ion-input class="automaticinputClass" ngModel name="selectedSubModelStartYear" type="number"required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3">
+        <ion-item lines="none">
+          <ion-label position="stacked" class="stackClass">End Year</ion-label>
+          <ion-input class="automaticinputClass" ngModel name="selectedSubModelEndYear" type="number" required></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="3">
+        <ion-item lines="none">
+          <ion-label position="stacked" class="stackClass">Profile</ion-label>
+          <ion-input class="automaticinputClass" ngModel name="profile" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="3">
+        <ion-item lines="none">
+          <ion-label position="stacked" class="stackClass">Chip ID</ion-label>
+          <ion-input class="automaticinputClass" ngModel name="chipID" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="3">
+        <ion-item lines="none">
+          <ion-label position="stacked" class="stackClass">Freq</ion-label>
+          <ion-input class="automaticinputClass" ngModel name="freq" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="1" class="ion-align-self-end ion-text-end">
+          <ion-button (click)="carSubModelService.addNewToGallery()" [disabled]="carSubModelService.uploadphotobutton">
+            <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="4" *ngFor="let photo of carSubModelService.photos; index as position">
+          <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)" class="uploadimageClass"></ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+   </form>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+     <ion-button slot="start" color="success" fill="clear" class="ion-button-class saveandexitButton" (click)="f.reset()">CLEAR FORM</ion-button>
+    <ion-button slot="end" color="success" class="ion-button-class saveandexitButton" [disabled]="!f.valid" (click)="f.ngSubmit.emit()">
+      <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+      SAVE AND UPLOAD
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

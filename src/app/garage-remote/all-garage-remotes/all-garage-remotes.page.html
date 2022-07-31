@@ -1,0 +1,69 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>ALL Garage Remotes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content
+  [scrollEvents]="true"
+  (ionScrollStart)="logScrollStart()"
+>
+
+<ion-card *ngFor="let garageremote of garageRemoteService.allGarageRemotes" (click)="onClick(garageremote)"
+    class="ion-activatable ripple-parent ion-no-margin">
+      <ion-card-content>
+        <ion-grid class="ion-no-padding">
+          <ion-row class="ion-no-padding">
+          <ion-col size="3" class="ion-no-margin">
+            <ion-label class="ion-text-nowrap">
+              <ion-label color="medium" class="saveTag">BOX </ion-label>
+              <ion-label color="danger" class="shellClass">{{garageremote.shell}}</ion-label>
+              <ion-note id="boxnumberID"
+                color="danger"
+                class="ion-text-nowrap"
+                >{{garageremote.boxnumber}}</ion-note
+              >
+            </ion-label>
+
+            <ion-label class="ion-text-nowrap availableClass">
+              <ion-label color="medium" class="saveTag">QTY </ion-label>
+              <ion-note id="boxnumberID"
+                color="dark"
+                class="ion-text-nowrap"
+                >{{garageremote.qtyavailable}}</ion-note
+              >
+            </ion-label>
+
+            <ion-card-subtitle color="dark" class="primarytext">{{garageremote.frequency}}</ion-card-subtitle>
+            <!-- <ion-card-subtitle color="dark" class="primarytext">{{garageremote.inbuildblade}}</ion-card-subtitle>
+            <ion-card-subtitle color="dark" class="primarytext">{{garageremote.inbuildchip}}</ion-card-subtitle> -->
+
+
+          </ion-col>
+          <ion-col size="8" class="ion-text-end ion-no-margin">
+            <img src="{{garageremote.image}}" width="80" height="80" />
+          </ion-col>
+
+          <!-- <ion-col size="1" class="ion-text-end">
+            <ion-button (click)="onClickEditRemote($event, remote)" fill="clear">
+              <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="onClickDelete($event, remote)" fill="clear">
+              <ion-icon slot="icon-only" color="danger" name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-col> -->
+        </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+  </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="ScrollToTop()" *ngIf="hideButton">
+      <ion-icon name="arrow-up-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

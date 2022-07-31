@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { IonicModule } from '@ionic/angular';
-import { AllremotesPageRoutingModule } from './allremotes-routing.module';
-import { AllremotesPage } from './allremotes.page';
+
+import { AddCarSubModelPageRoutingModule } from './add-car-sub-model-routing.module';
+
+import { AddCarSubModelPage } from './add-car-sub-model.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AllremotesPageRoutingModule
+    AddCarSubModelPageRoutingModule
   ],
-  declarations: [AllremotesPage]
+  declarations: [AddCarSubModelPage]
 })
-export class AllremotesPageModule {}
+export class AddCarSubModelPageModule {}

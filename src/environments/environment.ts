@@ -5,13 +5,14 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-      apiKey: "AIzaSyDS6DCQcYOD1Rdt0RrdMEo1k2INx34xc1U",
-      authDomain: "tapsystock-a6450.firebaseapp.com",
-      databaseURL: "https://tapsystock-a6450-default-rtdb.firebaseio.com",
-      projectId: "tapsystock-a6450",
-      storageBucket: "tapsystock-a6450.appspot.com",
-      messagingSenderId: "125405620194",
-      appId: "1:125405620194:web:c676bf1524d48db2133bbb"
+    apiKey: "AIzaSyD99LbJc3Ru1h7pj_KUSG-LHx5Myecqcdk",
+    authDomain: "tapsy-stock-app-v3-database.firebaseapp.com",
+    databaseURL: "https://tapsy-stock-app-v3-database-default-rtdb.firebaseio.com",
+    projectId: "tapsy-stock-app-v3-database",
+    storageBucket: "tapsy-stock-app-v3-database.appspot.com",
+    messagingSenderId: "177050935539",
+    appId: "1:177050935539:web:49d05e2e0550a041479786",
+    measurementId: "G-WDRLWRN89J"
   }
 };
 
