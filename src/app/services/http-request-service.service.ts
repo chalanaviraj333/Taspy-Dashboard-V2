@@ -360,7 +360,7 @@ export class HttpRequestServiceService {
   // http request about cars
   getcarmodels() {
     if (this.allCarModels.length == 0) {
-      this.http.get<{ [key: string]: CarModel }>('https://tapsystock-a6450-default-rtdb.firebaseio.com/car-model.json')
+      this.http.get<{ [key: string]: CarModel }>('https://tapsy-stock-app-v3-database-default-rtdb.firebaseio.com/all-car-models.json')
       .subscribe(resData => {
         for (const key in resData) {
           this.allCarModels.push(resData[key]);

@@ -207,7 +207,7 @@ export class CarModelService {
             .getDownloadURL()
             .then((imageURL) => {
 
-              this.http.post('https://tapsystock-a6450-default-rtdb.firebaseio.com/car-model.json', {...enteredCarModelDetails, icon: imageURL}).subscribe(
+              this.http.post('https://tapsy-stock-app-v3-database-default-rtdb.firebaseio.com/all-car-models.json', {...enteredCarModelDetails, show: true, icon: imageURL}).subscribe(
               resData => {
                 setInterval(() => {
                   loading.dismiss();
