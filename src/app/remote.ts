@@ -14,6 +14,7 @@ export interface Remote {
   costperitem?: number;
   remotetype?: string;
   productType: string;
+  suppliertype: string;
   image?: string;
   notes?: Array<RemoteNote>;
   qtyavailable: number;

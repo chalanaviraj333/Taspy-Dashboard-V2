@@ -107,6 +107,15 @@
             <ion-label position="stacked" class="stackClass">Quantity</ion-label>
             <ion-input class="automaticinputClass" ngModel name="qtyavailable" type="number" required></ion-input>
           </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Supplier</ion-label>
+            <ion-select class="inputClass" ngModel="Aftermarket" name="suppliertype">
+              <ion-select-option value="Aftermarket">Aftermarket</ion-select-option>
+              <ion-select-option value="OEM">OEM</ion-select-option>
+              <ion-select-option value="Genuine">Genuine</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-col>
 
         <ion-col size="1" class="ion-align-self-center ion-text-end">

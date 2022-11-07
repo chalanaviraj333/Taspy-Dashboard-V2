@@ -80,6 +80,7 @@ export class EditRemoteDetailPagePage implements OnInit {
       frequency: form.value.remotefrequency,
       costperitem: null,
       remotetype: form.value.remotetype,
+      suppliertype: form.value.suppliertype,
       productType: 'remote',
       image: this.allhttprequestservice.editRemote.image,
       notes: this.allhttprequestservice.editRemote.notes,

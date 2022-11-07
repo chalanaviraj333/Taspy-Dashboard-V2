@@ -80,6 +80,15 @@
             <ion-label position="stacked" class="stackClass">Quantity</ion-label>
             <ion-input class="automaticinputClass" name="qtyavailable" type="number" [ngModel]="allhttprequestservice.editRemote.qtyavailable" required></ion-input>
           </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Supplier</ion-label>
+            <ion-select class="inputClass" [ngModel]="allhttprequestservice.editRemote.suppliertype" name="suppliertype">
+              <ion-select-option value="Aftermarket">Aftermarket</ion-select-option>
+              <ion-select-option value="OEM">OEM</ion-select-option>
+              <ion-select-option value="Genuine">Genuine</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-col>
 
         <ion-col size="4" offset="5">

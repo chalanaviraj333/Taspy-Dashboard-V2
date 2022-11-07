@@ -39,6 +39,7 @@ export class HttpRequestServiceService {
     frequency: '',
     costperitem: 0,
     remotetype: '',
+    suppliertype: '',
     productType: '',
     image: '',
     notes: [],
@@ -120,6 +121,7 @@ export class HttpRequestServiceService {
               costperitem: resData[key].costperitem,
               frequency: resData[key].frequency,
               remotetype: resData[key].remotetype,
+              suppliertype: resData[key].suppliertype,
               productType: resData[key].productType,
               image: resData[key].image,
               notes: resData[key].notes,
@@ -371,8 +373,18 @@ export class HttpRequestServiceService {
 
   // get all car brands from database
   getcarbrands() {
+    // if (this.carBrands.length == 0) {
+    //   this.http.get<{ [key: string]: CarBrand }>('https://tapsystock-a6450-default-rtdb.firebaseio.com/car-brand.json')
+    //   .subscribe(resData => {
+    //     for (const key in resData) {
+    //       this.carBrands.push(resData[key].name);
+    //     }
+    //     this.carBrands.sort((a, b) => (a > b) ? 1 : -1)
+
+    //   });
+    // }
     if (this.carBrands.length == 0) {
-      this.http.get<{ [key: string]: CarBrand }>('https://tapsystock-a6450-default-rtdb.firebaseio.com/car-brand.json')
+      this.http.get<{ [key: string]: CarBrand }>('https://tapsy-stock-app-v3-database-default-rtdb.firebaseio.com/all-car-brands.json')
       .subscribe(resData => {
         for (const key in resData) {
           this.carBrands.push(resData[key].name);
@@ -381,6 +393,7 @@ export class HttpRequestServiceService {
 
       });
     }
+
   }
 
   // find available car models for selected car brand
