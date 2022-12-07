@@ -19,7 +19,7 @@ export class AddcarmodelPage implements OnInit {
   constructor(private http: HttpClient, public carModelService: CarModelService, public actionSheetController: ActionSheetController, private toastController: ToastController) { }
 
   ngOnInit() {
-    this.http.get<{ [key: string]: CarBrand}>('https://tapsystock-a6450-default-rtdb.firebaseio.com/car-brand.json')
+    this.http.get<{ [key: string]: CarBrand}>('https://tapsy-stock-app-v3-database-default-rtdb.firebaseio.com/all-car-brands.json')
     .subscribe(resData => {
       for (const key in resData) {
         this.allcarbrands.push(resData[key].name)
@@ -37,11 +37,13 @@ export class AddcarmodelPage implements OnInit {
     }
 
       const enteredCarModelDetails: CarModel = {
+        key: '',
         brand: form.value.selectedCarBrand,
         model: form.value.selectedCarModel,
         icon: form.value.selectedCarBrand + form.value.selectedCarModel,
         startyear: form.value.selectedCarStartYear,
-        endyear: form.value.selectedCarEndYear
+        endyear: form.value.selectedCarEndYear,
+        show: true
          }
 
       this.carModelService.uploadCarModel(enteredCarModelDetails);

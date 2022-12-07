@@ -139,7 +139,8 @@ const routes: Routes = [
   {
     path: 'addremoteshellstock',
     loadChildren: () => import('./addremoteshellstock/addremoteshellstock.module').then( m => m.AddremoteshellstockPageModule)
-  },  {
+  },
+  {
     path: 'all-garage-remotes',
     loadChildren: () => import('./garage-remote/all-garage-remotes/all-garage-remotes.module').then( m => m.AllGarageRemotesPageModule)
   },
@@ -155,6 +156,23 @@ const routes: Routes = [
     path: 'add-car-sub-model',
     loadChildren: () => import('./carsubmodel/add-car-sub-model/add-car-sub-model/add-car-sub-model.module').then( m => m.AddCarSubModelPageModule)
   },
+  {
+    path: 'car-brand-page/car-model-page/car-sub-model-page/edit-sub-model-details/:startyear/:endyear',
+    loadChildren: () => import('./carsubmodel/edit-sub-model-details/edit-sub-model-details.module').then( m => m.EditSubModelDetailsPageModule)
+  },
+  {
+    path: 'all-car-brands',
+    loadChildren: () => import('./select-car-sub-model/all-car-brands/all-car-brands.module').then( m => m.AllCarBrandsPageModule)
+  },
+  {
+    path: 'car-brand-page/car-model-page/:brandId',
+    loadChildren: () => import('./carsubmodel/car-model-page/car-model-page.module').then( m => m.CarModelPagePageModule)
+  },
+  {
+    path: 'car-brand-page/car-model-page/car-sub-model-page/:selectedBrand/:selectedModel/:startyear/:endyear',
+    loadChildren: () => import('./select-car-sub-model/all-car-sub-model/all-car-sub-model.module').then( m => m.AllCarSubModelPageModule)
+  },
+
 
 ];
 

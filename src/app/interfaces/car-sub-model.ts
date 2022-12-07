@@ -7,13 +7,19 @@ export interface CarSubModel {
   model: string;
   submodel: string;
   typeofignition: string;
-  profile: string;
-  chipID: string;
-  freq: string;
-  updatedat: string;
   icon: string;
   startyear: number;
   endyear: number;
   compatibleremotes: Array<Remote>;
   compatibleremoteshells: Array<RemoteShell>;
+  chipID: string;
+  freq: string;
+  profile: string;
+  allLostKeyPrice: number;
+  spareKeyPrice: number;
+  compatibleDevices: Array<string>;
+  allLostKeySpecialNotes: Array<string>;
+  spareKeySpecialNotes: Array<string>;
+  allLostKeyPriceUpdateDate: Date;
+  spareKeyPriceUpdateDate: Date;
 }

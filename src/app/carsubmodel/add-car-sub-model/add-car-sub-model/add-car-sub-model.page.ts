@@ -38,11 +38,13 @@ export class AddCarSubModelPage implements OnInit {
     .subscribe(resData => {
       for (const key in resData) {
         this.allcarmodels.push({
+          key,
           brand: resData[key].brand,
           model: resData[key].model,
           icon: resData[key].icon,
           startyear: resData[key].startyear,
-          endyear: resData[key].endyear
+          endyear: resData[key].endyear,
+          show: resData[key].show
         })
         this.allcarmodels.sort((a, b) => (a > b) ? 1 : -1)
       }
@@ -66,12 +68,18 @@ export class AddCarSubModelPage implements OnInit {
         profile: form.value.profile,
         chipID: form.value.chipID,
         freq: form.value.freq,
-        updatedat: null,
         icon: form.value.selectedCarBrand + form.value.selectedCarModel.model + form.value.enteredCarSubModel,
         startyear: form.value.selectedSubModelStartYear,
         endyear: form.value.selectedSubModelEndYear,
         compatibleremotes: null,
         compatibleremoteshells: null,
+        allLostKeyPrice: 0,
+        spareKeyPrice: 0,
+        allLostKeySpecialNotes: [],
+        spareKeySpecialNotes: [],
+        allLostKeyPriceUpdateDate: new Date,
+        spareKeyPriceUpdateDate: new Date,
+        compatibleDevices: []
          }
 
       if (enteredCarSubModelDetails.startyear < form.value.selectedCarModel.startyear)
