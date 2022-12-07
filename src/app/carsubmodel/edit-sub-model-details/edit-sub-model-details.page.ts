@@ -53,7 +53,7 @@ export class EditSubModelDetailsPage implements OnInit {
   }
 
   onSubmitNext(form: NgForm) {
-
+    this.commonphotoArrayUploadService.uploadimages(this.selectedSubModel);
   }
 
   public async showActionSheet(photo: UserPhoto, position: number) {

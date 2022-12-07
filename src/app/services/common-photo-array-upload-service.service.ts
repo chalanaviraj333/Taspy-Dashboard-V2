@@ -21,7 +21,8 @@ import { CarSubModel } from '../interfaces/car-sub-model';
 export class CommonPhotoArrayUploadServiceService {
 
   public photos: UserPhoto[] = [];
-  private photoID: string = '';
+  private photoIDArray: Array<string> = [];
+  // private photoID: string = '';
   private PHOTO_STORAGE: string = 'photos';
   public validentry: boolean = true;
   public uploadphotobutton: boolean = false;
@@ -29,19 +30,20 @@ export class CommonPhotoArrayUploadServiceService {
   constructor(private platform: Platform, public loadingController: LoadingController, private storage: AngularFireStorage, private http: HttpClient) { }
 
   public async addNewToGallery() {
-    // clear previous photos from Array
-    // this.photos = [];
 
     // Take a photo
     const capturedPhoto = await Camera.getPhoto({
-      resultType: CameraResultType.Uri, // file-based data; provides best performance
-      source: CameraSource.Camera, // automatically take a new photo with the camera
-      quality: 100, // highest quality (0 to 100)
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Camera,
+      quality: 100,
+
     });
 
     const savedImageFile = await this.savePicture(capturedPhoto);
 
-    this.photoID = await this.readAsBase64(capturedPhoto);
+    const photoID = await this.readAsBase64(capturedPhoto);
+    this.photoIDArray.push(photoID);
+    console.log(this.photoIDArray);
 
     // Add new photo to Photos array
     this.photos.unshift(savedImageFile);
@@ -53,6 +55,7 @@ export class CommonPhotoArrayUploadServiceService {
       value: JSON.stringify(this.photos),
     });
   }
+
 
   private async savePicture(cameraPhoto: Photo) {
     // Convert photo to base64 format, required by Filesystem API to save
@@ -133,50 +136,45 @@ export class CommonPhotoArrayUploadServiceService {
     });
   }
 
-  async uploadSubCarModel(enteredCarModelDetails: CarSubModel) {
+  async uploadimages(enteredData: any) {
     let downloadURL: Observable<string>;
+    let imageCount: number = 1;
 
-    const loading = await this.loadingController.create({
-      cssClass: 'uploadingproduct-css-class',
-      message: 'Uploading ' + enteredCarModelDetails.model + ' ' + enteredCarModelDetails.submodel,
-      backdropDismiss: false,
+    // const loading = await this.loadingController.create({
+    //   cssClass: 'uploadingproduct-css-class',
+    //   message: 'Uploading to Database',
+    //   backdropDismiss: false,
+    // });
+    // await loading.present();
+
+    this.photoIDArray.forEach(photo => {
+      imageCount++;
+      const contenttype = 'image/png';
+      const b64Data = photo.split(',').pop();
+      const blob = base64StringToBlob(b64Data, contenttype);
+      const filename = 'chalana' + imageCount + '.png';
+      const uploadTask = this.storage.upload('images/testing/' + filename, blob);
+      const fileRef = this.storage.ref('images/testing/' + filename);
+
+      uploadTask
+        .snapshotChanges()
+        .pipe(finalize(() => (downloadURL = fileRef.getDownloadURL())))
+        .subscribe((response) => {
+          if (response.state == 'success') {
+            firebase
+              .storage()
+              .ref()
+              .child('images/testing/' + filename)
+              .getDownloadURL()
+              .then((imageURL) => {
+
+                const imageDownloadURL = imageURL
+                console.log(imageDownloadURL);
+              });
+          }
+        });
+
     });
-    await loading.present();
-
-    const contenttype = 'image/png';
-    const b64Data = this.photoID.split(',').pop();
-    const blob = base64StringToBlob(b64Data, contenttype);
-    const filename = enteredCarModelDetails.brand + enteredCarModelDetails.model + enteredCarModelDetails.submodel + enteredCarModelDetails.startyear + enteredCarModelDetails.endyear + enteredCarModelDetails.typeofignition + '.png';
-    const uploadTask = this.storage.upload('images/submodels/' + filename, blob);
-    const fileRef = this.storage.ref('images/submodels/' + filename);
-
-    uploadTask
-      .snapshotChanges()
-      .pipe(finalize(() => (downloadURL = fileRef.getDownloadURL())))
-      .subscribe((response) => {
-        if (response.state == 'success') {
-          firebase
-            .storage()
-            .ref()
-            .child('images/submodels/' + filename)
-            .getDownloadURL()
-            .then((imageURL) => {
-
-              this.http.post('https://tapsy-stock-app-v3-database-default-rtdb.firebaseio.com/all-car-sub-models.json', {...enteredCarModelDetails, icon: imageURL}).subscribe(
-              resData => {
-                setInterval(() => {
-                  loading.dismiss();
-                }, 2000);
-
-                  loading.message = 'Successfully Uploaded';
-                  loading.spinner = null;
-                  this.clearallphotos();
-
-              }
-              );
-            });
-        }
-      });
   }
 
   clearallphotos() {
