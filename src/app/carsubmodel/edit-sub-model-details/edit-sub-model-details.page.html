@@ -43,7 +43,7 @@
         <ion-col size="3">
           <ion-item lines="none">
             <ion-label position="stacked" class="stackClass">Ignition Type</ion-label>
-            <ion-select interface="popover" class="inputClass" [ngModel]="selectedSubModel.typeofignition" name="remotetype">
+            <ion-select interface="popover" class="inputClass" [ngModel]="selectedSubModel.typeofignition" name="typeofignition">
               <ion-select-option value="Bladed">Bladed</ion-select-option>
             <ion-select-option value="Prox">Keyless</ion-select-option>
             <ion-select-option value="Slot">Slot</ion-select-option>
@@ -54,7 +54,7 @@
         <ion-col size="3">
           <ion-item lines="none">
             <ion-label position="stacked" class="stackClass">Transponder ID</ion-label>
-            <ion-select interface="popover" class="inputClass" [ngModel]="selectedSubModel.chipID" name="remotechip">
+            <ion-select interface="popover" class="inputClass" [ngModel]="selectedSubModel.chipID" name="carchip">
               <ion-select-option *ngFor="let chip of allhttprequestservice.allRemoteChips" [value]="chip">{{chip}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -74,7 +74,7 @@
         <ion-col size="3">
           <ion-item lines="none">
             <ion-label position="stacked" class="stackClass">Frequency</ion-label>
-            <ion-select class="inputClass" [ngModel]="selectedSubModel.freq" name="remotefrequency">
+            <ion-select class="inputClass" [ngModel]="selectedSubModel.freq" name="carfrequency">
               <ion-select-option *ngFor="let frequncy of allhttprequestservice.allRemoteFrequency" [value]="frequncy">{{frequncy}}</ion-select-option>
             </ion-select>
           </ion-item>

@@ -4,6 +4,7 @@ import { LoadingController } from '@ionic/angular';
 import { CarBrand } from '../car-brand';
 import { CarModel } from '../car-model';
 import { AvailableRemoteBox } from '../interfaces/available-remote-box';
+import { CarSubModel } from '../interfaces/car-sub-model';
 import { RemoteShell } from '../interfaces/remote-shell';
 import { StockAdd } from '../interfaces/stock-add';
 import { Remote } from '../remote';
@@ -745,6 +746,19 @@ export class HttpRequestServiceService {
           this.genRemoteTapsyCode = 'TAP' + [this.availableRemoteBoxNumber.availableRemoteBox] + '-';
         });
 
+  }
+
+  // update edit car sub model data to database
+
+  updateSubModelData(editSubModel: CarSubModel) {
+    this.http
+        .put(
+          `https://tapsy-stock-app-v3-database-default-rtdb.firebaseio.com/all-car-sub-models/${editSubModel.key}.json`,
+          { ...editSubModel, key: null }
+        )
+        .subscribe((resData) => {
+
+        });
   }
 
 

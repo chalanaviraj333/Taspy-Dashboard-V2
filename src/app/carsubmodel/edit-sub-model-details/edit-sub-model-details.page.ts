@@ -53,7 +53,15 @@ export class EditSubModelDetailsPage implements OnInit {
   }
 
   onSubmitNext(form: NgForm) {
-    this.commonphotoArrayUploadService.uploadimages(this.selectedSubModel);
+    // this.commonphotoArrayUploadService.uploadimages(this.selectedSubModel);
+    this.selectedSubModel.typeofignition = form.value.typeofignition;
+    this.selectedSubModel.chipID = form.value.carchip;
+    this.selectedSubModel.profile = form.value.remoteblade;
+    this.selectedSubModel.freq = form.value.carfrequency;
+    this.selectedSubModel.startyear = form.value.selectedSubModelStartYear;
+    this.selectedSubModel.endyear = form.value.selectedSubModelEndYear;
+
+    this.allhttprequestservice.updateSubModelData(this.selectedSubModel);
   }
 
   public async showActionSheet(photo: UserPhoto, position: number) {
