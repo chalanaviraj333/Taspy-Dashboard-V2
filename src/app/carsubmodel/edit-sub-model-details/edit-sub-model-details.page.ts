@@ -4,9 +4,15 @@ import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
 import { CarSubModel } from 'src/app/interfaces/car-sub-model';
 import { AllHttpServicesService } from 'src/app/services/all-http-services.service';
+import { CarSubModelEditService } from 'src/app/services/car-sub-model-edit.service';
 import { CommonPhotoArrayUploadServiceService } from 'src/app/services/common-photo-array-upload-service.service';
 import { HttpRequestServiceService } from 'src/app/services/http-request-service.service';
 import { UserPhoto } from 'src/app/user-photo';
+
+export interface ProgramDevices {
+  devicename: string;
+  checkedvalue: boolean;
+}
 
 @Component({
   selector: 'app-edit-sub-model-details',
@@ -20,12 +26,23 @@ export class EditSubModelDetailsPage implements OnInit {
   public modelstartYear: string = '';
   public modelendYear: string = '';
 
+  public programmingDevices: Array<ProgramDevices> = [
+    {devicename: 'SmartPro', checkedvalue: false},
+    {devicename: 'SmartPro with Aerial', checkedvalue: false},
+    {devicename: 'X-Tool', checkedvalue: false},
+    {devicename: 'Autel', checkedvalue: false},
+    {devicename: 'VVDI Key Plus', checkedvalue: false},
+    {devicename: 'G-Scan', checkedvalue: false},
+    {devicename: 'Super VAG', checkedvalue: false},
+  ];
+
   constructor(
     private activatedRoute: ActivatedRoute,
     public databaseService: AllHttpServicesService,
     public allhttprequestservice: HttpRequestServiceService,
     public actionSheetController: ActionSheetController,
-    public commonphotoArrayUploadService: CommonPhotoArrayUploadServiceService
+    public commonphotoArrayUploadService: CommonPhotoArrayUploadServiceService,
+    public carSubModelService: CarSubModelEditService
   ) {
 
     this.activatedRoute.paramMap.subscribe((paramMap) => {
@@ -50,10 +67,19 @@ export class EditSubModelDetailsPage implements OnInit {
     this.allhttprequestservice.getAllRemoteBlade();
     this.allhttprequestservice.getAllRemoteChips();
     this.allhttprequestservice.getAllRemoteFrequency();
+    this.carSubModelService.carsubmodelImage.webviewPath = this.selectedSubModel.icon;
+    this.carSubModelService.carFrontPhoto.webviewPath = this.selectedSubModel.useruploadImage;
+    this.carSubModelService.carRemoteLookslike.webviewPath = this.selectedSubModel.uploadremotephoto;
+
+    if (this.selectedSubModel.compatibleDevices !== undefined) {
+      this.selectedSubModel.compatibleDevices.forEach(device => {
+        this.programmingDevices.find((i) => i.devicename == device).checkedvalue = true;
+    });
+    }
+
   }
 
   onSubmitNext(form: NgForm) {
-    // this.commonphotoArrayUploadService.uploadimages(this.selectedSubModel);
     this.selectedSubModel.typeofignition = form.value.typeofignition;
     this.selectedSubModel.chipID = form.value.carchip;
     this.selectedSubModel.profile = form.value.remoteblade;
@@ -61,7 +87,15 @@ export class EditSubModelDetailsPage implements OnInit {
     this.selectedSubModel.startyear = form.value.selectedSubModelStartYear;
     this.selectedSubModel.endyear = form.value.selectedSubModelEndYear;
 
-    this.allhttprequestservice.updateSubModelData(this.selectedSubModel);
+    this.selectedSubModel.compatibleDevices = [];
+
+    this.programmingDevices.forEach(device => {
+      if (device.checkedvalue == true) {
+        this.selectedSubModel.compatibleDevices.push(device.devicename);
+      }
+    });
+
+    this.carSubModelService.uploadSubCarModel(this.selectedSubModel);
   }
 
   public async showActionSheet(photo: UserPhoto, position: number) {
@@ -84,6 +118,10 @@ export class EditSubModelDetailsPage implements OnInit {
       }]
     });
     await actionSheet.present();
+  }
+
+  updateDeviceChecked(indexofdevice: number) {
+    this.programmingDevices[indexofdevice].checkedvalue = !this.programmingDevices[indexofdevice].checkedvalue;
   }
 
 }

@@ -14,7 +14,7 @@
         <ion-col size="3">
         <ion-item lines="none">
           <ion-label position="stacked" class="stackClass">Select Brand</ion-label>
-          <ion-select class="automaticinputClass" (ionChange)="_ionChange($event)" ngModel name="selectedCarBrand" required>
+          <ion-select interface="popover" class="automaticinputClass" (ionChange)="_ionChange($event)" ngModel name="selectedCarBrand" required>
             <ion-select-option *ngFor="let carBrand of allcarbrands" [value]="carBrand">{{carBrand}}</ion-select-option>
           </ion-select>
         </ion-item>
@@ -22,7 +22,7 @@
       <ion-col size="3">
         <ion-item lines="none">
           <ion-label position="stacked" class="stackClass">Select Model</ion-label>
-          <ion-select class="automaticinputClass" ngModel name="selectedCarModel" required>
+          <ion-select interface="popover" class="automaticinputClass" ngModel name="selectedCarModel" required>
             <ion-select-option *ngFor="let carModel of selectedcarmodels" [value]="carModel">{{carModel.model}}</ion-select-option>
           </ion-select>
         </ion-item>
@@ -36,7 +36,7 @@
       <ion-col size="3">
         <ion-item lines="none">
           <ion-label position="stacked" class="stackClass">Ignition Type</ion-label>
-          <ion-select class="inputClass" type="text" ngModel="Bladed" name="typeofignition">
+          <ion-select interface="popover" class="inputClass" type="text" ngModel="Bladed" name="typeofignition">
             <ion-select-option value="Bladed">Bladed</ion-select-option>
             <ion-select-option value="Prox">Keyless</ion-select-option>
             <ion-select-option value="Slot">Slot</ion-select-option>
@@ -58,71 +58,62 @@
 
       <ion-col size="3">
         <ion-item lines="none">
-          <ion-label position="stacked" class="stackClass">Profile</ion-label>
-          <ion-input class="automaticinputClass" ngModel name="profile" type="text"></ion-input>
+          <ion-label position="stacked" class="stackClass">Blade</ion-label>
+          <ion-select interface="popover" class="inputClass" ngModel name="profile">
+            <ion-select-option *ngFor="let blade of allhttprequestservice.allRemoteBlades" [value]="blade">{{blade}}</ion-select-option>
+          </ion-select>
         </ion-item>
       </ion-col>
 
+      <!-- <ion-col size="3">
+        <ion-item lines="none">
+          <ion-label position="stacked" class="stackClass">Profile</ion-label>
+          <ion-input class="automaticinputClass" ngModel name="profile" type="text"></ion-input>
+        </ion-item>
+      </ion-col> -->
+
       <ion-col size="3">
+        <ion-item lines="none">
+          <ion-label position="stacked" class="stackClass">Transponder ID</ion-label>
+          <ion-select interface="popover" interface="popover" class="inputClass" ngModel name="chipID">
+            <ion-select-option *ngFor="let chip of allhttprequestservice.allRemoteChips" [value]="chip">{{chip}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <!-- <ion-col size="3">
         <ion-item lines="none">
           <ion-label position="stacked" class="stackClass">Chip ID</ion-label>
           <ion-input class="automaticinputClass" ngModel name="chipID" type="text"></ion-input>
         </ion-item>
-      </ion-col>
+      </ion-col> -->
 
       <ion-col size="3">
+        <ion-item lines="none">
+          <ion-label position="stacked" class="stackClass">Frequency</ion-label>
+          <ion-select interface="popover" class="inputClass" ngModel name="freq">
+            <ion-select-option *ngFor="let frequncy of allhttprequestservice.allRemoteFrequency" [value]="frequncy">{{frequncy}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <!-- <ion-col size="3">
         <ion-item lines="none">
           <ion-label position="stacked" class="stackClass">Freq</ion-label>
           <ion-input class="automaticinputClass" ngModel name="freq" type="text"></ion-input>
         </ion-item>
-      </ion-col>
+      </ion-col> -->
       </ion-row>
 
       <ion-label style="margin-left: 18px; font-size: 14px;">Programmed With</ion-label>
       <ion-row>
-        <ion-col size="3">
+        <ion-col size="3" *ngFor="let progDevice of programmingDevices; let i = index">
           <ion-item lines="none">
-            <ion-checkbox slot="start"></ion-checkbox>
-            <ion-label>Smart Pro</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col size="3">
-          <ion-item lines="none">
-            <ion-checkbox slot="start"></ion-checkbox>
-            <ion-label>Smart Pro with Aerial</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col size="3">
-          <ion-item lines="none">
-            <ion-checkbox slot="start"></ion-checkbox>
-            <ion-label>Xtool</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col size="3">
-          <ion-item lines="none">
-            <ion-checkbox slot="start"></ion-checkbox>
-            <ion-label>Autel</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col size="3">
-          <ion-item lines="none">
-            <ion-checkbox slot="start"></ion-checkbox>
-            <ion-label>VVDI Key Plus</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col size="3">
-          <ion-item lines="none">
-            <ion-checkbox slot="start"></ion-checkbox>
-            <ion-label>G-Scan</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col size="3">
-          <ion-item lines="none">
-            <ion-checkbox slot="start"></ion-checkbox>
-            <ion-label>Super VAG</ion-label>
+            <ion-checkbox name="progdevice" [checked]="progDevice.checkedvalue" slot="start" (ionChange)="updateDeviceChecked(i)"></ion-checkbox>
+            <ion-label>{{progDevice.devicename}}</ion-label>
           </ion-item>
         </ion-col>
       </ion-row>
+
       <ion-row>
         <ion-col size="4" class="ion-align-self-end ion-text-end">
           <ion-card color="danger">
@@ -161,8 +152,8 @@
               <ion-img *ngIf="carSubModelService.carRemoteLookslike.webviewPath !== ''" [src]="carSubModelService.carRemoteLookslike.webviewPath" (click)="showActionSheet(carSubModelService.carRemoteLookslike, 1)" class="uploadimageClass"></ion-img>
           </ion-card>
         </ion-col>
+        </ion-row>
 
-      </ion-row>
     </ion-grid>
    </form>
 

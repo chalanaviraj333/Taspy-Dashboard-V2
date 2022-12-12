@@ -7,7 +7,13 @@ import { CarBrand } from 'src/app/car-brand';
 import { CarModel } from 'src/app/car-model';
 import { CarSubModel } from 'src/app/interfaces/car-sub-model';
 import { CarSubModelService } from 'src/app/services/car-sub-model.service';
+import { HttpRequestServiceService } from 'src/app/services/http-request-service.service';
 import { UserPhoto } from 'src/app/user-photo';
+
+export interface ProgramDevices {
+  devicename: string;
+  checkedvalue: boolean;
+}
 
 @Component({
   selector: 'app-add-car-sub-model',
@@ -20,10 +26,28 @@ export class AddCarSubModelPage implements OnInit {
   private allcarmodels: Array<CarModel> = [];
   public selectedcarmodels: Array<CarModel> = [];
 
+  public smartpro: boolean = true;
 
-  constructor(private http: HttpClient, public carSubModelService: CarSubModelService, public actionSheetController: ActionSheetController, private toastController: ToastController) { }
+  public programmingDevices: Array<ProgramDevices> = [
+    {devicename: 'SmartPro', checkedvalue: false},
+    {devicename: 'SmartPro with Aerial', checkedvalue: false},
+    {devicename: 'X-Tool', checkedvalue: false},
+    {devicename: 'Autel', checkedvalue: false},
+    {devicename: 'VVDI Key Plus', checkedvalue: false},
+    {devicename: 'G-Scan', checkedvalue: false},
+    {devicename: 'Super VAG', checkedvalue: false},
+  ];
+
+
+  constructor(private http: HttpClient, public carSubModelService: CarSubModelService, public actionSheetController: ActionSheetController, private toastController: ToastController,
+    public allhttprequestservice: HttpRequestServiceService) { }
 
   ngOnInit() {
+    this.allhttprequestservice.getAllRemoteBlade();
+    this.allhttprequestservice.getAllRemoteChips();
+    this.allhttprequestservice.getAllRemoteFrequency();
+
+
     this.http.get<{ [key: string]: CarBrand}>('https://tapsy-stock-app-v3-database-default-rtdb.firebaseio.com/all-car-brands.json')
     .subscribe(resData => {
       for (const key in resData) {
@@ -90,6 +114,12 @@ export class AddCarSubModelPage implements OnInit {
         return;
       }
 
+      this.programmingDevices.forEach(device => {
+        if (device.checkedvalue == true) {
+          enteredCarSubModelDetails.compatibleDevices.push(device.devicename);
+        }
+      });
+
       this.carSubModelService.uploadSubCarModel(enteredCarSubModelDetails);
 
   }
@@ -137,6 +167,10 @@ export class AddCarSubModelPage implements OnInit {
       }
     });
 
+  }
+
+  updateDeviceChecked(indexofdevice: number) {
+    this.programmingDevices[indexofdevice].checkedvalue = !this.programmingDevices[indexofdevice].checkedvalue;
   }
 
 }
