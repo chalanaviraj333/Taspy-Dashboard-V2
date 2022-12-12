@@ -11,8 +11,6 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { finalize } from 'rxjs/operators';
 import firebase from 'firebase/app';
 import { HttpClient } from '@angular/common/http';
-import { CarModel } from '../car-model';
-import { CarBrand } from '../car-brand';
 import { CarSubModel } from '../interfaces/car-sub-model';
 
 @Injectable({
@@ -20,17 +18,20 @@ import { CarSubModel } from '../interfaces/car-sub-model';
 })
 export class CarSubModelService {
 
-  public photos: UserPhoto[] = [];
-  private photoID: string = '';
+  public carsubmodelImage: UserPhoto = {filepath: '', webviewPath: ''};
+  public carFrontPhoto: UserPhoto = {filepath: '', webviewPath: ''};
+  public carRemoteLookslike: UserPhoto = {filepath: '', webviewPath: ''};
+
+  private carsubmodelImagePhotoID: string = '';
+  private carFrontPhotoPhotoID: string = '';
+  private carRemoteLookslikePhotoID: string = '';
+
+  // private photoID: string = '';
   private PHOTO_STORAGE: string = 'photos';
-  public validentry: boolean = true;
-  public uploadphotobutton: boolean = false;
 
   constructor(private platform: Platform, public loadingController: LoadingController, private storage: AngularFireStorage, private http: HttpClient) { }
 
-  public async addNewToGallery() {
-    // clear previous photos from Array
-    this.photos = [];
+  public async addNewImagetoUploadArray(imagetype: string) {
 
     // Take a photo
     const capturedPhoto = await Camera.getPhoto({
@@ -41,17 +42,19 @@ export class CarSubModelService {
 
     const savedImageFile = await this.savePicture(capturedPhoto);
 
-    this.photoID = await this.readAsBase64(capturedPhoto);
+    if (imagetype == 'submodelicon') {
+      this.carsubmodelImagePhotoID = await this.readAsBase64(capturedPhoto);
+      this.carsubmodelImage = savedImageFile;
+    }
+    else if (imagetype == 'carfrontimage') {
+      this.carFrontPhotoPhotoID = await this.readAsBase64(capturedPhoto);
+      this.carFrontPhoto = savedImageFile;
+    }
+    else if (imagetype == 'remotelookslikephoto') {
+      this.carRemoteLookslikePhotoID = await this.readAsBase64(capturedPhoto);
+      this.carRemoteLookslike = savedImageFile;
+    }
 
-    // Add new photo to Photos array
-    this.photos.unshift(savedImageFile);
-    this.validentry = false;
-    this.uploadphotobutton = true;
-    // Cache all photo data for future retrieval
-    Storage.set({
-      key: this.PHOTO_STORAGE,
-      value: JSON.stringify(this.photos),
-    });
   }
 
   private async savePicture(cameraPhoto: Photo) {
@@ -115,15 +118,8 @@ export class CarSubModelService {
     // Delete picture by removing it from reference data and the filesystem
   public async deletePicture(photo: UserPhoto, position: number) {
     // Remove this photo from the Photos reference data array
-    this.photos.splice(position, 1);
-    this.validentry = true;
-    this.uploadphotobutton = false;
+    this.carsubmodelImage = {filepath: '', webviewPath: ''};
 
-    // Update photos array cache by overwriting the existing photo array
-    Storage.set({
-      key: this.PHOTO_STORAGE,
-      value: JSON.stringify(this.photos),
-    });
 
     // delete photo file from filesystem
     const filename = photo.filepath.substr(photo.filepath.lastIndexOf('/') + 1);
@@ -134,7 +130,6 @@ export class CarSubModelService {
   }
 
   async uploadSubCarModel(enteredCarModelDetails: CarSubModel) {
-    let downloadURL: Observable<string>;
 
     const loading = await this.loadingController.create({
       cssClass: 'uploadingproduct-css-class',
@@ -143,45 +138,133 @@ export class CarSubModelService {
     });
     await loading.present();
 
+    this.uploadCarIcontoStorage(enteredCarModelDetails);
+  }
+
+  uploadCarIcontoStorage(enteredCarModelDetails: CarSubModel) {
+    let downloadURL: Observable<string>;
+
     const contenttype = 'image/png';
-    const b64Data = this.photoID.split(',').pop();
+    const b64Data = this.carsubmodelImagePhotoID.split(',').pop();
     const blob = base64StringToBlob(b64Data, contenttype);
-    const filename = enteredCarModelDetails.brand + enteredCarModelDetails.model + enteredCarModelDetails.submodel + enteredCarModelDetails.startyear + enteredCarModelDetails.endyear + enteredCarModelDetails.typeofignition + '.png';
-    const uploadTask = this.storage.upload('images/submodels/' + filename, blob);
-    const fileRef = this.storage.ref('images/submodels/' + filename);
+    const folder = enteredCarModelDetails.brand + enteredCarModelDetails.model + enteredCarModelDetails.submodel + enteredCarModelDetails.startyear + enteredCarModelDetails.endyear + enteredCarModelDetails.typeofignition;
+    const filename = enteredCarModelDetails.brand + enteredCarModelDetails.model + enteredCarModelDetails.submodel + enteredCarModelDetails.startyear + enteredCarModelDetails.endyear + enteredCarModelDetails.typeofignition + 'caricon' + '.png';
+    const uploadTask = this.storage.upload('images/submodels/' + folder + '/' + filename, blob);
+    const fileRef = this.storage.ref('images/submodels/' + folder + '/' + filename);
 
     uploadTask
-      .snapshotChanges()
-      .pipe(finalize(() => (downloadURL = fileRef.getDownloadURL())))
-      .subscribe((response) => {
-        if (response.state == 'success') {
-          firebase
-            .storage()
-            .ref()
-            .child('images/submodels/' + filename)
-            .getDownloadURL()
-            .then((imageURL) => {
+    .snapshotChanges()
+    .pipe(finalize(() => (downloadURL = fileRef.getDownloadURL())))
+    .subscribe((response) => {
+      if (response.state == 'success') {
+        firebase
+          .storage()
+          .ref()
+          .child('images/submodels/' + folder + '/' + filename)
+          .getDownloadURL()
+          .then((imageURL) => {
+            enteredCarModelDetails.icon = imageURL;
 
-              this.http.post('https://tapsy-stock-app-v3-database-default-rtdb.firebaseio.com/all-car-sub-models.json', {...enteredCarModelDetails, icon: imageURL}).subscribe(
-              resData => {
-                setInterval(() => {
-                  loading.dismiss();
-                }, 2000);
+            this.uploadCarFrontImageToStorage(enteredCarModelDetails);
+          });
+      }
+    });
 
-                  loading.message = 'Successfully Uploaded';
-                  loading.spinner = null;
-                  this.clearallphotos();
+  }
 
-              }
-              );
-            });
-        }
-      });
+  uploadCarFrontImageToStorage(enteredCarModelDetails: CarSubModel) {
+    let downloadURL: Observable<string>;
+
+    if (this.carFrontPhoto.webviewPath == '') {
+      this.uploadCarOriginalKeyPhotoToStorage(enteredCarModelDetails);
+      return;
+    }
+
+
+    const contenttype = 'image/png';
+    const b64Data = this.carFrontPhotoPhotoID.split(',').pop();
+    const blob = base64StringToBlob(b64Data, contenttype);
+    const folder = enteredCarModelDetails.brand + enteredCarModelDetails.model + enteredCarModelDetails.submodel + enteredCarModelDetails.startyear + enteredCarModelDetails.endyear + enteredCarModelDetails.typeofignition;
+    const filename = enteredCarModelDetails.brand + enteredCarModelDetails.model + enteredCarModelDetails.submodel + enteredCarModelDetails.startyear + enteredCarModelDetails.endyear + enteredCarModelDetails.typeofignition + 'carfrontimage' + '.png';
+    const uploadTask = this.storage.upload('images/submodels/' + folder + '/' + filename, blob);
+    const fileRef = this.storage.ref('images/submodels/' + folder + '/' + filename);
+
+    uploadTask
+    .snapshotChanges()
+    .pipe(finalize(() => (downloadURL = fileRef.getDownloadURL())))
+    .subscribe((response) => {
+      if (response.state == 'success') {
+        firebase
+          .storage()
+          .ref()
+          .child('images/submodels/' + folder + '/' + filename)
+          .getDownloadURL()
+          .then((imageURL) => {
+            enteredCarModelDetails.useruploadImage = imageURL;
+
+            this.uploadCarOriginalKeyPhotoToStorage(enteredCarModelDetails);
+          });
+      }
+    });
+  }
+
+  uploadCarOriginalKeyPhotoToStorage(enteredCarModelDetails: CarSubModel) {
+    let downloadURL: Observable<string>;
+
+    if (this.carRemoteLookslike.webviewPath == '') {
+      this.uploadCarInformationstoDatabase(enteredCarModelDetails);
+      return;
+    }
+
+    const contenttype = 'image/png';
+    const b64Data = this.carRemoteLookslikePhotoID.split(',').pop();
+    const blob = base64StringToBlob(b64Data, contenttype);
+    const folder = enteredCarModelDetails.brand + enteredCarModelDetails.model + enteredCarModelDetails.submodel + enteredCarModelDetails.startyear + enteredCarModelDetails.endyear + enteredCarModelDetails.typeofignition;
+    const filename = enteredCarModelDetails.brand + enteredCarModelDetails.model + enteredCarModelDetails.submodel + enteredCarModelDetails.startyear + enteredCarModelDetails.endyear + enteredCarModelDetails.typeofignition + 'caroriginalremotephoto' + '.png';
+    const uploadTask = this.storage.upload('images/submodels/' + folder + '/' + filename, blob);
+    const fileRef = this.storage.ref('images/submodels/' + folder + '/' + filename);
+
+    uploadTask
+    .snapshotChanges()
+    .pipe(finalize(() => (downloadURL = fileRef.getDownloadURL())))
+    .subscribe((response) => {
+      if (response.state == 'success') {
+        firebase
+          .storage()
+          .ref()
+          .child('images/submodels/' + folder + '/' + filename)
+          .getDownloadURL()
+          .then((imageURL) => {
+            enteredCarModelDetails.uploadremotephoto = imageURL;
+
+            this.uploadCarInformationstoDatabase(enteredCarModelDetails);
+          });
+      }
+    });
+
+  }
+
+
+  uploadCarInformationstoDatabase(enteredCarModelDetails: CarSubModel) {
+    this.http.post('https://tapsy-stock-app-v3-database-default-rtdb.firebaseio.com/all-car-sub-models.json', enteredCarModelDetails).subscribe(
+      resData => {
+        setInterval(() => {
+          this.loadingController.dismiss();
+        }, 2000);
+
+          this.clearallphotos();
+
+      }
+      );
   }
 
   clearallphotos() {
-    this.photos = [];
-    this.uploadphotobutton = false;
-    this.validentry = true;
+    this.carsubmodelImage = {filepath: '', webviewPath: ''};
+    this.carFrontPhoto = {filepath: '', webviewPath: ''};
+    this.carRemoteLookslike = {filepath: '', webviewPath: ''};
+
+    this.carsubmodelImagePhotoID = '';
+    this.carFrontPhotoPhotoID = '';
+    this.carRemoteLookslikePhotoID = '';
   }
 }

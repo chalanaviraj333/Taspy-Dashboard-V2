@@ -8,6 +8,8 @@ export interface CarSubModel {
   submodel: string;
   typeofignition: string;
   icon: string;
+  useruploadImage: string;
+  uploadremotephoto: string;
   startyear: number;
   endyear: number;
   compatibleremotes: Array<Remote>;

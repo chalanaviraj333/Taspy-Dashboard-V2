@@ -54,7 +54,7 @@ export class AddCarSubModelPage implements OnInit {
 
   onSubmitNext(form: NgForm) {
 
-    if (this.carSubModelService.validentry == true) {
+    if (this.carSubModelService.carsubmodelImage.filepath == '') {
       this.presentToastAddUpload('Please add a photo first.');
       return;
     }
@@ -69,6 +69,8 @@ export class AddCarSubModelPage implements OnInit {
         chipID: form.value.chipID,
         freq: form.value.freq,
         icon: form.value.selectedCarBrand + form.value.selectedCarModel.model + form.value.enteredCarSubModel,
+        useruploadImage: '',
+        uploadremotephoto: '',
         startyear: form.value.selectedSubModelStartYear,
         endyear: form.value.selectedSubModelEndYear,
         compatibleremotes: null,
@@ -85,11 +87,6 @@ export class AddCarSubModelPage implements OnInit {
       if (enteredCarSubModelDetails.startyear < form.value.selectedCarModel.startyear)
       {
         this.presentToastAddUpload('Start Year is below model start year.');
-        return;
-      }
-      else if (enteredCarSubModelDetails.endyear > form.value.selectedCarModel.endyear)
-      {
-        this.presentToastAddUpload('End Year is above model end year.');
         return;
       }
 

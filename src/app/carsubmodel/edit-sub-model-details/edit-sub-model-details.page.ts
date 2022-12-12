@@ -15,7 +15,7 @@ import { UserPhoto } from 'src/app/user-photo';
 })
 export class EditSubModelDetailsPage implements OnInit {
 
-  public selectedSubModel: CarSubModel = {key: '', brand: '', model: '', submodel: '', typeofignition: '', icon: '', startyear: 2001, endyear: 2002, compatibleremotes: [], compatibleremoteshells: [], chipID: '', freq: '', profile: '',
+  public selectedSubModel: CarSubModel = {key: '', brand: '', model: '', submodel: '', typeofignition: '', icon: '', useruploadImage: '', uploadremotephoto: '', startyear: 2001, endyear: 2002, compatibleremotes: [], compatibleremoteshells: [], chipID: '', freq: '', profile: '',
   allLostKeyPrice: 0, spareKeyPrice: 0, compatibleDevices: [], allLostKeySpecialNotes: [], spareKeySpecialNotes: [], allLostKeyPriceUpdateDate: new Date, spareKeyPriceUpdateDate: new Date};
   public modelstartYear: string = '';
   public modelendYear: string = '';

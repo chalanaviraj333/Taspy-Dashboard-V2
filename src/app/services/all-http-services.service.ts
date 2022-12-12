@@ -98,6 +98,8 @@ export class AllHttpServicesService {
                 submodel: resData[key].submodel,
                 typeofignition: resData[key].typeofignition,
                 icon: resData[key].icon,
+                useruploadImage: resData[key].useruploadImage,
+                uploadremotephoto: resData[key].uploadremotephoto,
                 startyear: resData[key].startyear,
                 endyear: resData[key].endyear,
                 compatibleremotes: resData[key].compatibleremotes,

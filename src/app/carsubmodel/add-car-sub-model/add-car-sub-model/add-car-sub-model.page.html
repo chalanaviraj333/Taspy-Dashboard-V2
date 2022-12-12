@@ -77,16 +77,91 @@
         </ion-item>
       </ion-col>
       </ion-row>
+
+      <ion-label style="margin-left: 18px; font-size: 14px;">Programmed With</ion-label>
       <ion-row>
-        <ion-col size="1" class="ion-align-self-end ion-text-end">
-          <ion-button (click)="carSubModelService.addNewToGallery()" [disabled]="carSubModelService.uploadphotobutton">
-            <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
-          </ion-button>
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>Smart Pro</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>Smart Pro with Aerial</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>Xtool</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>Autel</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>VVDI Key Plus</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>G-Scan</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>Super VAG</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4" class="ion-align-self-end ion-text-end">
+          <ion-card color="danger">
+            <ion-item lines="none">
+              <ion-label>Add Submodel Icon</ion-label>
+              <ion-button (click)="carSubModelService.addNewImagetoUploadArray('submodelicon')">
+                <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+              </ion-button>
+            </ion-item>
+              <ion-img *ngIf="carSubModelService.carsubmodelImage.webviewPath !== ''" [src]="carSubModelService.carsubmodelImage.webviewPath" (click)="showActionSheet(carSubModelService.carsubmodelImage, 1)" class="uploadimageClass"></ion-img>
+          </ion-card>
         </ion-col>
 
-        <ion-col size="4" *ngFor="let photo of carSubModelService.photos; index as position">
-          <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)" class="uploadimageClass"></ion-img>
+        <!-- car front photo -->
+        <ion-col size="4" class="ion-align-self-end ion-text-end">
+          <ion-card color="danger">
+            <ion-item lines="none">
+              <ion-label>Add Car Front Photo</ion-label>
+              <ion-button (click)="carSubModelService.addNewImagetoUploadArray('carfrontimage')">
+                <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+              </ion-button>
+            </ion-item>
+              <ion-img *ngIf="carSubModelService.carFrontPhoto.webviewPath !== ''" [src]="carSubModelService.carFrontPhoto.webviewPath" (click)="showActionSheet(carSubModelService.carFrontPhoto, 1)" class="uploadimageClass"></ion-img>
+          </ion-card>
         </ion-col>
+
+        <!-- car remote photo -->
+        <ion-col size="4" class="ion-align-self-end ion-text-end">
+          <ion-card color="danger">
+            <ion-item lines="none">
+              <ion-label>Add Remote Photo</ion-label>
+              <ion-button (click)="carSubModelService.addNewImagetoUploadArray('remotelookslikephoto')">
+                <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+              </ion-button>
+            </ion-item>
+              <ion-img *ngIf="carSubModelService.carRemoteLookslike.webviewPath !== ''" [src]="carSubModelService.carRemoteLookslike.webviewPath" (click)="showActionSheet(carSubModelService.carRemoteLookslike, 1)" class="uploadimageClass"></ion-img>
+          </ion-card>
+        </ion-col>
+
       </ion-row>
     </ion-grid>
    </form>
