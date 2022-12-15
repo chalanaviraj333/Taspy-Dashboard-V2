@@ -172,6 +172,23 @@ const routes: Routes = [
     path: 'car-brand-page/car-model-page/car-sub-model-page/:selectedBrand/:selectedModel/:startyear/:endyear',
     loadChildren: () => import('./select-car-sub-model/all-car-sub-model/all-car-sub-model.module').then( m => m.AllCarSubModelPageModule)
   },
+  {
+    path: 'car-brand-page/car-model-page/car-sub-model-page/car-sub-model-info/:startyear/:endyear',
+    loadChildren: () => import('./car-sub-model-info/car-sub-model-info.module').then( m => m.CarSubModelInfoPageModule)
+  },
+  {
+    path: 'add-keydiy-remote',
+    loadChildren: () => import('./add-keydiy-remote/add-keydiy-remote.module').then( m => m.AddKeydiyRemotePageModule)
+  },
+  {
+    path: 'all-keydiy-remotes',
+    loadChildren: () => import('./all-keydiy-remotes/all-keydiy-remotes.module').then( m => m.AllKeydiyRemotesPageModule)
+  },  {
+    path: 'add-verified-product',
+    loadChildren: () => import('./add-verified-product/add-verified-product.module').then( m => m.AddVerifiedProductPageModule)
+  },
+
+
 
 
 ];

@@ -31,8 +31,6 @@ export class AddcarbrandPage implements OnInit {
       icon: form.value.carbrandname,
     };
 
-    console.log(enteredCarBrandDetails);
-
     this.carModelService.uploadCarBrand(enteredCarBrandDetails);
   }
 

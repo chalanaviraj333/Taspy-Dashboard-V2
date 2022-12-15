@@ -37,7 +37,6 @@ export class AllGarageRemotesPage implements OnInit {
     // perform view remote detail page loading
   async onClick(selectedRemote: GarageRemote) {
     // await this.modelService.onClickViewItem(selectedRemote);
-    console.log(selectedRemote);
   }
 
 }

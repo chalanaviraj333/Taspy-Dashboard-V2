@@ -1,8 +1,15 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>ALL REMOTES</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <div class="left-class">
+      <ion-title>ALL REMOTES</ion-title>
+    </div>
+    <div class="right-class">
+      <ion-label style="font-size: 14px; margin-top: 18px;">{{allhttprequestservice.filteredRemotes.length}} Products</ion-label>
+    </div>
   </ion-toolbar>
-  <!-- doing nothing this serach bar -->
   <ion-toolbar color="primary">
     <ion-searchbar
       #search
@@ -13,6 +20,7 @@
       animated
     ></ion-searchbar>
   </ion-toolbar>
+  <ion-progress-bar color="success" *ngIf="this.allhttprequestservice.isFetchindData" type="indeterminate"></ion-progress-bar>
 </ion-header>
 
 <ion-content
@@ -20,7 +28,7 @@
   (ionScrollStart)="logScrollStart()"
 >
 
-<ion-card *ngFor="let remote of allhttprequestservice.filteredRemotes" (click)="onClick(remote)"
+<ion-card *ngFor="let remote of allhttprequestservice.filteredRemotes" [ngClass]="{'oemgenuineclass' : remote.suppliertype == 'OEM' || remote.suppliertype == 'Genuine'}" (click)="onClick(remote)"
     class="ion-activatable ripple-parent ion-no-margin">
       <ion-card-content>
         <ion-grid class="ion-no-padding">
@@ -45,21 +53,25 @@
               >
             </ion-label>
 
+            <br>
+            <ion-badge color="warning" *ngIf="remote.remotetype == 'PROX'">Smart</ion-badge>
+            <ion-badge color="success" *ngIf="remote.suppliertype == 'OEM' || remote.suppliertype == 'Genuine'">{{remote.suppliertype}}</ion-badge>
             <ion-card-subtitle color="dark" class="primarytext">{{remote.frequency}}</ion-card-subtitle>
             <ion-card-subtitle color="dark" class="primarytext">{{remote.inbuildblade}}</ion-card-subtitle>
             <ion-card-subtitle color="dark" class="primarytext">{{remote.inbuildchip}}</ion-card-subtitle>
 
 
+
           </ion-col>
           <ion-col size="8" class="ion-text-end ion-no-margin">
-            <img src="{{remote.image}}" width="80" height="80" />
+            <img style="border-radius: 5px;" src="{{remote.image}}" width="80" height="80" />
           </ion-col>
 
           <ion-col size="1" class="ion-text-end">
             <ion-button (click)="onClickEditRemote($event, remote)" fill="clear">
-              <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+              <ion-icon color="dark" slot="icon-only" name="create-outline"></ion-icon>
             </ion-button>
-            <ion-button (click)="onClickDelete($event, remote)" fill="clear">
+            <ion-button (click)="onClickDelete($event, remote)" fill="clear" disabled>
               <ion-icon slot="icon-only" color="danger" name="trash-outline"></ion-icon>
             </ion-button>
           </ion-col>

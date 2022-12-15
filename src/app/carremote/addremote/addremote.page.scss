@@ -1,26 +1,23 @@
 .inputClass {
-  border: solid 1px #3880ff;
-  border-radius: 8px;
+  border: solid 2px #61616173;
+  border-radius: 3px;
   padding-left: 10px;
   font-family: poppins,sans-serif;
   font-weight: 500;
   font-style: normal;
 }
 
-.automaticinputClass {
-  border: solid 1px #eb445a;
-  border-radius: 8px;
-  padding-left: 10px;
-  font-family: poppins,sans-serif;
-  font-weight: 500;
-  font-style: normal;
-}
 
 .stackClass {
-  margin-bottom: 10px;
+  margin: 10px 0px 0px 5px;
+  font-size: 12px;
   font-family: poppins,sans-serif;
   font-weight: 500;
   font-style: normal;
+}
+
+.required-detail-class {
+  color: rgb(169, 0, 0);
 }
 
 .remotetypeclass {

@@ -19,14 +19,11 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let model of this.databaseService.searchCarModels">
+      <ion-col size="3" *ngFor="let model of this.databaseService.searchCarModels">
         <ion-card *ngIf="model.show" (click)="onClick(model.model, model.startyear, model.endyear)" class="ion-activatable ripple-parent ion-no-margin">
           <ion-card-header>
             <ion-label color="dark" id="carmodelID">{{model.model}}</ion-label>
           </ion-card-header>
-          <ion-card-content>
-            <ion-note color="danger" id="yearsRangeID">{{model.startyear}}-{{model.endyear}}</ion-note>
-          </ion-card-content>
           <ion-ripple-effect type="unbounded"></ion-ripple-effect>
         </ion-card>
 

@@ -98,12 +98,22 @@
       </ion-row>
 
       <!--  -->
-      <ion-label style="margin-left: 18px; font-size: 14px;">Programmed With</ion-label>
+      <ion-label style="margin-left: 18px; font-size: 14px;">Programmed With Spare</ion-label>
       <ion-row>
-        <ion-col size="3" *ngFor="let progDevice of programmingDevices; let i = index">
+        <ion-col size="3" *ngFor="let progDevice of programmingDevicesSpare; let i = index">
           <ion-item lines="none">
-            <ion-checkbox name="progdevice" [checked]="progDevice.checkedvalue" (ionChange)="updateDeviceChecked(i)" slot="start"></ion-checkbox>
+            <ion-checkbox name="progdevice" color="success" [checked]="progDevice.checkedvalue" (ionChange)="updateDeviceCheckedSpare(i)" slot="start"></ion-checkbox>
             <ion-label>{{progDevice.devicename}}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-label color="danger" style="margin-left: 18px; font-size: 14px;">Programmed With All Lost</ion-label>
+      <ion-row>
+        <ion-col size="3" *ngFor="let progDevice of programmingDevicesAllLost; let i = index">
+          <ion-item lines="none">
+            <ion-checkbox name="progdevice" color="danger" [checked]="progDevice.checkedvalue" (ionChange)="updateDeviceCheckedAllLost(i)" slot="start"></ion-checkbox>
+            <ion-label color="danger">{{progDevice.devicename}}</ion-label>
           </ion-item>
         </ion-col>
       </ion-row>

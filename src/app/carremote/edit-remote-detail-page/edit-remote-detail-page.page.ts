@@ -81,6 +81,8 @@ export class EditRemoteDetailPagePage implements OnInit {
       costperitem: null,
       remotetype: form.value.remotetype,
       suppliertype: form.value.suppliertype,
+      partid: {mpn: form.value.partid, price: form.value.partprice},
+      supplierprodcode: form.value.supplierprodcode,
       productType: 'remote',
       image: this.allhttprequestservice.editRemote.image,
       notes: this.allhttprequestservice.editRemote.notes,

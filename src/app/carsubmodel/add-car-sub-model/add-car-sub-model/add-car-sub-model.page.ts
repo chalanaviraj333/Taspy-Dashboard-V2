@@ -26,9 +26,7 @@ export class AddCarSubModelPage implements OnInit {
   private allcarmodels: Array<CarModel> = [];
   public selectedcarmodels: Array<CarModel> = [];
 
-  public smartpro: boolean = true;
-
-  public programmingDevices: Array<ProgramDevices> = [
+  public programmingDevicesSpare: Array<ProgramDevices> = [
     {devicename: 'SmartPro', checkedvalue: false},
     {devicename: 'SmartPro with Aerial', checkedvalue: false},
     {devicename: 'X-Tool', checkedvalue: false},
@@ -36,6 +34,20 @@ export class AddCarSubModelPage implements OnInit {
     {devicename: 'VVDI Key Plus', checkedvalue: false},
     {devicename: 'G-Scan', checkedvalue: false},
     {devicename: 'Super VAG', checkedvalue: false},
+    {devicename: 'KEYDIY Chip Clone', checkedvalue: false},
+    {devicename: 'VVDI Chip Clone', checkedvalue: false},
+  ];
+
+  public programmingDevicesAllLost: Array<ProgramDevices> = [
+    {devicename: 'SmartPro', checkedvalue: false},
+    {devicename: 'SmartPro with Aerial', checkedvalue: false},
+    {devicename: 'X-Tool', checkedvalue: false},
+    {devicename: 'Autel', checkedvalue: false},
+    {devicename: 'VVDI Key Plus', checkedvalue: false},
+    {devicename: 'G-Scan', checkedvalue: false},
+    {devicename: 'Super VAG', checkedvalue: false},
+    {devicename: 'KEYDIY Chip Clone', checkedvalue: false},
+    {devicename: 'VVDI Chip Clone', checkedvalue: false},
   ];
 
 
@@ -99,13 +111,16 @@ export class AddCarSubModelPage implements OnInit {
         endyear: form.value.selectedSubModelEndYear,
         compatibleremotes: null,
         compatibleremoteshells: null,
+        compatibleKDRemotes: null,
+        compatibleXhorseRemote: null,
         allLostKeyPrice: 0,
         spareKeyPrice: 0,
         allLostKeySpecialNotes: [],
         spareKeySpecialNotes: [],
         allLostKeyPriceUpdateDate: new Date,
         spareKeyPriceUpdateDate: new Date,
-        compatibleDevices: []
+        compatibleDevicesSpare: [],
+        compatibleDevicesAllLost: []
          }
 
       if (enteredCarSubModelDetails.startyear < form.value.selectedCarModel.startyear)
@@ -114,9 +129,15 @@ export class AddCarSubModelPage implements OnInit {
         return;
       }
 
-      this.programmingDevices.forEach(device => {
+      this.programmingDevicesSpare.forEach(device => {
         if (device.checkedvalue == true) {
-          enteredCarSubModelDetails.compatibleDevices.push(device.devicename);
+          enteredCarSubModelDetails.compatibleDevicesSpare.push(device.devicename);
+        }
+      });
+
+      this.programmingDevicesAllLost.forEach(device => {
+        if (device.checkedvalue == true) {
+          enteredCarSubModelDetails.compatibleDevicesAllLost.push(device.devicename);
         }
       });
 
@@ -169,8 +190,12 @@ export class AddCarSubModelPage implements OnInit {
 
   }
 
-  updateDeviceChecked(indexofdevice: number) {
-    this.programmingDevices[indexofdevice].checkedvalue = !this.programmingDevices[indexofdevice].checkedvalue;
+  updateDeviceCheckedSpare(indexofdevice: number) {
+    this.programmingDevicesSpare[indexofdevice].checkedvalue = !this.programmingDevicesSpare[indexofdevice].checkedvalue;
+  }
+
+  updateDeviceCheckedAllLost(indexofdevice: number) {
+    this.programmingDevicesAllLost[indexofdevice].checkedvalue = !this.programmingDevicesAllLost[indexofdevice].checkedvalue;
   }
 
 }

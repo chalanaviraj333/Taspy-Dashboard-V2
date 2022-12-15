@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>All KEYDIY REMOTES</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="3" *ngFor="let keydiyremote of keyProductUploadService.allkeydiyremotes">
+        <ion-card>
+          <ion-card-header>
+              {{keydiyremote.name}}
+              <ion-badge color="danger">{{keydiyremote.series}}</ion-badge>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-img src="{{keydiyremote.image}}"></ion-img>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

@@ -7,7 +7,6 @@ import { ModelControllerServiceService } from 'src/app/services/model-controller
 import { HttpRequestServiceService } from 'src/app/services/http-request-service.service';
 import { PhotoDetails } from 'src/app/interfaces/photo-details';
 import { RemotePhotoRequestService } from 'src/app/services/remote-photo-request.service';
-import { GetAvailableBoxNumberService } from 'src/app/services/get-available-box-number.service';
 
 @Component({
   selector: 'app-addremote',
@@ -20,15 +19,16 @@ export class AddremotePage implements OnInit {
   private compitableBrandsunsorted: Array<string> = [];
   private compitableBrands: Array<string> = [];
   public selectedcarmodelyears: Array<number>;
-  public availableShell: string = "W";
+
+  // generatedtapsycode
+  public autogentapsyCode: string = 'TAP'
 
   constructor(
      public actionSheetController: ActionSheetController,
       private toastController: ToastController,
       private modelController: ModelControllerServiceService,
       public allhttprequestservice: HttpRequestServiceService,
-      public remotePhotoService: RemotePhotoRequestService,
-      public getAvailableBoxNumberService: GetAvailableBoxNumberService) {
+      public remotePhotoService: RemotePhotoRequestService) {
 
   }
 
@@ -43,8 +43,6 @@ export class AddremotePage implements OnInit {
     this.allhttprequestservice.getAllRemoteChips();
     this.allhttprequestservice.getAllRemoteFrequency();
     this.allhttprequestservice.getAllRemoteBatteries();
-    this.allhttprequestservice.getAvailableRemoteBox();
-    this.getAvailableBoxNumberService.getAvailableBoxNumbers();
 
     // get all car brands from database
     this.allhttprequestservice.getcarbrands();
@@ -104,6 +102,12 @@ export class AddremotePage implements OnInit {
       this.presentToastAddCarBrands();
       return;
     }
+    this.autogentapsyCode = form.value.tapsycode;
+
+    this.compitableBrands.forEach(brand => {
+      this.autogentapsyCode = this.autogentapsyCode.concat('-' + brand.toString());
+    });
+
 
     let enteredtapsycode: string = form.value.tapsycode.toUpperCase();
 
@@ -122,6 +126,8 @@ export class AddremotePage implements OnInit {
         remotetype: form.value.remotetype,
         suppliertype: form.value.suppliertype,
         productType: 'remote',
+        partid: {mpn: form.value.partid, price: form.value.partprice},
+        supplierprodcode: form.value.supplierprodcode,
         image: enteredtapsycode,
         notes: [{username: 'Chalana', notebodyText: form.value.remotenotes}],
         qtyavailable: form.value.qtyavailable,
@@ -133,10 +139,7 @@ export class AddremotePage implements OnInit {
         compitablebrands: this.compitableBrands
       }
 
-
       await this.remotePhotoService.uploadPhotoandItem(enteredRemoteDetails);
-      this.allhttprequestservice.availableRemoteBoxNumber.availableRemoteBox++
-      this.allhttprequestservice.uploadAvailableRemoteBox();
 
     } else {
       const enteredRemoteDetails: Remote = {
@@ -153,6 +156,8 @@ export class AddremotePage implements OnInit {
         remotetype: form.value.remotetype,
         suppliertype: form.value.suppliertype,
         productType: 'remote',
+        partid: {mpn: form.value.partid, price: form.value.partprice},
+        supplierprodcode: form.value.supplierprodcode,
         image: enteredtapsycode,
         notes: [],
         qtyavailable: form.value.qtyavailable,
@@ -165,8 +170,6 @@ export class AddremotePage implements OnInit {
       }
 
       await this.remotePhotoService.uploadPhotoandItem(enteredRemoteDetails);
-      this.allhttprequestservice.availableRemoteBoxNumber.availableRemoteBox++
-      this.allhttprequestservice.uploadAvailableRemoteBox();
     }
 
   }
@@ -215,6 +218,11 @@ export class AddremotePage implements OnInit {
   // perform add new component to the remote
   onClickAddNew(newitemCategory: string) {
     this.modelController.onClickAddNewRemoteComponent(newitemCategory);
+  }
+
+  changetapsycode(event) {
+    const entervalue = event.target.value;
+    this.autogentapsyCode = this.autogentapsyCode.concat('-' + entervalue.toString());
   }
 
 

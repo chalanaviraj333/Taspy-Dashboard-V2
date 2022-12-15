@@ -1,11 +1,7 @@
 ion-card {
-  box-shadow: 1px 1px 5px 0px rgba(84, 6, 156, 0.315);
-  border-radius: 15px;
+  border-radius: 5px;
   text-align: left;
-  margin-top: 7px;
-  margin-bottom: 7px;
-  margin-left: 30px;
-  margin-right: 30px;
+  margin: 5px 10px;
 }
 
 #boxNumber {
@@ -17,6 +13,11 @@ ion-chip {
   margin-top: 20px;
   width: 50%;
   justify-content: center;
+}
+
+ion-badge {
+  border-radius: 10px;
+  margin-left: 10px;
 }
 
 
@@ -73,3 +74,15 @@ font-style: normal;
   font-weight: 700;
   font-style: normal;
 }
+
+
+.right-class {
+  float: right;
+  padding-right: 20px;
+  padding-top: 10px;
+}
+
+.left-class {
+  float: left;
+}
+

@@ -43,7 +43,6 @@ export class CommonPhotoArrayUploadServiceService {
 
     const photoID = await this.readAsBase64(capturedPhoto);
     this.photoIDArray.push(photoID);
-    console.log(this.photoIDArray);
 
     // Add new photo to Photos array
     this.photos.unshift(savedImageFile);
@@ -169,7 +168,6 @@ export class CommonPhotoArrayUploadServiceService {
               .then((imageURL) => {
 
                 const imageDownloadURL = imageURL
-                console.log(imageDownloadURL);
               });
           }
         });

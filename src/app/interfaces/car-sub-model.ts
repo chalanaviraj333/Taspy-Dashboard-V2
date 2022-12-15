@@ -1,5 +1,6 @@
 import { Remote } from "../remote";
 import { RemoteShell } from "./remote-shell";
+import { WorkOnProducts } from "./work-on-products";
 
 export interface CarSubModel {
   key: string;
@@ -12,14 +13,17 @@ export interface CarSubModel {
   uploadremotephoto: string;
   startyear: number;
   endyear: number;
-  compatibleremotes: Array<Remote>;
-  compatibleremoteshells: Array<RemoteShell>;
+  compatibleremotes: Array<WorkOnProducts>;
+  compatibleremoteshells: Array<WorkOnProducts>;
+  compatibleKDRemotes: Array<WorkOnProducts>;
+  compatibleXhorseRemote: Array<WorkOnProducts>;
   chipID: string;
   freq: string;
   profile: string;
   allLostKeyPrice: number;
   spareKeyPrice: number;
-  compatibleDevices: Array<string>;
+  compatibleDevicesSpare: Array<string>;
+  compatibleDevicesAllLost: Array<string>;
   allLostKeySpecialNotes: Array<string>;
   spareKeySpecialNotes: Array<string>;
   allLostKeyPriceUpdateDate: Date;

@@ -1,4 +1,5 @@
 import { Car } from './car';
+import { DealerPartDetails } from './interfaces/dealer-part-details';
 import { RemoteNote } from './remote-note';
 
 export interface Remote {
@@ -15,6 +16,8 @@ export interface Remote {
   remotetype?: string;
   productType: string;
   suppliertype: string;
+  partid: DealerPartDetails;
+  supplierprodcode: string;
   image?: string;
   notes?: Array<RemoteNote>;
   qtyavailable: number;

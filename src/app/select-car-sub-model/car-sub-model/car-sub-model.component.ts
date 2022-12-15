@@ -51,9 +51,13 @@ export class CarSubModelComponent implements OnInit {
       }
     }
 
+    // this.router.navigate(
+    //   ["car-brand-page/car-model-page/car-sub-model-page/edit-sub-model-details/" + this.modelStartYear + '/' + this.modelEndYear],
+    //   navigationExtras);
+
     this.router.navigate(
-       ["car-brand-page/car-model-page/car-sub-model-page/edit-sub-model-details/" + this.modelStartYear + '/' + this.modelEndYear],
-        navigationExtras);
+      ["car-brand-page/car-model-page/car-sub-model-page/car-sub-model-info/" + this.modelStartYear + '/' + this.modelEndYear],
+      navigationExtras);
   }
 
 }

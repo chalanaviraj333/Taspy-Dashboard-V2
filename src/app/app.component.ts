@@ -71,6 +71,21 @@ export class AppComponent implements OnInit {
         }
       ]
     },
+    { title: 'KEYDIY Remotes',
+    numberofitems: 0,
+      children: [
+        {
+          title: 'All KEYDIY Remotes',
+          url: '/all-keydiy-remotes',
+          icon: 'layers-outline'
+        },
+        {
+          title: 'Add KEYDIY Remote',
+          url: '/add-keydiy-remote',
+          icon: 'add-circle-outline'
+        },
+      ]
+    },
     { title: 'Cars',
       numberofitems: 0,
       children: [

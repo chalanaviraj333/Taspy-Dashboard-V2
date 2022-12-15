@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>ADD KEYDIY</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #f="ngForm" (ngSubmit)="onSubmitNext(f)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Select Series</ion-label>
+            <ion-select interface="popover" class="inputClass" type="text" ngModel="B-Series" name="productseries">
+              <ion-select-option value="B-Series">B Series</ion-select-option>
+              <ion-select-option value="NB-Series">NB Series</ion-select-option>
+              <ion-select-option value="ZB-Series">ZB Series</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Name</ion-label>
+            <ion-input class="automaticinputClass" ngModel name="productname" type="text" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4" class="ion-align-self-end ion-text-end">
+          <ion-card color="danger">
+            <ion-item lines="none">
+              <ion-label>Add Image</ion-label>
+              <ion-button (click)="keyProductUploadService.addNewImagetoUploadArray()">
+                <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+              </ion-button>
+            </ion-item>
+            <ion-img *ngIf="keyProductUploadService.selectImage.webviewPath !== ''" [src]="keyProductUploadService.selectImage.webviewPath" (click)="showActionSheet(keyProductUploadService.selectImage, 1)" class="uploadimageClass"></ion-img>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button slot="end" color="success" class="ion-button-class saveandexitButton" [disabled]="!f.valid" (click)="f.ngSubmit.emit()">
+      <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+      SAVE AND UPLOAD
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

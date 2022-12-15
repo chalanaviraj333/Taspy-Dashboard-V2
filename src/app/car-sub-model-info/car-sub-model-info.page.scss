@@ -1,0 +1,440 @@
+#carCard {
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+  overflow: visible;
+  position: relative;
+  padding-top: 60px;
+  margin: 35px 10px 2px 10px;
+  background: rgb(248, 248, 248);
+  background: linear-gradient(
+    150deg,
+    rgba(248, 248, 248, 1) 0%,
+    rgba(28, 28, 28, 1) 100%
+  );
+
+  .img-wrapper {
+    position: absolute;
+    left: 3%;
+    top: -30px;
+    //   transform: translateX(-50%);
+    img {
+      border-radius: 10px;
+      height: 100px;
+    }
+
+    ion-button {
+      --border-width: 1px;
+      --border-color: var(--ion-color-light-shade);
+      --border-style: solid;
+      --padding-start: 0;
+      --padding-end: 0;
+      --padding-bottom: 0;
+      --padding-top: 0;
+
+      --border-radius: 50%;
+      height: 26px;
+      width: 26px;
+
+      position: absolute;
+      right: -10px;
+      bottom: -10px;
+
+      ion-icon {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+
+  .right-class {
+    position: absolute;
+    right: 3%;
+    top: 15px;
+    padding-right: 20px;
+  }
+}
+
+.calender-icon {
+  margin-right: 7px;
+}
+
+.margin-class-car {
+  margin-top: 5px;
+}
+
+h4 {
+  margin-top: 0%;
+  text-align: center;
+  font-size: 12px;
+}
+
+#errorContent {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.detailtitles {
+  font-family: rucksack, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 30px;
+}
+
+.remotedetails {
+  font-family: rucksack, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  color: #240370;
+  font-size: 30px;
+}
+
+.remotetypebox {
+  color: #7049ff;
+}
+
+.remotetypebox::content {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-family: rucksack, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+#toprow {
+  height: 100%;
+  vertical-align: middle;
+}
+
+#lowstockErrorcontent {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.addnoteStyle {
+  font-family: rucksack, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.carnotes {
+  font-family: brandon-grotesque, sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  padding-bottom: 5px;
+  font-size: 15px;
+}
+
+ion-card {
+  border-radius: 10px;
+  overflow: visible;
+}
+
+#usernameID {
+  font-size: 13px;
+  font-family: futura-pt, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+#cardetails {
+  border-style: solid;
+}
+
+.remotetypeh1 {
+  text-align: end;
+}
+
+.primarytext {
+  font-family: futura-pt, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.fontsize {
+  font-size: 30px;
+}
+
+#carnameID {
+  font-family: futura-pt, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 15px;
+}
+
+#addnoteButtonID {
+  font-family: futura-pt, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+#spaecialnotesheaderID {
+  font-size: 13px;
+  color: red;
+}
+
+.specialOfferTiles {
+  width: 100%;
+}
+
+.ion-nowrap {
+  flex-wrap: nowrap;
+  overflow-x: scroll !important;
+  overflow-y: hidden;
+}
+#remotesTitleID {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.saveTag {
+  font-family: futura-pt, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 12px;
+}
+
+#boxnumberID {
+  font-size: 25px;
+  font-family: futura-pt, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.otherdetailsClass {
+  font-family: futura-pt, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 15px;
+}
+
+#itemCardID {
+  margin: 8px;
+}
+
+.shellClass {
+  font-family: futura-pt, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 30px;
+}
+
+.imageClass {
+  border-radius: 10px;
+}
+
+ion-fab {
+  margin: -25px -10px;
+  line-height: 2;
+  right: calc(var(--ion-safe-area-right, 0px) - 10px);
+}
+
+.right-remoteclass {
+  color: rgb(7, 102, 29);
+}
+
+.car-details-p-class {
+  font-family: sofia-pro, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.update-class {
+  font-family: sofia-pro-condensed, sans-serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 13px;
+}
+
+.edit-car-details-class {
+  margin-top: 10px;
+  margin-right: -30px;
+}
+
+.margin-class-car {
+  margin-top: 5px;
+  color: white;
+}
+
+
+.all-lost-key-card {
+  background-color: #FE7A48;
+}
+
+.all-lost-key-word-card {
+  background-color: white;
+  opacity: 0.7;
+  color: #FE7A48;
+}
+
+.spare-lost-key-card {
+  background-color: #86CC0A;
+}
+
+.spare-lost-key-word-card {
+  background-color: white;
+  opacity: 0.7;
+  color: #86CC0A;
+}
+
+.alert-badge-class {
+  background-color: transparent;
+  color: #450f0f;
+}
+
+#remotesTitleID {
+  font-weight: 700;
+}
+
+.ion-card-header-remote {
+  background: #F9C827;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.ion-card-header-remote::after {
+  content: '';
+  height: 5px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(-55deg,
+      #222,
+      #222 10px,
+      #F9C827 10px,
+      #F9C827 20px);
+}
+
+.font-class {
+  font-family: poppins, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+//
+
+#errorContent {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.detailtitles {
+  font-family: rucksack, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 30px;
+}
+
+.remotedetails {
+  font-family: rucksack, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  color: #240370;
+  font-size: 30px;
+}
+
+.remotetypebox {
+  color: #7049ff;
+}
+
+.remotetypebox::content {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-family: rucksack, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+#toprow {
+  height: 100%;
+  vertical-align: middle;
+}
+
+#lowstockErrorcontent {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.addnoteStyle {
+  font-family: rucksack, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.carnotes {
+  font-family: brandon-grotesque, sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  padding-bottom: 5px;
+  font-size: 15px;
+}
+
+
+#usernameID {
+  font-size: 13px;
+  font-family: futura-pt, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+#cardetails {
+  border-style: solid;
+}
+
+.remotetypeh1 {
+  text-align: end;
+}
+
+.primarytext {
+  font-family: futura-pt, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.fontsize {
+  font-size: 30px;
+}
+
+#carnameID {
+  font-family: futura-pt, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 15px;
+}
+
+#addnoteButtonID {
+  font-family: futura-pt, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+#spaecialnotesheaderID {
+  font-size: 13px;
+  color: red;
+}
+
+.specialOfferTiles {
+  width: 100%;
+}
+
+.ion-nowrap {
+  flex-wrap: nowrap;
+  overflow-x: scroll !important;
+  overflow-y: hidden;
+}
+
+
+.imageClass {
+  border-radius: 10px;
+}
+
+#itemCardID {
+  margin: 8px;
+}
+
+ion-slides {
+  --bullet-background-active: white;
+  --bullet-background: white;
+}
+
+.remoteoriginalclass {
+  height: 292px;
+}

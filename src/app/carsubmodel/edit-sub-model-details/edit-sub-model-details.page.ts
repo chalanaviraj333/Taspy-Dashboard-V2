@@ -21,12 +21,12 @@ export interface ProgramDevices {
 })
 export class EditSubModelDetailsPage implements OnInit {
 
-  public selectedSubModel: CarSubModel = {key: '', brand: '', model: '', submodel: '', typeofignition: '', icon: '', useruploadImage: '', uploadremotephoto: '', startyear: 2001, endyear: 2002, compatibleremotes: [], compatibleremoteshells: [], chipID: '', freq: '', profile: '',
-  allLostKeyPrice: 0, spareKeyPrice: 0, compatibleDevices: [], allLostKeySpecialNotes: [], spareKeySpecialNotes: [], allLostKeyPriceUpdateDate: new Date, spareKeyPriceUpdateDate: new Date};
+  public selectedSubModel: CarSubModel = {key: '', brand: '', model: '', submodel: '', typeofignition: '', icon: '', useruploadImage: '', uploadremotephoto: '', startyear: 2001, endyear: 2002, compatibleremotes: [], compatibleremoteshells: [], compatibleKDRemotes: [], compatibleXhorseRemote: [], chipID: '', freq: '', profile: '',
+  allLostKeyPrice: 0, spareKeyPrice: 0, compatibleDevicesSpare: [], compatibleDevicesAllLost: [], allLostKeySpecialNotes: [], spareKeySpecialNotes: [], allLostKeyPriceUpdateDate: new Date, spareKeyPriceUpdateDate: new Date};
   public modelstartYear: string = '';
   public modelendYear: string = '';
 
-  public programmingDevices: Array<ProgramDevices> = [
+  public programmingDevicesSpare: Array<ProgramDevices> = [
     {devicename: 'SmartPro', checkedvalue: false},
     {devicename: 'SmartPro with Aerial', checkedvalue: false},
     {devicename: 'X-Tool', checkedvalue: false},
@@ -34,6 +34,20 @@ export class EditSubModelDetailsPage implements OnInit {
     {devicename: 'VVDI Key Plus', checkedvalue: false},
     {devicename: 'G-Scan', checkedvalue: false},
     {devicename: 'Super VAG', checkedvalue: false},
+    {devicename: 'KEYDIY Chip Clone', checkedvalue: false},
+    {devicename: 'VVDI Chip Clone', checkedvalue: false},
+  ];
+
+  public programmingDevicesAllLost: Array<ProgramDevices> = [
+    {devicename: 'SmartPro', checkedvalue: false},
+    {devicename: 'SmartPro with Aerial', checkedvalue: false},
+    {devicename: 'X-Tool', checkedvalue: false},
+    {devicename: 'Autel', checkedvalue: false},
+    {devicename: 'VVDI Key Plus', checkedvalue: false},
+    {devicename: 'G-Scan', checkedvalue: false},
+    {devicename: 'Super VAG', checkedvalue: false},
+    {devicename: 'KEYDIY Chip Clone', checkedvalue: false},
+    {devicename: 'VVDI Chip Clone', checkedvalue: false},
   ];
 
   constructor(
@@ -71,9 +85,15 @@ export class EditSubModelDetailsPage implements OnInit {
     this.carSubModelService.carFrontPhoto.webviewPath = this.selectedSubModel.useruploadImage;
     this.carSubModelService.carRemoteLookslike.webviewPath = this.selectedSubModel.uploadremotephoto;
 
-    if (this.selectedSubModel.compatibleDevices !== undefined) {
-      this.selectedSubModel.compatibleDevices.forEach(device => {
-        this.programmingDevices.find((i) => i.devicename == device).checkedvalue = true;
+    if (this.selectedSubModel.compatibleDevicesSpare !== undefined) {
+      this.selectedSubModel.compatibleDevicesSpare.forEach(device => {
+        this.programmingDevicesSpare.find((i) => i.devicename == device).checkedvalue = true;
+    });
+    }
+
+    if (this.selectedSubModel.compatibleDevicesAllLost !== undefined) {
+      this.selectedSubModel.compatibleDevicesAllLost.forEach(device => {
+        this.programmingDevicesAllLost.find((i) => i.devicename == device).checkedvalue = true;
     });
     }
 
@@ -87,11 +107,19 @@ export class EditSubModelDetailsPage implements OnInit {
     this.selectedSubModel.startyear = form.value.selectedSubModelStartYear;
     this.selectedSubModel.endyear = form.value.selectedSubModelEndYear;
 
-    this.selectedSubModel.compatibleDevices = [];
+    this.selectedSubModel.compatibleDevicesSpare = [];
 
-    this.programmingDevices.forEach(device => {
+    this.programmingDevicesSpare.forEach(device => {
       if (device.checkedvalue == true) {
-        this.selectedSubModel.compatibleDevices.push(device.devicename);
+        this.selectedSubModel.compatibleDevicesSpare.push(device.devicename);
+      }
+    });
+
+    this.selectedSubModel.compatibleDevicesAllLost = [];
+
+    this.programmingDevicesAllLost.forEach(device => {
+      if (device.checkedvalue == true) {
+        this.selectedSubModel.compatibleDevicesAllLost.push(device.devicename);
       }
     });
 
@@ -120,8 +148,12 @@ export class EditSubModelDetailsPage implements OnInit {
     await actionSheet.present();
   }
 
-  updateDeviceChecked(indexofdevice: number) {
-    this.programmingDevices[indexofdevice].checkedvalue = !this.programmingDevices[indexofdevice].checkedvalue;
+  updateDeviceCheckedSpare(indexofdevice: number) {
+    this.programmingDevicesSpare[indexofdevice].checkedvalue = !this.programmingDevicesSpare[indexofdevice].checkedvalue;
+  }
+
+  updateDeviceCheckedAllLost(indexofdevice: number) {
+    this.programmingDevicesAllLost[indexofdevice].checkedvalue = !this.programmingDevicesAllLost[indexofdevice].checkedvalue;
   }
 
 }

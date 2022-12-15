@@ -96,7 +96,6 @@ generateUnitCylinder() {
   console.log(masterkeyofArray);
   this.unitKeys.forEach(key => {
       if (key.pinOne > masterkeyofArray.pinOne) {
-          console.log()
       }
   });
 }

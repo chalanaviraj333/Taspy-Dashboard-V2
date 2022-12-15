@@ -1,0 +1,41 @@
+<ion-buttons slot="start">
+  <ion-button class="closeButtonClass" (click)="_onClickDismiss()">
+    <ion-icon slot="icon-only" color="danger" name="close-circle-outline"></ion-icon>
+  </ion-button>
+</ion-buttons>
+
+<ion-content>
+  <ion-card class="ion-no-margin" style="padding: 10px;">
+    <ion-card-header>-Select Tested Year</ion-card-header>
+    <ion-button size="small" *ngFor="let caryear of this.yearslist" [ngClass]="{'selectedItemClass' : caryear.selected == true}" (click)="onClickyear(caryear)">
+      {{caryear.year}}
+    </ion-button>
+  </ion-card>
+
+  <ion-card *ngIf="this.buttontype == 'addremote'" color="dark" class="ion-no-margin" style="padding: 10px;">
+    <ion-card-header>-Select Worked Key</ion-card-header>
+    <ion-button size="medium" *ngFor="let carproduct of this.databaseService.byBrandBasedProducts" [ngClass]="{'selectedItemClass' : carproduct.selected == true}" (click)="onClickProduct(carproduct)">
+      {{carproduct.shell}}{{carproduct.boxnumber}}
+    </ion-button>
+  </ion-card>
+
+  <ion-card *ngIf="this.buttontype == 'addkeydiyProd'">
+    <ion-card-header>-Select KEYDIY</ion-card-header>
+    <ion-button size="medium" *ngFor="let keydiy of this.databaseService.byBrandBasedProducts" [ngClass]="{'selectedItemClass' : keydiy.selected == true}" (click)="onClickProduct(keydiy)">
+      {{keydiy.name}}
+      <ion-chip color="danger">{{keydiy.series}}</ion-chip>
+    </ion-button>
+  </ion-card>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" color="success" (click)="onClickDataSave()">
+      <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+      SAVE AND UPLOAD
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+
+

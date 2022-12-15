@@ -169,7 +169,6 @@ export class RemoteShellPhotoRequestService {
                   setInterval(() => {
                     loadingScreen.dismiss();
                   }, 2000);
-                  this.allhttprequestservice.availableRemoteShellBoxNumber++;
                   loadingScreen.message = 'Successfully Uploaded';
                   loadingScreen.spinner = null;
                   this.clearallphotos();
@@ -207,7 +206,6 @@ export class RemoteShellPhotoRequestService {
           data: base64,
           directory: FilesystemDirectory.Documents
         });
-        console.log('Downloaed');
       }
     });
 

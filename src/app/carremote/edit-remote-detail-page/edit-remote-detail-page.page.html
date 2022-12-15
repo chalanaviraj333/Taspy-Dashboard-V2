@@ -82,6 +82,16 @@
           </ion-item>
 
           <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Manufacture Part ID</ion-label>
+            <ion-input name="partid" type="text" [ngModel]="allhttprequestservice.editRemote.partid"></ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked" class="stackClass">Supplier Part ID</ion-label>
+            <ion-input name="supplierprodcode" type="text" ngModel></ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
             <ion-label position="stacked" class="stackClass">Supplier</ion-label>
             <ion-select class="inputClass" [ngModel]="allhttprequestservice.editRemote.suppliertype" name="suppliertype">
               <ion-select-option value="Aftermarket">Aftermarket</ion-select-option>
