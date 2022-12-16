@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { CarBrand } from '../car-brand';
 import { CarModel } from '../car-model';
 import { CarSubModel } from '../interfaces/car-sub-model';
@@ -30,7 +30,7 @@ export class AllHttpServicesService {
   public verifiedRemotes: Array<any> = [];
   public verifiedKEYDIYProds: Array<any> = [];
 
-  constructor(private http: HttpClient, public toastController: ToastController) { }
+  constructor(private http: HttpClient, public toastController: ToastController, public loadingController: LoadingController) { }
 
   getallCarBrandsFromDatabase() {
     if (this.allcarBrands.length == 0) {
@@ -110,6 +110,8 @@ export class AllHttpServicesService {
                 uploadremotephoto: resData[key].uploadremotephoto,
                 startyear: resData[key].startyear,
                 endyear: resData[key].endyear,
+                remotempn: resData[key].remotempn,
+                remotempnprice: resData[key].remotempnprice,
                 compatibleremotes: resData[key].compatibleremotes,
                 compatibleremoteshells: resData[key].compatibleremoteshells,
                 compatibleKDRemotes: resData[key].compatibleKDRemotes,
@@ -253,6 +255,29 @@ export class AllHttpServicesService {
         }
         });
     });
+  }
+
+  async updateCarSubmodelDetails(carSubModel: CarSubModel) {
+    const loading = await this.loadingController.create({
+      cssClass: 'uploadingproduct-css-class',
+      message: 'Uploading Changes',
+      backdropDismiss: false,
+    });
+    await loading.present();
+
+    this.http
+        .put(
+          `https://tapsy-stock-app-v3-database-default-rtdb.firebaseio.com/all-car-sub-models/${carSubModel.key}.json`,
+          { ...carSubModel, key: null }
+        )
+        .subscribe((resData) => {
+          setInterval(() => {
+            loading.dismiss();
+          }, 1000);
+
+          loading.message = 'Successfully Uploaded';
+          loading.spinner = null;
+        });
   }
 
 }

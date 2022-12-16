@@ -21,7 +21,7 @@ export interface ProgramDevices {
 })
 export class EditSubModelDetailsPage implements OnInit {
 
-  public selectedSubModel: CarSubModel = {key: '', brand: '', model: '', submodel: '', typeofignition: '', icon: '', useruploadImage: '', uploadremotephoto: '', startyear: 2001, endyear: 2002, compatibleremotes: [], compatibleremoteshells: [], compatibleKDRemotes: [], compatibleXhorseRemote: [], chipID: '', freq: '', profile: '',
+  public selectedSubModel: CarSubModel = {key: '', brand: '', model: '', submodel: '', typeofignition: '', icon: '', useruploadImage: '', uploadremotephoto: '', startyear: 2001, endyear: 2002, remotempn: '', remotempnprice: 0, compatibleremotes: [], compatibleremoteshells: [], compatibleKDRemotes: [], compatibleXhorseRemote: [], chipID: '', freq: '', profile: '',
   allLostKeyPrice: 0, spareKeyPrice: 0, compatibleDevicesSpare: [], compatibleDevicesAllLost: [], allLostKeySpecialNotes: [], spareKeySpecialNotes: [], allLostKeyPriceUpdateDate: new Date, spareKeyPriceUpdateDate: new Date};
   public modelstartYear: string = '';
   public modelendYear: string = '';
@@ -106,6 +106,8 @@ export class EditSubModelDetailsPage implements OnInit {
     this.selectedSubModel.freq = form.value.carfrequency;
     this.selectedSubModel.startyear = form.value.selectedSubModelStartYear;
     this.selectedSubModel.endyear = form.value.selectedSubModelEndYear;
+    this.selectedSubModel.remotempn = form.value.remotempn;
+    this.selectedSubModel.remotempnprice = form.value.remotempnprice;
 
     this.selectedSubModel.compatibleDevicesSpare = [];
 

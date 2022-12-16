@@ -71,9 +71,7 @@
             </ion-select>
           </ion-item>
         </ion-col>
-      </ion-row>
 
-      <ion-row>
         <ion-col size="3">
           <ion-item lines="none">
             <ion-label position="stacked" class="stackClass">Frequency</ion-label>
@@ -82,7 +80,9 @@
             </ion-select>
           </ion-item>
         </ion-col>
+      </ion-row>
 
+      <ion-row>
         <ion-col size="3">
           <ion-item lines="none">
             <ion-label position="stacked" class="stackClass">Start Year</ion-label>
@@ -93,6 +93,20 @@
           <ion-item lines="none">
             <ion-label position="stacked" class="stackClass">End Year</ion-label>
             <ion-input class="automaticinputClass" [ngModel]="selectedSubModel.endyear" name="selectedSubModelEndYear" type="number" required></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="stacked" color="success" class="stackClass">MPN</ion-label>
+            <ion-input class="automaticinputClass" [ngModel]="selectedSubModel.remotempn" name="remotempn" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="stacked" color="success" class="stackClass">MPN Price</ion-label>
+            <ion-input class="automaticinputClass" [ngModel]="selectedSubModel.remotempnprice" name="remotempnprice" type="number"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>

@@ -109,6 +109,8 @@ export class AddCarSubModelPage implements OnInit {
         uploadremotephoto: '',
         startyear: form.value.selectedSubModelStartYear,
         endyear: form.value.selectedSubModelEndYear,
+        remotempn: form.value.remotempn,
+        remotempnprice: form.value.remotempnprice,
         compatibleremotes: null,
         compatibleremoteshells: null,
         compatibleKDRemotes: null,

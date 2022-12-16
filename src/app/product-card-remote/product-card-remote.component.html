@@ -90,6 +90,24 @@
 
       </ion-col>
     </ion-row>
+
+    <ion-row *ngIf="productInformations.partid != null">
+      <ion-col
+        size="12"
+
+        class="ion-text-start"
+      >
+        <ion-label class="ion-text-wrap">
+          <ion-label color="medium" class="product-information-static">MPN </ion-label>
+          <ion-note
+            color="dark"
+            class="ion-text-wrap product-information-dynamic"
+            >{{productInformations.partid}}</ion-note
+          >
+        </ion-label>
+
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-card-content>
 <ion-ripple-effect type="unbounded"></ion-ripple-effect>

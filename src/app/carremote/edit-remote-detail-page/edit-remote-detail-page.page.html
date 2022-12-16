@@ -10,109 +10,105 @@
 <ion-content>
   <form #f="ngForm" (ngSubmit)="onSubmitNext(f)">
     <ion-grid *ngIf="allhttprequestservice.editRemote !== undefined">
+      <!--  -->
       <ion-row>
         <ion-col size="2">
-          <ion-item lines="none">
-            <ion-label position="stacked" class="stackClass">Box No</ion-label>
-            <ion-input class="automaticinputClass" type="number" name="boxnumber" [ngModel]="allhttprequestservice.editRemote.boxnumber" readonly></ion-input>
-          </ion-item>
+            <ion-label position="stacked" class="stackClass required-detail-class">Box No</ion-label>
+            <ion-input class="inputClass" name="boxnumber" [ngModel]="allhttprequestservice.editRemote.boxnumber" required></ion-input>
         </ion-col>
 
         <ion-col size="2">
-          <ion-item lines="none">
-            <ion-label position="stacked" class="stackClass">Shell</ion-label>
-            <ion-input class="automaticinputClass ion-text-uppercase" name="shell" [ngModel]="allhttprequestservice.editRemote.shell" readonly></ion-input>
-          </ion-item>
+            <ion-label position="stacked" class="stackClass required-detail-class">Shell</ion-label>
+            <ion-input class="inputClass ion-text-uppercase" name="shell" [ngModel]="allhttprequestservice.editRemote.shell" required></ion-input>
         </ion-col>
 
-          <ion-col size="4">
-            <ion-item lines="none">
-              <ion-label position="stacked" class="stackClass">Remote Type</ion-label>
-              <ion-select class="inputClass" name="remotetype" [ngModel]="allhttprequestservice.editRemote.remotetype">
+          <ion-col size="2">
+              <ion-label position="stacked" class="stackClass required-detail-class">Remote Type</ion-label>
+              <ion-select class="inputClass" interface="popover" name="remotetype" [ngModel]="allhttprequestservice.editRemote.remotetype">
                 <ion-select-option value="BLADED">Bladed</ion-select-option>
-                <ion-select-option value="SLOT">Slot</ion-select-option>
                 <ion-select-option value="PROX">Prox</ion-select-option>
+                <ion-select-option value="SLOT">Slot</ion-select-option>
               </ion-select>
-            </ion-item>
           </ion-col>
 
-          <ion-col size="4">
-          <ion-item lines="none">
-            <ion-label position="stacked" class="stackClass">Chip</ion-label>
-            <ion-select class="inputClass" name="remotechip" [ngModel]="allhttprequestservice.editRemote.inbuildchip">
-              <ion-select-option *ngFor="let chip of allhttprequestservice.allRemoteChips" [value]="chip">{{chip}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-
-        <ion-col size="4">
-          <ion-item lines="none">
-            <ion-label position="stacked" class="stackClass">Blade</ion-label>
-            <ion-select class="inputClass" name="remoteblade" [ngModel]="allhttprequestservice.editRemote.inbuildblade">
-              <ion-select-option *ngFor="let blade of allhttprequestservice.allRemoteBlades" [value]="blade">{{blade}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-
-        <ion-col size="4">
-          <ion-item lines="none">
-            <ion-label position="stacked" class="stackClass">Frequency</ion-label>
-            <ion-select class="inputClass" name="remotefrequency" [ngModel]="allhttprequestservice.editRemote.frequency">
-              <ion-select-option *ngFor="let frequncy of allhttprequestservice.allRemoteFrequency" [value]="frequncy">{{frequncy}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-
-        <ion-col size="4">
-          <ion-item lines="none">
-            <ion-label position="stacked" class="stackClass">Battery</ion-label>
-            <ion-select class="inputClass" name="remotebattery" [ngModel]="allhttprequestservice.editRemote.battery">
-              <ion-select-option *ngFor="let battery of allhttprequestservice.allRemoteBattery" [value]="battery">{{battery}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-
-        <ion-col size="3">
-          <ion-item lines="none">
-            <ion-label position="stacked" class="stackClass">Quantity</ion-label>
-            <ion-input class="automaticinputClass" name="qtyavailable" type="number" [ngModel]="allhttprequestservice.editRemote.qtyavailable" required></ion-input>
-          </ion-item>
-
-          <ion-item lines="none">
-            <ion-label position="stacked" class="stackClass">Manufacture Part ID</ion-label>
-            <ion-input name="partid" type="text" [ngModel]="allhttprequestservice.editRemote.partid"></ion-input>
-          </ion-item>
-
-          <ion-item lines="none">
-            <ion-label position="stacked" class="stackClass">Supplier Part ID</ion-label>
-            <ion-input name="supplierprodcode" type="text" ngModel></ion-input>
-          </ion-item>
-
-          <ion-item lines="none">
-            <ion-label position="stacked" class="stackClass">Supplier</ion-label>
-            <ion-select class="inputClass" [ngModel]="allhttprequestservice.editRemote.suppliertype" name="suppliertype">
+          <ion-col size="2">
+            <ion-label position="stacked required-detail-class" class="stackClass">Supplier</ion-label>
+            <ion-select class="inputClass" interface="popover" [ngModel]="allhttprequestservice.editRemote.suppliertype" name="suppliertype">
               <ion-select-option value="Aftermarket">Aftermarket</ion-select-option>
               <ion-select-option value="OEM">OEM</ion-select-option>
               <ion-select-option value="Genuine">Genuine</ion-select-option>
             </ion-select>
-          </ion-item>
         </ion-col>
 
-        <ion-col size="4" offset="5">
+          <ion-col size="3">
+            <ion-label position="stacked" class="stackClass">Chip</ion-label>
+            <ion-select class="inputClass" interface="popover" name="remotechip" [ngModel]="allhttprequestservice.editRemote.inbuildchip">
+              <ion-select-option *ngFor="let chip of allhttprequestservice.allRemoteChips" [value]="chip">{{chip}}</ion-select-option>
+            </ion-select>
+        </ion-col>
+      </ion-row>
+      <!--  -->
+
+      <!--  -->
+      <ion-row style="margin-top: 12px;">
+        <ion-col size="3">
+            <ion-label position="stacked" class="stackClass">Blade</ion-label>
+            <ion-select class="inputClass" interface="popover" name="remoteblade" [ngModel]="allhttprequestservice.editRemote.inbuildblade">
+              <ion-select-option *ngFor="let blade of allhttprequestservice.allRemoteBlades" [value]="blade">{{blade}}</ion-select-option>
+            </ion-select>
+        </ion-col>
+
+        <ion-col size="3">
+            <ion-label position="stacked" class="stackClass">Frequency</ion-label>
+            <ion-select class="inputClass" interface="popover" name="remotefrequency" [ngModel]="allhttprequestservice.editRemote.frequency">
+              <ion-select-option *ngFor="let frequncy of allhttprequestservice.allRemoteFrequency" [value]="frequncy">{{frequncy}}</ion-select-option>
+            </ion-select>
+        </ion-col>
+
+        <ion-col size="3">
+            <ion-label position="stacked" class="stackClass">Battery</ion-label>
+            <ion-select class="inputClass" interface="popover" name="remotebattery" [ngModel]="allhttprequestservice.editRemote.battery">
+              <ion-select-option *ngFor="let battery of allhttprequestservice.allRemoteBattery" [value]="battery">{{battery}}</ion-select-option>
+            </ion-select>
+        </ion-col>
+      </ion-row>
+      <!--  -->
+
+      <!--  -->
+      <ion-row style="margin-top: 12px;">
+        <ion-col size="3">
+          <ion-label position="stacked" class="stackClass">Our Supplier Part Number</ion-label>
+          <ion-input name="supplierprodcode" class="inputClass" type="text" [ngModel]="allhttprequestservice.editRemote.supplierprodcode"></ion-input>
+      </ion-col>
+
+        <ion-col size="2">
+            <ion-label position="stacked" class="stackClass required-detail-class">Quantity</ion-label>
+            <ion-input class="inputClass" type="number" name="qtyavailable" [ngModel]="allhttprequestservice.editRemote.qtyavailable" required></ion-input>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-label position="stacked" class="stackClass">Manufacturer Part Number(MPN)</ion-label>
+            <ion-input class="inputClass" name="partid" type="text" [ngModel]="allhttprequestservice.editRemote.partid"></ion-input>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-label position="stacked" class="stackClass">Manufacturer Price</ion-label>
+          <ion-input name="dealerPrice" class="inputClass" type="number" [ngModel]="allhttprequestservice.editRemote.dealerPrice"></ion-input>
+      </ion-col>
+      </ion-row>
+      <!--  -->
+
+      <ion-row>
+        <ion-col size="12" class="ion-text-end">
           <ion-img [src]="allhttprequestservice.editRemote.image" (click)="showActionSheet(allhttprequestservice.editRemote.image)" class="uploadimageClass"></ion-img>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col size="12">
-          <ion-item lines="none">
-            <ion-label position="stacked" class="stackClass">Tapsy Code</ion-label>
-            <ion-input class="automaticinputClass ion-text-uppercase" name="tapsycode" [ngModel]="allhttprequestservice.editRemote.tapsycode" minlength="8"></ion-input>
-          </ion-item>
-        </ion-col>
+          <ion-label position="stacked" class="stackClass required-detail-class">Tapsy Code</ion-label>
+          <ion-input class="inputClass ion-text-uppercase"  name="tapsycode" [ngModel]="allhttprequestservice.editRemote.tapsycode" minlength="8"></ion-input>
+      </ion-col>
       </ion-row>
     </ion-grid>
   </form>
@@ -121,39 +117,31 @@
       <ion-grid>
         <ion-row>
           <ion-col size="3">
-            <ion-item lines="none">
               <ion-label position="stacked" class="stackClass">Brand</ion-label>
               <ion-select class="inputClass" ngModel name="brand" (ionChange)="onChangeBrand($event)" required>
                 <ion-select-option *ngFor="let carbrand of allhttprequestservice.carBrands" [value]="carbrand">{{carbrand}}</ion-select-option>
               </ion-select>
-            </ion-item>
           </ion-col>
 
           <ion-col size="3">
-            <ion-item lines="none">
               <ion-label position="stacked" class="stackClass">Model</ion-label>
               <ion-select class="inputClass" ngModel name="model" (ionChange)="onChangeModel($event)">
                 <ion-select-option *ngFor="let carmodel of allhttprequestservice.selectedCarBrandModels" [value]="carmodel">{{carmodel.model}}</ion-select-option>
               </ion-select>
-            </ion-item>
           </ion-col>
 
           <ion-col size="2">
-            <ion-item lines="none">
               <ion-label position="stacked" class="stackClass">Start Year</ion-label>
               <ion-select class="inputClass" ngModel name="startyear">
                 <ion-select-option *ngFor="let year of selectedcarmodelyears" [value]="year">{{year}}</ion-select-option>
               </ion-select>
-            </ion-item>
           </ion-col>
 
           <ion-col size="2">
-            <ion-item lines="none">
               <ion-label position="stacked" class="stackClass">End Year</ion-label>
               <ion-select class="inputClass" ngModel name="endyear">
                 <ion-select-option *ngFor="let year of selectedcarmodelyears" [value]="year">{{year}}</ion-select-option>
               </ion-select>
-            </ion-item>
           </ion-col>
 
           <ion-col size="2" class="ion-align-self-end">

@@ -59,6 +59,7 @@
             <ion-card-subtitle color="dark" class="primarytext">{{remote.frequency}}</ion-card-subtitle>
             <ion-card-subtitle color="dark" class="primarytext">{{remote.inbuildblade}}</ion-card-subtitle>
             <ion-card-subtitle color="dark" class="primarytext">{{remote.inbuildchip}}</ion-card-subtitle>
+            <ion-card-subtitle color="dark" class="primarytext" *ngIf="remote.partid !== undefined">MPN: {{remote.partid}}</ion-card-subtitle>
 
 
 

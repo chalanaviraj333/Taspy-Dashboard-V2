@@ -13,6 +13,8 @@ export interface CarSubModel {
   uploadremotephoto: string;
   startyear: number;
   endyear: number;
+  remotempn: string;
+  remotempnprice: number;
   compatibleremotes: Array<WorkOnProducts>;
   compatibleremoteshells: Array<WorkOnProducts>;
   compatibleKDRemotes: Array<WorkOnProducts>;

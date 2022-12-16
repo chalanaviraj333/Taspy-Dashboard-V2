@@ -43,7 +43,8 @@ export class HttpRequestServiceService {
     remotetype: '',
     suppliertype: '',
     productType: '',
-    partid: {mpn: '', price: 0},
+    partid: '',
+    dealerPrice: 0,
     supplierprodcode: '',
     image: '',
     notes: [],
@@ -128,6 +129,7 @@ export class HttpRequestServiceService {
                 remotetype: resData[key].remotetype,
                 suppliertype: resData[key].suppliertype,
                 partid: resData[key].partid,
+                dealerPrice: resData[key].dealerPrice,
                 supplierprodcode: resData[key].supplierprodcode,
                 productType: resData[key].productType,
                 image: resData[key].image,
@@ -254,7 +256,6 @@ export class HttpRequestServiceService {
 
   // find edit remotes from all the remotes
   findEditRemote(selectedtapsycode: string) {
-    // let editRemote: Remote = { key: '', tapsycode: '', boxnumber: 0, inbuildchip: '', inbuildblade: '', battery: '', buttons: 0, frequency: '', costperitem: 0, remotetype: '', productType: '', image: '', notes: [], qtyavailable: 0, compitablecars: [], compitablebrands: []};
 
     this.allRemotes.forEach((remote) => {
       if (remote.tapsycode == selectedtapsycode) {
@@ -272,10 +273,18 @@ export class HttpRequestServiceService {
     if (entervalue && entervalue.trim() != "") {
       this.filteredRemotes = this.filteredRemotes.filter((currentremote) => {
         if (currentremote.compitablebrands !== undefined) {
-          let searchWord =
+          if (currentremote.partid !== undefined) {
+            let searchWord =
+            currentremote.tapsycode + currentremote.shell + currentremote.boxnumber + currentremote.partid +
+            currentremote.compitablebrands.toString();
+            return searchWord.toLowerCase().indexOf(entervalue.toLowerCase()) > -1;
+          }
+          else {
+            let searchWord =
             currentremote.tapsycode + currentremote.shell + currentremote.boxnumber +
             currentremote.compitablebrands.toString();
-          return searchWord.toLowerCase().indexOf(entervalue.toLowerCase()) > -1;
+            return searchWord.toLowerCase().indexOf(entervalue.toLowerCase()) > -1;
+          }
         } else {
           let searchWord = currentremote.tapsycode + currentremote.shell + currentremote.boxnumber;
           return searchWord.toLowerCase().indexOf(entervalue.toLowerCase()) > -1;
